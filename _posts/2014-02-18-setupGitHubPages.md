@@ -1,4 +1,9 @@
-  使用[github pages](http://pages.github.com/)搭建个人博客有这些好处：
+---
+layout: default
+title: github page搭建博客
+---
+  
+使用[github pages](http://pages.github.com/)搭建个人博客有这些好处：
 
 1. 只要你是github的一员，你就可以随时编辑、上传你的文章。
 2. 搭载Jekyll，可以使用像markdown简洁漂亮的语法来写博客，而不用处理与数据库相关的东西。
@@ -10,3 +15,7 @@
 #### 第一步 ####
 
 在GitHub上创建一个新的仓库，注意这里的仓库的名字必须是username.github.io(username就是你在github上的用户名)
+
+未完
+
+![icon]({{ site.url }/assets/1793558551700409840.png})
