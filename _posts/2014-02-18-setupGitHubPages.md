@@ -23,19 +23,19 @@ title: github page搭建博客
 
 进入到你想克隆仓库的文件目录，在git bash中执行git clone https://github.com/username/username.github.io
 
-![icon]({{ site.url }}/assests/github_pages_setup_2.png)
+![icon]({{ site.url }}/assets/github_pages_setup_2.png)
 
 #### 第三步 ####
 
 进入username.github.io文件目录，创建index.html
 
-![icon]({{ site.url }}/assests/github_pages_setup_3.png)
+![icon]({{ site.url }}/assets/github_pages_setup_3.png)
 
 #### 第四步 ####
 
 推送index.html
 
-![icon]({{ site.url }}/assests/github_pages_setup_4.png)
+![icon]({{ site.url }}/assets/github_pages_setup_4.png)
 
 #### 第五步 ####
 
