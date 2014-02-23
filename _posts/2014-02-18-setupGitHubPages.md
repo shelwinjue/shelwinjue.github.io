@@ -14,8 +14,29 @@ title: github page搭建博客
 
 #### 第一步 ####
 
-在GitHub上创建一个新的仓库，注意这里的仓库的名字必须是username.github.io(username就是你在github上的用户名)
+在GitHub上创建一个新的仓库，注意这里的仓库的名字必须是username.github.io(username就是你在github上的用户名)，否则，github pages将不会成功
 
-未完
+![icon]({{ site.url }}/assets/github_pages_setup_1.png)
 
-![icon]({{ site.url }}/assets/1793558551700409840.png)
+
+#### 第二步 ####
+
+进入到你想克隆仓库的文件目录，在git bash中执行git clone https://github.com/username/username.github.io
+
+![icon]({{ site.url }}/assests/github_pages_setup_2.png)
+
+#### 第三步 ####
+
+进入username.github.io文件目录，创建index.html
+
+![icon]({{ site.url }}/assests/github_pages_setup_3.png)
+
+#### 第四步 ####
+
+推送index.html
+
+![icon]({{ site.url }}/assests/github_pages_setup_4.png)
+
+#### 第五步 ####
+
+等待几分钟，然后你就可以访问http://username.github.io了
