@@ -2,7 +2,7 @@
 layout: default
 title: 国内互联网公司的js库
 ---
-<link href="{{ site.url }}/assets/css/foghorn.css" rel="stylesheet"></link>
+
 ## 百度 [Trangram](http://tangram.baidu.com/) ##
 
 Tangram是一套简单可依赖的Javascript库，主要分为Base和Component两部分。Base提供了开发时常用功能的封装，是核心的工具库。Component是Tangram组件库，基于Tangram Base之上开发，提供各种UI组件和动画效果。

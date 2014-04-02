@@ -3,7 +3,7 @@ layout: default
 title: github page搭建博客
 ---
 
-<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
 
 使用[github pages](http://pages.github.com/)搭建个人博客有这些好处：
 
