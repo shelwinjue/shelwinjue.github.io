@@ -1,5 +1,4 @@
 ---
-layout: default
 title: github page搭建博客
 ---
 

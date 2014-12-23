@@ -1,5 +1,4 @@
 ---
-layout: default
 title: 国内互联网公司的js库
 ---
 
