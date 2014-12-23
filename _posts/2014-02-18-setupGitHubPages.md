@@ -1,7 +1,7 @@
 ---
 title: github page搭建博客
 ---
-
+haha
 
 
 使用[github pages](http://pages.github.com/)搭建个人博客有这些好处：
