@@ -17,7 +17,7 @@ require(['src/app/list', 'src/app/ajax'], function(List, Ajax) {
 
 我们从require(deps, fn)这个函数来看下requirejs是怎么加载模块的。
 
-![icon](blob:http%3A//www.maxiang.info/11674192-1362-412f-95e3-ffe6aaf1e870)
+![icon]({{ site.url }}/assets/requirejs.png)
 
 
 总结一下：
