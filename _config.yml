@@ -7,3 +7,5 @@ defaults:
       layout: "default"
 
 markdown: kramdown
+kramdown:
+  input: GFM
