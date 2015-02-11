@@ -6,8 +6,8 @@ title: requirejs源码解析
 ### 主流程
 
 {% highlight js %}
-  var a = 1;
-  console.log(a);
+var a = 1;
+console.log(a);
 {% endhighlight %}
 
 ![icon]({{ site.url }}/assets/js.png)
