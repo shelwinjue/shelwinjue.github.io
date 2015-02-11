@@ -7,6 +7,7 @@ title: requirejs源码解析
 
 ```javascript
  var a = 1;
+ console.log(a);
 ```
 
 ![icon]({{ site.url }}/assets/js.png)
