@@ -5,7 +5,7 @@ title: requirejs源码解析
 
 ### 主流程
 
-{% highlight javascript %}
+{% highlight js %}
   var a = 1;
   console.log(a);
 {% endhighlight %}
