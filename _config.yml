@@ -5,6 +5,4 @@ defaults:
       type: "posts"
     values:
       layout: "default"
-
-kramdown:
-  input: GFM
+markdown: redcarpet
