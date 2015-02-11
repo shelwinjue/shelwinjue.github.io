@@ -6,11 +6,13 @@ title: requirejs源码解析
 ### 主流程
 
 {% highlight js %}
-var a = 1;
-console.log(a);
+require(['src/app/list', 'src/app/ajax'], function(List, Ajax) {
+	List.init();
+	Ajax.init();
+});
 {% endhighlight %}
 
-![icon]({{ site.url }}/assets/js.png)
+
 
 这是在调用模块的时候使用的方法，第一个参数是依赖模块集合，第二个参数是一个执行函数体，该执行函数的参数是各个依赖模块
 
