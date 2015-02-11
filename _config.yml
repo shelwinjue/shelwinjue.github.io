@@ -6,6 +6,5 @@ defaults:
     values:
       layout: "default"
 
-markdown: kramdown
 kramdown:
   input: GFM
