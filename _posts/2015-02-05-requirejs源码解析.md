@@ -5,10 +5,10 @@ title: requirejs源码解析
 
 ### 主流程
 
-```javascript
+{% highlight javascript %}
  var a = 1;
  console.log(a);
-```
+{% endhighlight %}
 
 ![icon]({{ site.url }}/assets/js.png)
 
