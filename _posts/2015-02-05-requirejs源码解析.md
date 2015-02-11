@@ -6,10 +6,10 @@ title: requirejs源码解析
 ### 主流程
 
 {% highlight js %}
-require(['src/app/list', 'src/app/ajax'], function(List, Ajax) {
-	List.init();
-	Ajax.init();
-});
+	require(['src/app/list', 'src/app/ajax'], function(List, Ajax) {
+		List.init();
+		Ajax.init();
+	});
 {% endhighlight %}
 
 
