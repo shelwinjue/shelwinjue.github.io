@@ -5,6 +5,9 @@ title: requirejs源码解析
 
 ### 主流程
 
+```javascript
+ var a = 1;
+```
 
 ![icon]({{ site.url }}/assets/js.png)
 
