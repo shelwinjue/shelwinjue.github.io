@@ -20,7 +20,7 @@ Flappy Bird 是一个很简单的游戏，下面我用仅仅百行代码来实�
 
 index.html的代码如下：
 
-{% highlight html %}
+``` html
 	<!DOCTYPE html>
     <html>
 
@@ -38,6 +38,6 @@ index.html的代码如下：
         <div id="gameDiv"> </div>
 
     </body>
-    </html>  
-{% endhighlight %}
+    </html>
+```
 
