@@ -5,4 +5,4 @@ defaults:
       type: "posts"
     values:
       layout: "default"
-
+markdown: redcarpet2
