@@ -1,6 +1,7 @@
 ---
 layout: default
 title: 用html5开发flappy bird游戏
+keywords: html5,游戏,flappy bird,html5游戏,phaser,html5游戏教程,html5游戏开发
 ---
 
 ### 如何用html5开发flappy bird游戏
@@ -40,4 +41,34 @@ index.html的代码如下：
     </body>
     </html>
 
+其中gameDiv元素是我们游戏所在的区域，在main.js中添加以下代码：
+
+    // 初始化 Phaser, 创建一个大小为 400x490px 的游戏
+    var game = new Phaser.Game(400, 490, Phaser.AUTO, 'gameDiv');
+
+    // Create our 'main' state that will contain the game
+    var mainState = {
+
+        preload: function() {
+            // preload方法将在开始的时候执行，主要用来加载游戏的资源
+        },
+
+        create: function() {
+            // create方法在preload方法执行完后接着执行，主要是游戏的初始化部分
+
+        },
+
+        update: function() {
+            // update方法每秒执行60次，主要是游戏的逻辑部分
+
+        },
+    };
+
+    // 添加并启动'main'状态
+    game.state.add('main', mainState);
+    game.state.start('main');
+
+后面我们会一步步填充完善preload(),create()和update()方法，并且会添加一些其他的方法
+
+#### 初始化小鸟
 
