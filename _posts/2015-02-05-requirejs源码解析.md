@@ -5,7 +5,8 @@ title: requirejs源码解析
 
 ### 主流程
 
-``` js
+```
+    var a = 1;
 	require(['src/app/list', 'src/app/ajax'], function(List, Ajax) {
 		List.init();
 		Ajax.init();
