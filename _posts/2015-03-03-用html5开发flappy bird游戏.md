@@ -5,7 +5,7 @@ title: 用html5开发flappy bird游戏
 
 ### 如何用html5开发flappy bird游戏
 
-![icon](http://api.photo.yunpan.360.cn/intf.php?method=Photo.getThumb&qid=107106320&nid=142539109094436254&size=1280_1280&devid=&rtick=1425391192&v=1.0.1&devtype=web&sign=2bbef692bc7f5b73c65671fe690b89a8&xid=23658011)
+![icon](http://img1.ph.126.net/VEvtewL1YVsS7KuPiwGQww==/6597970266681734611.jpg)
 
 Flappy Bird 是一个很简单的游戏，下面我用仅仅百行代码来实现它。这里用到了Phaser游戏库
 
