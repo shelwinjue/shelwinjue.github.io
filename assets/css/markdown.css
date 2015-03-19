@@ -1,6 +1,8 @@
-html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html { height: 100%;font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
 body{
+height: 100%;
+position: relative;
 color:#444;
 font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
 font-size:12px;
@@ -8,7 +10,21 @@ line-height:1.5em;
 padding:1em;
 margin:auto;
 max-width:60em;
-background:#fefefe;
+
+}
+
+.content{
+    background: #fefefe;
+}
+.overlay{
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:url('http://img04.taobaocdn.com/imgextra/i4/187929522/TB2KpOjcXXXXXcqXXXXXXXXXXXX_!!187929522.jpg_620x10000.jpg')  no-repeat center fixed;
+    opacity: 0.7;
 }
 
 a{ color: #0645ad; text-decoration:none;}
