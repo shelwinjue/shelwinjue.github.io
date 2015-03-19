@@ -6,7 +6,7 @@ keywords: html5,游戏,flappy bird,html5游戏,phaser,html5游戏教程,html5游
 
 ### 如何用html5开发flappy bird游戏
 
-![icon](http://img1.ph.126.net/VEvtewL1YVsS7KuPiwGQww==/6597970266681734611.jpg)
+![icon](http://img02.taobaocdn.com/imgextra/i2/187929522/TB2hyKicXXXXXXdXpXXXXXXXXXX_!!187929522.jpg)
 
 Flappy Bird 是一个很简单的游戏，下面我用仅仅百行代码来实现它。这里用到了Phaser游戏库
 
