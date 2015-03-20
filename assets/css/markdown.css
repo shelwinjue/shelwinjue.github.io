@@ -26,10 +26,10 @@ max-width:60em;
     opacity: 0.7;
 }
 
-a{ color: #0645ad; text-decoration:none;}
-a:visited{ color: #0b0080; }
-a:hover{ color: #06e; }
-a:active{ color:#faa700; }
+a{ color: #888; text-decoration:none;}
+a:visited{ color: #888; }
+a:hover{ color: #888; }
+a:active{ color:#888; }
 a:focus{ outline: thin dotted; }
 a:hover, a:active{ outline: 0; }
 
