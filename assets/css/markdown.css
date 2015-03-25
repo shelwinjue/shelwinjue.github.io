@@ -7,13 +7,18 @@ color:#444;
 font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
 font-size:12px;
 line-height:1.5em;
-padding:1em;
-margin:auto;
-max-width:60em;
-
+margin: 0;
 }
-
+.header{
+    height: 200px;
+    overflow: hidden;
+}
+.header .bg{
+    width: 100%;
+}
 .content{
+    margin: auto;
+    max-width: 60em;
 }
 .overlay{
     position: fixed;
