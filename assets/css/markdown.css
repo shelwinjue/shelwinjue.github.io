@@ -14,7 +14,12 @@ margin: 0;
     overflow: hidden;
 }
 .header .bg{
+    position: relative;
+    top: 50%;
     width: 100%;
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 .content{
     margin: auto;
