@@ -22,7 +22,7 @@ margin: 0;
     -webkit-transform: translateY(-50%);
 }
 .postwrap{
-    padding: 10px 0;
+    padding: 10px 10px;
     border-bottom: 1px dotted #ccc
 }
 .post{
@@ -30,6 +30,7 @@ margin: 0;
 .postwrap:hover{
     position: relative;
     left: 2px;
+    background: #f8f8f8;
 }
 
 .content{
