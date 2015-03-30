@@ -8,7 +8,7 @@ keywords: 仙枫的blog,仙枫的博客,html5,nodejs,html5游戏,css3
 <ul>
 {% for post in site.posts %}
 <li class="postwrap">
-<a class="post">
+<a class="post" href="{{ site.url }}{{ post.url }}">
 {{ post.content | split:'<!--more-->' | first }}
 </a>
 </li>
