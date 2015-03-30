@@ -2,7 +2,7 @@
 title: github page搭建博客
 ---
 
-### [github page搭建博客]({{ site.url}}{{ post.url }})
+### [github page搭建博客]({{ site.url }}{{ post.url }})
 
 使用[github pages](http://pages.github.com/)搭建个人博客有这些好处：
 

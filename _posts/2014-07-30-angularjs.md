@@ -4,7 +4,7 @@ title: angularjs教程
 ---
 
 
-### [angularjs教程]({{ site.url}}{{ post.url }})
+### [angularjs教程]({{ site.url }}{{ post.url }})
 
 本教程是在一步步实践angularjs的教程之后重新将官网教程一遍，以便更多的人能了解。
 
