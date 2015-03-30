@@ -3,7 +3,7 @@ layout: default
 title: requirejs源码解析
 ---
 
-### [requirejs源码解析]({{ site.url }}{{ post.url }})
+### requirejs源码解析
 
 
 

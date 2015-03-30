@@ -2,7 +2,9 @@
 title: 国内互联网公司的js库
 ---
 
-### [国内互联网公司的js库]({{ site.url }})
+### 国内互联网公司的js库
+
+[国内互联网公司的js库]({{ site.url }}{{ post.url }})
 
 #### 百度 [Trangram](http://tangram.baidu.com/)
 

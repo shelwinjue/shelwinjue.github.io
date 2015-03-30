@@ -5,7 +5,7 @@ title: apache中关于ProxyPass和ProxyPassReverse的配置
 
 
 
-### [理解ProxyPass 与 ProxyPassReverse]({{ site.url }}{{ post.url }})
+### 理解ProxyPass 与 ProxyPassReverse
 
 可能很多人在配置ProxyPass和ProxyPassReverse的时候都是参照下面这种格式：
 
