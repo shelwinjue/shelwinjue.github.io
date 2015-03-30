@@ -4,11 +4,11 @@ title: angularjs教程
 ---
 
 
-#说明#
+### [angularjs教程]({{ site.url}}{{ post.url }})
 
 本教程是在一步步实践angularjs的教程之后重新将官网教程一遍，以便更多的人能了解。
 
-##准备##
+#### 准备
 
 angularjs的官网是以一个demo来讲解它的特性和使用方法的。通过这个demo的讲解，你将会看到：
 

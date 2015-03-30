@@ -4,7 +4,7 @@ title: 用html5开发flappy bird游戏
 keywords: html5,游戏,flappy bird,html5游戏,phaser,html5游戏教程,html5游戏开发
 ---
 
-### 如何用html5开发flappy bird游戏
+### [如何用html5开发flappy bird游戏]({{ site.url}}{{ post.url }})
 
 ![icon](http://img02.taobaocdn.com/imgextra/i2/187929522/TB2hyKicXXXXXXdXpXXXXXXXXXX_!!187929522.jpg)
 
