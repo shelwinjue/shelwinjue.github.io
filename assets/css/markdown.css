@@ -22,17 +22,16 @@ margin: 0;
     -webkit-transform: translateY(-50%);
 }
 .postwrap{
+    padding: 10px 0;
     border-bottom: 1px dotted #ccc
 }
 .post{
-    padding: 10px 0;
 }
-.post a{
-    color: #000;
+.postwrap:hover{
+    position: relative;
+    left: 2px;
 }
-.post a:hover{
-    color: #08c;
-}
+
 .content{
     margin: auto;
     max-width: 60em;
