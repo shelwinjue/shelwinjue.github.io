@@ -19,6 +19,8 @@ title: requirejs源码解析
 
 我们从require(deps, fn)这个函数来看下requirejs是怎么加载模块的。
 
+<!--more-->
+
 ![icon]({{ site.url }}/assets/requirejs.png)
 
 

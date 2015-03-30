@@ -21,6 +21,10 @@ margin: 0;
     -moz-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
 }
+.post{
+    margin: 10px 0;
+    border-bottom: 1px dotted #ccc
+}
 .content{
     margin: auto;
     max-width: 60em;

@@ -18,6 +18,8 @@ Tangram是一套简单可依赖的Javascript库，主要分为Base和Component�
 
 所有常用的浏览器都经过QA测试
 
+<!--more-->
+
 ## 腾讯 [JX](http://alloyteam.github.io/JX/#home) ##
 
 一个类似 Google Closure Library 的 Web 前端开发框架，在Github上开源，开源地址[https://github.com/AlloyTeam/JX](https://github.com/AlloyTeam/JX)，适合构建和组织大规模、工业级的Web App，腾讯 WebQQ、腾讯Q+等产品都是采用JX框架开发，兼容目前所有主流浏览器。
