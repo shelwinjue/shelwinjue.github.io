@@ -9,17 +9,25 @@ font-size:12px;
 line-height:1.5em;
 margin: 0;
 }
-.header{
-    height: 200px;
-    overflow: hidden;
+.clearfix:after{
+    display: table;
+    clear: both;
+    content: "";
 }
-.header .bg{
-    position: relative;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
+.header{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-width: 1000px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e5e5e5;
+}
+.header .container{
+    width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.header .container ul li{
+    float: left;
 }
 .postwrap{
     padding: 10px 10px;
