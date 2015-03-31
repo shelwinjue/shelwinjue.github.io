@@ -29,6 +29,7 @@ margin: 0;
 }
 .header .container ul li{
     float: left;
+    padding: 0 10px;
 }
 .postwrap{
     padding: 10px 10px;
