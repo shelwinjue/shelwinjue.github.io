@@ -27,6 +27,20 @@ margin: 0;
     margin-right: auto;
     margin-left: auto;
 }
+.content{
+    position: relative;
+    top: 0;
+    -webkit-animation: up 2s 1 ease;
+    animation: up 1s 1 ease;
+}
+@-webkit-keyframes up {
+    0% {
+        top: 50px;
+    }
+    100% {
+        top: 0;
+    }
+ }
 .header .container ul li{
     float: left;
     padding: 0 10px;
