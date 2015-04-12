@@ -30,12 +30,12 @@ margin: 0;
 .content{
     position: relative;
     top: 0;
-    -webkit-animation: up 2s 1 ease;
+    -webkit-animation: up 1s 1 ease;
     animation: up 1s 1 ease;
 }
 @-webkit-keyframes up {
     0% {
-        top: 50px;
+        top: 60px;
     }
     100% {
         top: 0;
