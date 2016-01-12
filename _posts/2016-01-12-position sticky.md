@@ -31,6 +31,8 @@ position:fixed的结合，怎么理解呢？设置了position:sticky的元素，
 
 我们还是通过一个例子来看一看：(使用safari查看或者用iphone扫一扫下面的二维码)
 
+![img](https://gw.alicdn.com/tps/TB1a6tVLpXXXXcwXVXXXXXXXXXX-220-201.png)
+
 
 
 <iframe height='268' scrolling='no' src='//codepen.io/shelwinjue/embed/LGLgow/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/shelwinjue/pen/LGLgow/'>LGLgow</a> by shelwinjue (<a href='http://codepen.io/shelwinjue'>@shelwinjue</a>) on <a href='http://codepen.io'>CodePen</a>.
