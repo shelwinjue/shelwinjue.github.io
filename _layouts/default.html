@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="keywords" content="{{ page.keywords }}">
 	<link rel="icon" type="image/png" sizes="180x180"  href="https://img.alicdn.com/imgextra/i3/187929522/TB2BmmPipXXXXcxXpXXXXXXXXXX_!!187929522.png">
-	<link href="{{ site.url }}/assets/css/markdown.css" rel="stylesheet"></link>
+	<link href="/assets/css/post.css" rel="stylesheet"></link>
       <link rel="stylesheet" href="{{ site.url }}/assets/css/zenburn.min.css">
     <script src="{{ site.url }}/assets/js/highlight.js"></script>
       <script>hljs.initHighlightingOnLoad();</script>
@@ -22,12 +22,11 @@
 
   </head>
   <body>
-  <div class="header header-logged-in true" role="banner">
-      <div class="container">
-        <ul class="clearfix">
-            <li><a href="http://imjue.com">所有文章</a></li>
-        </ul>
-      </div>
+  <div class="header">
+      <a href="/">Home</a>
+  </div>
+  <div class="main-title">
+      <div class="tag">{{ page.title }}</div>
   </div>
 
   <div class="content">
@@ -50,6 +49,5 @@
       <!-- 多说公共JS代码 end -->
   </div>
 
-    <div class="overlay"></div>
   </body>
 </html>
