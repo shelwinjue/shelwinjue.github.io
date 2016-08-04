@@ -20,6 +20,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .clearfix:after{
   display: table;
   clear: both;
@@ -176,4 +177,16 @@ td { vertical-align: top; }
   @page :right { margin: 15mm 10mm 15mm 20mm; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
+}
+@media (max-width: 768px) {
+  .header{
+    padding: 0 1em;
+  }
+  body{
+    background-image: -moz-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("//img.alicdn.com/tps/TB1onGaKFXXXXa7XXXXXXXXXXXX-1680-840.jpg_640x640.jpg");
+    background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("//img.alicdn.com/tps/TB1onGaKFXXXXa7XXXXXXXXXXXX-1680-840.jpg_640x640.jpg");
+    background-image: -ms-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("//img.alicdn.com/tps/TB1onGaKFXXXXa7XXXXXXXXXXXX-1680-840.jpg_640x640.jpg");
+    background-image: linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("//img.alicdn.com/tps/TB1onGaKFXXXXa7XXXXXXXXXXXX-1680-840.jpg_640x640.jpg");
+
+  }
 }
