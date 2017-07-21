@@ -1,0 +1,1305 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2017-07-21T18:09:41+08:00</updated><id>/</id><subtitle>Xian Feng</subtitle><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><entry><title type="html">在生产环境中使用LogRocket记录Redux日志</title><link href="/blog/2017/07/21/%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BD%BF%E7%94%A8LogRocket%E8%AE%B0%E5%BD%95Redux%E6%97%A5%E5%BF%97/" rel="alternate" type="text/html" title="在生产环境中使用LogRocket记录Redux日志" /><published>2017-07-21T00:00:00+08:00</published><updated>2017-07-21T00:00:00+08:00</updated><id>/blog/2017/07/21/%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BD%BF%E7%94%A8LogRocket%E8%AE%B0%E5%BD%95Redux%E6%97%A5%E5%BF%97</id><content type="html" xml:base="/blog/2017/07/21/%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BD%BF%E7%94%A8LogRocket%E8%AE%B0%E5%BD%95Redux%E6%97%A5%E5%BF%97/">&lt;p&gt;&lt;a href=&quot;https://www.sitepoint.com/redux-logging-production-logrocket/&quot;&gt;原文链接&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;在web应用中排查问题很难。那些难解的js错误，用户上报的bug，还有QA系统里的issue，解决这些影响用户的问题是永恒不变的斗争。这些还只是那些明显的问题，事实是大部分的bug从来都没有被上报，因为当用户对应用有个不好的体验时，他们将不再使用，或者忍气吞声。
+&lt;img src=&quot;http://p0.qhimg.com/t01961e3bfa861b5882.png&quot; alt=&quot;Redux Logging with LogRocket&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;为了解决这种问题，越来越多的开发者们引入前端日志工具，因为现在的状态管理库，像redux一样，留好了丰富的追踪日志接口。在生产环境，记录action和state，使得理解bug和用户上报的issues变得容易了&lt;/p&gt;
+
+&lt;p&gt;在这篇文章中，我将会向你展示如何使用LogRocket来记录Redux日志。然后，我将会讨论一些使Redux应用debug变得容易的技巧。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;这篇文章最初发表在&lt;a href=&quot;https://blog.logrocket.com/redux-logging-in-production-3b2a4816b713&quot;&gt;logrocket.com&lt;/a&gt;上。经过作者的授权，转载在这里。如果你喜欢这篇文章，可以关注Ben的其他&lt;a href=&quot;https://blog.logrocket.com/@edelstein&quot;&gt;文章&lt;/a&gt;。如果你想了解更多Redux方面的东西，为何不注册一个SitePoint账号，这里有我们最新的&lt;a href=&quot;https://www.sitepoint.com/premium/courses/forms-with-react-and-redux-2935&quot;&gt;教程&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;heading-logrocket-web应用的录像机&quot;&gt;LogRocket: web应用的录像机&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p0.qhimg.com/t01c8d6f2634c66c986.png&quot; alt=&quot;LogRocket dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://logrocket.com&quot;&gt;LogRocket&lt;/a&gt; 是一个新型的开发者工具。它就像一个web应用的录像机，可以记录下发生在你的页面上所发生的一切。它适用于任何app，不管你使用什么框架。对于React,Redux,Vue.js和Angular都有相应的插件可供使用。通过LogRocket，你可以回放bug或者用户反馈的issue时所处的会话信息，从而快速定位到问题所在。&lt;/p&gt;
+
+&lt;p&gt;除了记录Redux action和state之外，LogRocket还可以记录控制台console的日志，js错误，堆栈信息，网络请求/响应(含header和responseBody)，浏览器的metadata和自定义日志。它还可以监控DOM来记录页面上的HTML和CSS，还原出像素级的视频，即使是最复杂的单页面应用。&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-开始使用logrocket&quot;&gt;开始使用LogRocket&lt;/h2&gt;
+
+&lt;p&gt;使用LogRocket非常简单，只需要在你的应用中加几行代码就可以了：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;使用&lt;code class=&quot;highlighter-rouge&quot;&gt;npm i --save logrocket&lt;/code&gt;进行安装&lt;/li&gt;
+  &lt;li&gt;在&lt;a href=&quot;https://app.logrocket.com&quot;&gt;https://app.logrocket.com&lt;/a&gt;上创建一个免费的账号，创建你的app id&lt;/li&gt;
+  &lt;li&gt;在你的应用中初始化LogRocket&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    import LogRocket from 'logrocket';
+    // Initialize LogRocket with your app ID
+    LogRocket.init(&amp;lt;your_application_id&amp;gt;);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;增加Redux中间件&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    import { applyMiddleware, createStore } from 'redux';
+    const store = createStore(
+      reducer, // your app reducer
+      applyMiddleware(middlewares, LogRocket.reduxMiddleware()),
+    );
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这就是基本的用法&lt;/p&gt;
+
+&lt;p&gt;LogRocket同时也为其他的Flux实现，比如&lt;strong&gt;ngrx&lt;/strong&gt;和&lt;strong&gt;vuex&lt;/strong&gt;，提供了插件，你可以从[这里]((https://docs.logrocket.com)获取更多细节&lt;/p&gt;
+
+&lt;p&gt;–广告–&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-回放用户会话&quot;&gt;回放用户会话&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;http://p0.qhimg.com/t01dd92be0eec10560e.png&quot; alt=&quot;LogRocket User Session&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在LogRocket中回放会话，就像在你自己的浏览器中看着它一步步发生一样。你可以查看Redux actions中详细的action payload、上一个状态和下一个状态&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p0.qhimg.com/t018a5e6a6071d098c1.png&quot; alt=&quot;LogRocket User Session&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;LogRocket捕获了网络请求和响应，你可以查看某次请求的headers和body的详情信息。下面的瀑布图展示了耗时，可以很容易地分辨出哪些请求很慢，或者有哪些潜在的网络竞争。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p0.qhimg.com/t01b889f791d250aa11.png&quot; alt=&quot;LogRocket Timeline&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;有时候单凭Redux的日志来排查bug是远远不够的，特别是排查用户上报的问题的时候。LogRocket的视频回放可以帮助你查看用户当时的界面&lt;/p&gt;
+
+&lt;p&gt;因为视频实际上就是DOM的重建过程(并非是真实的视频)，所以你可以查看HTML和CSS来排查UI bug，或者以2倍的速度快进，来理解用户在遇到问题时在app中做了哪些操作。&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-整合redux日志记录到你的工作流中&quot;&gt;整合Redux日志记录到你的工作流中&lt;/h2&gt;
+
+&lt;p&gt;能重放用户会话和Redux日志，无疑对整个开发过程是很有帮助的。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-修复bug&quot;&gt;修复bug&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p0.qhimg.com/t01c5dffebb681d7d24.png&quot; alt=&quot;LogRocket Bug&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;LogRocket，像Sentry和Bugsnag一样，整合了错误上报工具，可以让你查看Redux日志和每个bug的视频记录。这不仅对修复bug很有帮助，还可以帮助了解错误的影响范围有多少，毕竟一些js错误完全是不影响的。通过查看视频，可以判断出，当错误发生时，它是否真的会影响用户操作，还是可以忽略不计。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-支持度&quot;&gt;支持度&lt;/h3&gt;
+
+&lt;p&gt;通常情况下，用户上报问题时，并不能给出足够的上下文来判断到底发生了什么。&lt;/p&gt;
+
+&lt;p&gt;如果你正在使用一个像&lt;a href=&quot;https://intercom.com&quot;&gt;Intercom&lt;/a&gt;的聊天工具，你可以直接将LogRocket整合进去，从而无论用户何时开始聊天，你都可以插入一条记录链接。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p0.qhimg.com/t014699cee3b09a1e8c.png&quot; alt=&quot;LogRocket support&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果你整合了一个更加通用的分析工具，你可以调用它的跟踪API接口来增加一条记录链接，像下面这样：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LogRocket.getSessionURL(function (sessionURL) {
+  analytics.track('LogRocket recording', sessionURL);
+})
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;heading-在生产环境尽可能多地创建redux日志&quot;&gt;在生产环境尽可能多地创建Redux日志&lt;/h2&gt;
+
+&lt;p&gt;在所有的Redux应用中，生产环境日志记录是非常有用的。你可以通过良好的设计，使日志记录最有效，保证这些日志足以排查问题所在。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-在redux中保留尽可能地多的状态信息&quot;&gt;在Redux中保留尽可能地多的状态信息&lt;/h3&gt;
+
+&lt;p&gt;这里我不想深入讨论Rdux state。当你决定是否将一部分数据放入state中时，问问自己这些状态是否可以帮助你排查问题。如果回答是yes的话，就将它们放入state中去。当应用crash或者用户遇到问题时，它们将会被记录下来。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-使用事半功倍的数据请求库&quot;&gt;使用事半功倍的数据请求库&lt;/h3&gt;
+
+&lt;p&gt;像 适用GraphQL的&lt;a href=&quot;https://github.com/apollographql/apollo-client&quot;&gt;apollo-client&lt;/a&gt;,使用REST的&lt;a href=&quot;https://github.com/amplitude/redux-query&quot;&gt;redux-query&lt;/a&gt;这样的库，都可以帮助你用来从网络请求中抓取数据。它们使用Redux作为一个持久化层，这意味着当调试问题的时候，你可以查看你的Redux日志，从而可以查看客户端获取了哪些数据&lt;/p&gt;
+
+&lt;p&gt;如果你更喜欢一种简单的方式，你可以不使用这些拉取数据的框架，只通过简单地dispatch action，当你准备发送和接收请求的时候。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-使用redux来处理未知的数据来源&quot;&gt;使用Redux来处理未知的数据来源&lt;/h3&gt;
+
+&lt;p&gt;当从websockets,localstorage，IndexedDB，或者&lt;code class=&quot;highlighter-rouge&quot;&gt;Date()&lt;/code&gt;中访问数据时，考虑使用dispatch action，这样你可以在以后很方便的调试。例如：当监听websocket的时候，对每条信息都dispatch一条action，这样的话，你就可以在Redux日志中看到这些数据&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-考虑其他的console-apis&quot;&gt;考虑其他的Console APIs&lt;/h3&gt;
+
+&lt;p&gt;Console方法，比如&lt;code class=&quot;highlighter-rouge&quot;&gt;console.time()&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;console.count()&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;console.group()&lt;/code&gt;，可以让你添加丰富的数据到你的日志中去，比如React组件的渲染数量，动画时间和组件生命周期日志。如果你对这些感兴趣，可以查看我的&lt;a href=&quot;https://blog.logrocket.com/leveraging-the-console-api-in-react-apps-44df6d1ebeb2&quot;&gt;另一篇文章&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-编译上传source-map到logrocket&quot;&gt;编译上传source Map到LogRocket&lt;/h3&gt;
+
+&lt;p&gt;LogRocket支持source map，你可以通过&lt;a href=&quot;https://github.com/LogRocket/logrocket-cli&quot;&gt;命令上传&lt;/a&gt;。这样做，你可以在代码里看到js的错误堆栈、Redux action，console日志和网络请求&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-结论&quot;&gt;结论&lt;/h3&gt;
+
+&lt;p&gt;React和Redux都被赞赏为可创建可维护性的应用。在生产环境记录Redux数据非常有用，因为bug和用户上报的问题，可以通过查看Redux状态、网络请求和DOM来进行调试排查。&lt;/p&gt;
+
+&lt;p&gt;在Redux日志中使用LogRocket可以简化bug fix过程，你可以&lt;a href=&quot;https://logrocket.com&quot;&gt;开始使用LogRocket&lt;/a&gt;&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="js" /><category term="h5" /><summary type="html">原文链接</summary></entry><entry><title type="html">虚拟DOM内部是如何工作的</title><link href="/blog/2017/07/12/%E8%99%9A%E6%8B%9FDOM%E5%86%85%E9%83%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" rel="alternate" type="text/html" title="虚拟DOM内部是如何工作的" /><published>2017-07-12T00:00:00+08:00</published><updated>2017-07-12T00:00:00+08:00</updated><id>/blog/2017/07/12/%E8%99%9A%E6%8B%9FDOM%E5%86%85%E9%83%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84</id><content type="html" xml:base="/blog/2017/07/12/%E8%99%9A%E6%8B%9FDOM%E5%86%85%E9%83%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/">&lt;p&gt;&lt;a href=&quot;https://medium.com/@rajaraodv/the-inner-workings-of-virtual-dom-666ee7ad47cf&quot;&gt;英文原文链接&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Virtual DOM很神奇，同时也比较复杂，难以理解。react,preact和相似的js库都使用了virtual dom。然而，我找不到任何好的文章或者文档，可以详细地又容易理解的方式来解释它。因此我决定自己写一篇。&lt;/p&gt;
+
+&lt;p&gt;注意：文章篇幅较长，文中有大量的图片来帮助理解。文中使用的是preact的代码，因为它体积小，容易阅读。但是它与React里大部分的概率是保持一致的。希望阅读完这篇文章后，你可以更好地理解React和Preact这样的类库，甚至为它们作出贡献。&lt;/p&gt;
+
+&lt;p&gt;在这篇文章中，我将列举一个简单的例子来解释以下这些是如何工作的：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Babel和JSX&lt;/li&gt;
+  &lt;li&gt;创建VNode-一个简单的virtual DOM元素&lt;/li&gt;
+  &lt;li&gt;处理组件和子组件&lt;/li&gt;
+  &lt;li&gt;初始化渲染和创建一个DOM元素&lt;/li&gt;
+  &lt;li&gt;重新渲染&lt;/li&gt;
+  &lt;li&gt;移除DOM元素&lt;/li&gt;
+  &lt;li&gt;替换DOM元素&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;heading-the-app&quot;&gt;The app&lt;/h2&gt;
+
+&lt;p&gt;这是一个简单地可筛选的搜索应用，它包含了两个组件&lt;code class=&quot;highlighter-rouge&quot;&gt;FilteredList&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;。&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;组件用来渲染一组items(默认：&quot;California&quot;和&quot;New York&quot;)。这个应用有一个搜索框，可以根据字母来过滤列表项。非常地直观：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1J.D.SXXXXXaFXVXXXXXXXXXX-1600-594.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-概览图&quot;&gt;概览图&lt;/h2&gt;
+
+&lt;p&gt;我们用jsx来写组件，它会被babel转换成纯js，然后Preact的&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数会将这段js转换成DOM树，最后Preact的Virtual DOM算法会将virtual DOM转换成真实的DOM树，来构建我们的应用。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1s1jUSXXXXXcAaXXXXXXXXXXX-1600-496.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在深入Virtual DOM的生命周期之前，我们先理解一下jsx，因为它为库提供了入口。&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-babel-and-jsx&quot;&gt;Babel And JSX&lt;/h2&gt;
+&lt;p&gt;在React，Preact这样的类库中，没有HTML标签，取而代之的是，一切都是javascript。所以我们要在js中写HTML标签，但是在js中写HTML简直就是噩梦😱&lt;/p&gt;
+
+&lt;p&gt;对于我们的应用来说，我们将会像下面这样来写HTML&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1QFHFSXXXXXcxaFXXXXXXXXXX-1312-258.png&quot; alt=&quot;img&quot; /&gt;
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1de_NSXXXXXbBapXXXXXXXXXX-1300-400.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这就是jsx的由来。jsx本质上就是允许我们在javascript中书写HTML!并且允许我们在HTML中通过使用花括号来使用js。
+jsx帮助我们像下面这样写组件
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1N6_7SXXXXXcgXVXXXXXXXXXX-1130-194.png&quot; alt=&quot;img&quot; /&gt;
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1kI66SXXXXXcsXVXXXXXXXXXX-1134-216.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-jsx转换成js&quot;&gt;jsx转换成js&lt;/h3&gt;
+&lt;p&gt;jsx很酷，但它不是合法的js，并且最终我们需要的是真实的DOM。JSX只是帮助编写一个真实DOM的替代品，除此之外，它别无用处。所以我们需要一种方法将它转换成对应的JSON对象(也就是Virtual DOM)，作为转化成真实DOM的输入。我们需要一个函数来实现这个功能。&lt;/p&gt;
+
+&lt;p&gt;在Preact中&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数就是干这件事情的，等同于React中的&lt;code class=&quot;highlighter-rouge&quot;&gt;React.createElement&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;但是如何将jsx转换成&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数的调用呢？Babel就是干这件事情的。Babel遍历每个jsx节点，并将它们转换成&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数调用。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1VtfNSXXXXXb4apXXXXXXXXXX-1000-992.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-babel-jsxreact-vs-preact&quot;&gt;Babel JSX(React vs Preact)&lt;/h3&gt;
+&lt;p&gt;默认情况下，Babel将jsx转换成React.createElement调用
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1BiZnSXXXXXbkXpXXXXXXXXXX-1600-173.png&quot; alt=&quot;img&quot; /&gt;
+但是我们可以很容易地将函数名修改成任何名称，只需要在babelrc中配置一下即可&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Option 1:
+//.babelrc
+{   &quot;plugins&quot;: [
+      [&quot;transform-react-jsx&quot;, { &quot;pragma&quot;: &quot;h&quot; }]
+     ]
+}
+Option 2:
+//Add the below comment as the 1st line in every JSX file
+/** @jsx h */
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1RN2VSXXXXXXnapXXXXXXXXXX-1600-153.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-挂载到真实dom&quot;&gt;挂载到真实DOM&lt;/h3&gt;
+
+&lt;p&gt;不仅仅是render中的代码会被转换成&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数，最初的挂载也会！&lt;/p&gt;
+
+&lt;p&gt;这就是代码执行开始的地方&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//Mount to real DOM
+render(&amp;lt;FilteredList/&amp;gt;, document.getElementById(‘app’));
+//Converted to &quot;h&quot;:
+render(h(FilteredList), document.getElementById(‘app’));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;heading-h函数的输出&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数的输出&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数将jsx转化后的内容转换成Virtual DOM节点。一个Preact的Virtual DOM节点就是一个简单的代表了单个包含属性和子节点的DOM节点的js对象，如下所示：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;nodeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;attributes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;children&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;比如，应用的input标签对应的Virtual DOM如下：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;nodeName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;input&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;attributes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;placeholder&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Search&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;onChange&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;children&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;注意：&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;函数并不是创建整棵树！&lt;/strong&gt;它只是简单地创建某个节点的js对象。但是因为&lt;code class=&quot;highlighter-rouge&quot;&gt;render&lt;/code&gt;方法。。。&lt;/p&gt;
+
+&lt;p&gt;好了，让我们看看Virtual DOM是如何工作的。&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-preact中的virtual-dom算法&quot;&gt;Preact中的Virtual DOM算法&lt;/h2&gt;
+&lt;p&gt;在下面的流程图中，展示了在Preact中，组件是如何被创建、更新和删除的过程。同时也展示了像&lt;code class=&quot;highlighter-rouge&quot;&gt;componentWillMount&lt;/code&gt;这样的生命周期事件是什么时候被调用的。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB13tfPSXXXXXc3apXXXXXXXXXX-1000-1232.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;现在理解起来有些困难，所以我们一步一步来拆解流程图中的每种情况。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-情景1初始化app&quot;&gt;情景1：初始化app&lt;/h3&gt;
+
+&lt;h4 id=&quot;heading-11-创建virtual-dom&quot;&gt;1.1 创建Virtual DOM&lt;/h4&gt;
+&lt;p&gt;高亮的部分展示了根据给定的组件生成的Virtual DOM树。注意一点这里并没有为子组件创建Virtual DOM
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1EFIESXXXXXbIXpXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;
+下面这幅图展示了应用首次加载时发生的情况。这个库最后为FilteredList组件创建了带有子节点和属性
+的Virtual DOM
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1T2.bSXXXXXXjapXXXXXXXXXX-1447-487.png&quot; alt=&quot;img&quot; /&gt;
+注意：在这个过程中还调用了&lt;code class=&quot;highlighter-rouge&quot;&gt;componentWillMount&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;render&lt;/code&gt;生命周期方法(在上图中的绿色区块)&lt;/p&gt;
+
+&lt;p&gt;此时，我们有了一个Virtual DOM，div元素是父亲节点，带有一个input和一个list的子节点&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-12-如果不是一个组件则创建真实的dom&quot;&gt;1.2 如果不是一个组件，则创建真实的DOM&lt;/h4&gt;
+
+&lt;p&gt;在这一步中，它只是为父亲节点创建一个真实DOM，对于子节点，重复这个过程
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1.McGSXXXXXX6XpXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;
+此时，我们在下图中只有一个div展示出来
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1BL6_SXXXXXaEapXXXXXXXXXX-800-498.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;heading-13-对于子元素重复这个过程&quot;&gt;1.3 对于子元素重复这个过程&lt;/h4&gt;
+
+&lt;p&gt;在这一步中，循环所有的子节点。在我们的应用中，将会循环input和list
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1KSkGSXXXXXa8XpXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;heading-14-处理孩子节点和添加到父亲节点&quot;&gt;1.4 处理孩子节点和添加到父亲节点&lt;/h4&gt;
+
+&lt;p&gt;在这一步中，我们将会处理叶子节点，由于input有个父节点div，那么我们将会将input添加到div中作为
+子节点。然后流程转向创建&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;(第二个子节点是div)
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1W5kuSXXXXXbZXFXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;
+此时，我们的app长下面这样
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1n7EpSXXXXXXOXVXXXXXXXXXX-800-498.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;注意：在&lt;code class=&quot;highlighter-rouge&quot;&gt;input&lt;/code&gt;被创建之后，由于它没有任何子节点，并不会立马就去循环和创建List组件。相反地，它会首先
+把&lt;code class=&quot;highlighter-rouge&quot;&gt;input&lt;/code&gt;标签添加到父节点div中去，完事之后再返回处理List标签&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-15-处理子节点&quot;&gt;1.5 处理子节点&lt;/h4&gt;
+
+&lt;p&gt;现在控制流回到了步骤1.1，并且开始处理&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;组件。但是由于&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;是一个组件，所以它会遍历执行自身的&lt;strong&gt;render&lt;/strong&gt;方法，从而获得一组VNodes，就像下面这样：
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1xn.BSXXXXXcyXpXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;
+当&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;组件的循环完成时，它会返回&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;的VNode，就像下面这样：
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1GTcCSXXXXXcyXpXXXXXXXXXX-884-483.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-16-对于所有的子节点重复步骤11到14&quot;&gt;1.6 对于所有的子节点，重复步骤1.1到1.4&lt;/h4&gt;
+
+&lt;p&gt;对于每个节点，它将会重复以上的每一步。一旦到达叶子节点，它将会被加入到父节点中去，并且重复这个过程。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1YncLSXXXXXcmXXXXXXXXXXXX-1000-1257.png&quot; alt=&quot;img&quot; /&gt;
+下面的图片展示了每个节点是如何添加上去的(深度优先遍历)
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1Pwr9SXXXXXbZapXXXXXXXXXX-2000-412.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-17-处理完成&quot;&gt;1.7 处理完成&lt;/h4&gt;
+
+&lt;p&gt;此时已经完成了处理过程。然后对于所有的组件，会调用&lt;code class=&quot;highlighter-rouge&quot;&gt;componentDidMount&lt;/code&gt;方法(从子组件开始，直到父组件)
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1_sf.SXXXXXb_aXXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：当一切准备就绪，一个真实DOM的引用会被添加到每个组件的实例中。这个引用会在接下来的一些更新操作(创建、更新、删除)被用来比较，避免重复创建相同的DOM节点&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-情景2删除叶子节点&quot;&gt;情景2：删除叶子节点&lt;/h3&gt;
+&lt;p&gt;当输入&quot;cal&quot;并按回车，这将会删除第二个列表子元素，也就是一个叶子节点(New York)，同时其他父元素都会保留。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1PYAdSXXXXXadapXXXXXXXXXX-800-160.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;让我们看下这种情景下，流程是怎么样的&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-21-创建vnodes&quot;&gt;2.1 创建VNodes&lt;/h4&gt;
+
+&lt;p&gt;在初始化渲染之后，后面的每次改变都是一次&quot;更新&quot;。当创建VNodes时，更新周期与创建周期非常相似，并且再一次创建所有的VNodes。不过既然是更新(不是创建)组件，将会调用每个组件和子组件相应的&lt;code class=&quot;highlighter-rouge&quot;&gt;componentWillReceiveProps&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;shouldComponentUpdate&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;componentWillUpdate&lt;/code&gt;方法。&lt;/p&gt;
+
+&lt;p&gt;另外，更新周期并不会重新创建已经存在的DOM元素。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1WB3XSXXXXXaNapXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-22-使用真实dom引用避免创建重复的节点&quot;&gt;2.2 使用真实DOM引用，避免创建重复的节点&lt;/h4&gt;
+
+&lt;p&gt;之前提到过，在初始化加载期间，每个组件都有一个指向真实DOM树的引用。下面的图展示了引用是如何寻找我们的应用的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1YXwCSXXXXXaDXFXXXXXXXXXX-1000-666.png&quot; alt=&quot;img&quot; /&gt;
+当VNodes被创建后，每个VNode的属性都会与真实DOM的属性相比较。&lt;strong&gt;如果真实DOM存在，循环将会转移到下个节点&lt;/strong&gt;
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1wT7dSXXXXXX9apXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-23-如果在真实dom中有其它的节点则删除&quot;&gt;2.3 如果在真实DOM中有其它的节点，则删除&lt;/h4&gt;
+
+&lt;p&gt;下面的图展示了真实DOM和VNode之间的不同&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1FyUsSXXXXXaQXVXXXXXXXXXX-800-320.png&quot; alt=&quot;img&quot; /&gt;
+由于存在不同，真实DOM中的&quot;New York&quot;节点会被算法删除掉，正如下面图展示的那样。这个算法也称为&quot;componentDidUpdate&quot;生命周期。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1pZgySXXXXXa_XFXXXXXXXXXX-1000-1245.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-情景3-卸载整个组件&quot;&gt;情景3-卸载整个组件&lt;/h3&gt;
+
+&lt;p&gt;举例：当输入&lt;code class=&quot;highlighter-rouge&quot;&gt;blabla&lt;/code&gt;时，由于不匹配&quot;California&quot;和&quot;New York&quot;，我们将不会渲染子组件&lt;code class=&quot;highlighter-rouge&quot;&gt;List&lt;/code&gt;。这意味着，我们需要卸载整个组件
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1QcQESXXXXXXiXFXXXXXXXXXX-552-160.png&quot; alt=&quot;img&quot; /&gt;
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1QFD5SXXXXXbraFXXXXXXXXXX-800-558.png&quot; alt=&quot;img&quot; /&gt;
+删除一个组件类似于删除一个单独的节点。除此之外，当我们删除一个包含组件引用的节点，将会调用&quot;componentWillUnmount&quot;，然后递归删除所有的DOM元素。在删除了所有的真实DOM元素之后，&quot;componentDidUnmount&quot;将会被调用。
+下面的图片展示了真实DOM元素&quot;ul&quot;包含了指向&quot;List&quot;组件的引用。
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1aSgmSXXXXXXFaXXXXXXXXXXX-800-470.png&quot; alt=&quot;img&quot; /&gt;
+下面的图片在流程图中高亮了deleting/unmounting一个组件是如何工作的
+&lt;img src=&quot;https://gw.alicdn.com/tfs/TB1J73JSXXXXXX1XpXXXXXXXXXX-1000-1174.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;heading-最后&quot;&gt;最后&lt;/h2&gt;
+
+&lt;p&gt;希望这篇文章能帮助你理解Virtual DOM是如何工作的(至少在Preact中)&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="js" /><category term="h5" /><summary type="html">英文原文链接</summary></entry><entry><title type="html">webpack-dev-server 2.x 实时加载</title><link href="/blog/2017/06/25/webpack-dev-server-2.x-%E5%AE%9E%E6%97%B6%E5%8A%A0%E8%BD%BD/" rel="alternate" type="text/html" title="webpack-dev-server 2.x 实时加载" /><published>2017-06-25T00:00:00+08:00</published><updated>2017-06-25T00:00:00+08:00</updated><id>/blog/2017/06/25/webpack-dev-server%202.x%20%E5%AE%9E%E6%97%B6%E5%8A%A0%E8%BD%BD</id><content type="html" xml:base="/blog/2017/06/25/webpack-dev-server-2.x-%E5%AE%9E%E6%97%B6%E5%8A%A0%E8%BD%BD/">&lt;h3 id=&quot;heading-webpack-dev-server-2x-实时加载&quot;&gt;webpack-dev-server 2.x 实时加载&lt;/h3&gt;
+
+&lt;p&gt;webpack 2.0升级之后，webpack-dev-server也随之升级，首先还是一样，执行安装&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install --save-dev webpack-dev-server
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;heading-实时加载的bundle来自于内存&quot;&gt;实时加载的bundle来自于内存&lt;/h3&gt;
+
+&lt;p&gt;这一点很重要，经过有个误解，误认为文件修改后，实时编译后的bundle会写到&lt;code class=&quot;highlighter-rouge&quot;&gt;webpack.config.js&lt;/code&gt;配置项&lt;code class=&quot;highlighter-rouge&quot;&gt;output&lt;/code&gt;指定的文件中，其实并不是，重新
+编译后的bundle在内存中，不会覆盖&lt;code class=&quot;highlighter-rouge&quot;&gt;output&lt;/code&gt;指定的bundle.js。&lt;/p&gt;
+
+&lt;p&gt;了解这一点之后，再来看看代码目录&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;├── app
+│   └── index.jsx
+├── dist
+│   └── bundle.js
+├── index.html
+├── mods
+│   └── util
+├── package.json
+└── webpack.config.js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;index.html的内容如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;webpack demo&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;dist/bundle.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;默认情况下，&lt;code class=&quot;highlighter-rouge&quot;&gt;devServer.publicPath&lt;/code&gt;的值是&quot;/&quot;，因为bundle的路径是&lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost:8080/bundle.js&lt;/code&gt;。
+而index.html中引入bundle的路径是&lt;code class=&quot;highlighter-rouge&quot;&gt;dist/bundle.js&lt;/code&gt;，因为需要将devServer.publicPath的值改为&lt;code class=&quot;highlighter-rouge&quot;&gt;/dist/&lt;/code&gt;(官网说明publicPath必须以斜杠符开始和结尾)，
+因此修改后的webpack.config.js如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var path = require('path');
+module.exports = {
+	entry: './app/index.jsx',
+	output: {
+		filename: 'bundle.js',
+		path: path.resolve(__dirname, 'dist')
+	},
+	module: {
+		rules: [{
+			test: /\.jsx$/,
+			loader: &quot;babel-loader&quot;
+		}]
+	},
+	resolve: {
+		alias: {
+			'@modules': path.resolve(__dirname, 'mods')
+		}
+	},
+	devServer: {
+		publicPath: '/dist/'
+	}
+};
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;heading-启动webpack-dev-server&quot;&gt;启动webpack-dev-server&lt;/h3&gt;
+
+&lt;p&gt;启动后，修改任何源文件，页面都会自动刷新，加载最新的bundle&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="js" /><category term="h5" /><summary type="html">webpack-dev-server 2.x 实时加载</summary></entry><entry><title type="html">h5日历选择组件</title><link href="/blog/2016/08/03/%E6%89%93%E9%80%A0%E6%9C%80%E6%8E%A5%E8%BF%91native%E4%BD%93%E9%AA%8C%E7%9A%84h5%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6/" rel="alternate" type="text/html" title="h5日历选择组件" /><published>2016-08-03T00:00:00+08:00</published><updated>2016-08-03T00:00:00+08:00</updated><id>/blog/2016/08/03/%E6%89%93%E9%80%A0%E6%9C%80%E6%8E%A5%E8%BF%91native%E4%BD%93%E9%AA%8C%E7%9A%84h5%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6</id><content type="html" xml:base="/blog/2016/08/03/%E6%89%93%E9%80%A0%E6%9C%80%E6%8E%A5%E8%BF%91native%E4%BD%93%E9%AA%8C%E7%9A%84h5%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6/">&lt;h3 id=&quot;heading-ios中原生的select组件&quot;&gt;ios中原生的select组件&lt;/h3&gt;
+
+&lt;p&gt;ios中select标签在focus的时候，会唤起原生的ios选择组件，样式上是一个3d的滚筒，滚动选择时流畅、平滑，截图如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB103DCLXXXXXc3XVXXXXXXXXXX-640-1136.jpg_400x400.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;而在android设备里，原生的select组件就没有ios设备里的漂亮和流畅了&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1syrwLXXXXXb0aXXXXXXXXXXX-1080-1920.png_400x400.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-统一ui&quot;&gt;统一UI&lt;/h3&gt;
+
+&lt;p&gt;原生的select组件在不同平台有不同的UI表现，事件处理也各有各的坑，统一UI才是王道。那么该如何模拟实现这种3d滚动选择组件呢?&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-3d特效&quot;&gt;3d特效&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1g6P4LXXXXXacXXXXXXXXXXXX-520-368.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;试着想象一下，将一张长方形的纸卷曲形成圆柱体的过程，无非就是将无穷多个细小的长方形，以圆柱体的中心轴为基准，旋转一定的角度。只要角度是连续的，就可以形成曲面。
+这段话一时难以理解。我们认为每一个选择项的dom节点一开始是平面的，2d的，通过transform的rotateX(angle),rotateY(angle),rotateZ(angle)来实现3d旋转。&lt;/p&gt;
+
+&lt;p&gt;先简单理解一下rotateX,rotateY,rotateZ的直观效果&lt;/p&gt;
+
+&lt;iframe height=&quot;265&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/shelwinjue/embed/RRYZkJ/?height=265&amp;amp;theme-id=0&amp;amp;default-tab=css,result&amp;amp;embed-version=2&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/shelwinjue/pen/RRYZkJ/&quot;&gt;RRYZkJ&lt;/a&gt; by shelwinjue (&lt;a href=&quot;http://codepen.io/shelwinjue&quot;&gt;@shelwinjue&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;p&gt;(注意，要搭配透视perspective属性才能看到上面的效果)&lt;/p&gt;
+
+&lt;p&gt;很明显我们应该使用rotateX属性来形成曲面。但是，但是，有一个属性刚刚被我们忽略了。那就是transform-origin属性，为了形成3d的曲面，除了rotate的角度，还有一个关键性
+的因为，就是transform-origin了。平时在缩放元素的时候，都会用到tansform-origin，但我们只用到了x轴和y轴，
+其实还有一个z轴。为了形成曲面，需要指定这个z轴的值。这个z轴的值应该是多少呢(一脸懵b)。&lt;/p&gt;
+
+&lt;p&gt;下面来细细解释一下,transform-origin的定义如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;transform-origin: x-axis y-axis z-axis;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;x-axis定义视图被置于x轴的何处&lt;/li&gt;
+  &lt;li&gt;y-axis定义视图被置于y轴的何处&lt;/li&gt;
+  &lt;li&gt;z-axis定义视图被置于z轴的何处&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;到底怎么理解呢？来点实际的&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB16WDILXXXXXcfXVXXXXXXXXXX-330-227.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;蒙眼飞刀的transform-origin是x(center),y(center)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1ee2JLXXXXXbAXVXXXXXXXXXX-237-300.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;钢管舞的transform-origin是x(0),y(随意)&lt;/p&gt;
+
+&lt;p&gt;那么圆柱体呢？其实它的transform-origin是x(center),y(center),z(圆柱体底面的圆的半径)。&lt;/p&gt;
+
+&lt;p&gt;这个圆个半径如何计算呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1Az7XLXXXXXc4XXXXXXXXXXXX-374-201.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图中可视区域的高度，其实就是圆的直径(179px)，那么半径就是89.5px。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;ul class=&quot;mui-pciker-list&quot; style=&quot;transform-origin: center center -89.5px; transform: perspective(1000px) rotateY(0deg) rotateX(60deg); transition: 100ms ease-out;&quot;&amp;gt;
+	&amp;lt;li class=&quot;visible&quot; style=&quot;transform-origin: center center -89.5px; transform: rotateX(0deg);&quot;&amp;gt;选项1&amp;lt;/li&amp;gt;
+	&amp;lt;li class=&quot;visible&quot; style=&quot;transform-origin: center center -89.5px; transform: rotateX(-20deg);&quot;&amp;gt;选项2&amp;lt;/li&amp;gt;
+	&amp;lt;li class=&quot;visible&quot; style=&quot;transform-origin: center center -89.5px; transform: rotateX(-40deg);&quot;&amp;gt;选项3&amp;lt;/li&amp;gt;
+	&amp;lt;li class=&quot;visible highlight&quot; style=&quot;transform-origin: center center -89.5px; transform: rotateX(-60deg);&quot;&amp;gt;选项4&amp;lt;/li&amp;gt;
+	&amp;lt;li class=&quot;visible&quot; style=&quot;transform-origin: center center -89.5px; transform: rotateX(-80deg);&quot;&amp;gt;选项5&amp;lt;/li&amp;gt;
+	&amp;lt;li style=&quot;transform-origin: center center -89.5px; transform: rotateX(-100deg);&quot; class=&quot;visible&quot;&amp;gt;选项6&amp;lt;/li&amp;gt;
+	&amp;lt;li style=&quot;transform-origin: center center -89.5px; transform: rotateX(-120deg);&quot; class=&quot;visible&quot;&amp;gt;选项7&amp;lt;/li&amp;gt;
+	&amp;lt;li style=&quot;transform-origin: center center -89.5px; transform: rotateX(-140deg);&quot; class=&quot;visible&quot;&amp;gt;选项8&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在上面的代码中，将每个选择项的&lt;code class=&quot;highlighter-rouge&quot;&gt;transform-origin&lt;/code&gt;的值设置为&lt;code class=&quot;highlighter-rouge&quot;&gt;center center -89.5px&lt;/code&gt;，同时将ul的&lt;code class=&quot;highlighter-rouge&quot;&gt;transform-origin&lt;/code&gt;也设置为相同的值，这样ul渲染后会有上面的3d曲面效果。接下来，就是监听touchstart,touchmove,touchend(或者mousedown,mousemove,mouseup)事件，在touchmove(或者mousemove)事件处理函数中
+对拨动的角度的计算。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-反余弦计算拨动角度&quot;&gt;反余弦计算拨动角度&lt;/h3&gt;
+
+&lt;p&gt;已知手势滑动的绝对值(或鼠标滑动的绝对值)，和3d曲面半径，求曲面应该转动的角度。等同于下面的三角形，已经三条边的长度，求夹角&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1bPn.LXXXXXXWXpXXXXXXXXXX-320-226.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;余弦定理的计算公式如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1UQr0LXXXXXX9XFXXXXXXXXXX-149-45.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;求的余弦值后，通过反余弦函数求得角度，代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	/**
+	 * 弧度转换成角度
+	 * @param rad
+	 * @returns {number}
+	 */
+	function rad2deg(rad) {
+		return rad / (Math.PI / 180);
+	}
+	/**
+	 * 计算旋转角度
+	 * @param deltaPageY 手势滑动的绝对值(或者鼠标滑动的绝对值)
+	 * @returns {*}
+	 */
+	function calcAngle(deltaPageY) {
+		var self = this;
+		var a = b = parseFloat(self.r);
+		//直径的整倍数部分直接乘以 180
+		c = Math.abs(c); //只算角度不关心正否值
+		var intDeg = parseInt(c / self.d) * 180;
+		c = c % self.d;
+		//余弦
+		var cosC = (a * a + b * b - c * c) / (2 * a * b);
+		var angleC = intDeg + rad2deg(Math.acos(cosC));
+		console.log('angleC=' + angleC);
+		return angleC;
+	}
+	/**
+     * 更新ul的旋转角度
+     * @param angle
+     */
+    function setAngle(angle) {
+
+        var self = this;
+        self.list.angle = angle;
+        self.list.style.webkitTransformOrigin = 'center center -89.5px';
+        self.list.style.webkitTransform = &quot;perspective(1000px) rotateY(0deg) rotateX(&quot; + angle + &quot;deg)&quot;;
+        self.calcElementItemVisibility(angle);
+
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;调用calcAngle(deltaPageY)后，再调用setAngle()，将ul的rotateX值进行更新。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-touchend或者mousemove事件处理&quot;&gt;touchend(或者mousemove)事件处理&lt;/h3&gt;
+
+&lt;p&gt;在touchend(或者mousemove)事件处理函数中，需要实现减速效果。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;滑动的最后300ms内，计算滑动的速度&lt;/li&gt;
+  &lt;li&gt;根据滑动速度，计算速度降到0需要的时间，根据速度和时间，计算出减速运动滑动的距离&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;将滑动的距离转换成角度，然后调用缓动函数，计算每个时间点应该转动的角度，直至转动停止&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; /**
+  * 计算最终应该旋转的角度和时间
+  * @param event
+  */
+ function startInertiaScroll(event) {
+     var self = this;
+     var point = event.changedTouches ? event.changedTouches[0] : event;
+
+     var nowTime = event.timeStamp || Date.now();
+     console.log('移动距离=' + (point.pageY - self.lastMoveStart));
+     console.log('移动时间=' + (nowTime - self.lastMoveTime));
+     var v = (point.pageY - self.lastMoveStart) / (nowTime - self.lastMoveTime); //最后一段时间手指划动速度
+     var dir = v &amp;gt; 0 ? -1 : 1; //加速度方向
+     var deceleration = dir * 0.0006 * -1;
+     console.log('速度' + v);
+     console.log('@@@@@@@' + deceleration + '@@@@@@@@@@');
+     var duration = Math.abs(v / deceleration); // 速度消减至0所需时间
+     console.log('#########'+ duration + '########');
+     var dist = v * duration / 2; //最终移动多少
+     console.log('最终dist' + dist);
+     var startAngle = self.list.angle;
+     var distAngle = self.calcAngle(dist) * dir;
+     console.log('需要转的角度' + distAngle);
+     //----
+     var srcDistAngle = distAngle;
+     if (startAngle + distAngle &amp;lt; self.beginExceed) {
+         distAngle = self.beginExceed - startAngle;
+         duration = duration * (distAngle / srcDistAngle) * 0.6;
+     }
+     if (startAngle + distAngle &amp;gt; self.endExceed) {
+         distAngle = self.endExceed - startAngle;
+         duration = duration * (distAngle / srcDistAngle) * 0.6;
+     }
+     //----
+     if (distAngle == 0) {
+         self.endScroll();
+         return;
+     }
+     self.scrollDistAngle(nowTime, startAngle, distAngle, duration);
+ }
+
+ /**
+  * 缓动函数
+  * @param nowTime
+  * @param startAngle
+  * @param distAngle
+  * @param duration
+  */
+ function scrollDistAngle(nowTime, startAngle, distAngle, duration) {
+     var self = this;
+     self.stopInertiaMove = false;
+     (function(nowTime, startAngle, distAngle, duration) {
+         var frameInterval = 13;
+         var stepCount = duration / frameInterval;
+         var stepIndex = 0;
+         (function inertiaMove() {
+             if (self.stopInertiaMove) return;
+             var newAngle = self.quartEaseOut(stepIndex, startAngle, distAngle, stepCount);
+             self.setAngle(newAngle);
+             stepIndex++;
+             if (stepIndex &amp;gt; stepCount - 1 || newAngle &amp;lt; self.beginExceed || newAngle &amp;gt; self.endExceed) {
+                 self.endScroll();
+                 return;
+             }
+             setTimeout(inertiaMove, frameInterval);
+         })();
+     })(nowTime, startAngle, distAngle, duration);
+ }
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;heading-说好的日历选择组件呢&quot;&gt;说好的日历选择组件呢&lt;/h3&gt;
+
+&lt;p&gt;上面讲的是一般选择组件的实现，日历选择组件，只需要改一下UI，将一个曲面变成多个曲面，比例，生日的选择，需要年、月、日三个3d曲面&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1Qc2PLXXXXXczXVXXXXXXXXXX-374-228.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.dcloud.io/hellomui/examples/dtpicker.html&quot;&gt;demo展示&lt;/a&gt;，具体的代码实现可以看&lt;a href=&quot;https://github.com/dcloudio/mui/blob/master/examples/hello-mui/js/mui.dtpicker.js&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="js" /><category term="h5" /><summary type="html">ios中原生的select组件</summary></entry><entry><title type="html">promise规范</title><link href="/blog/2016/06/22/promise%E6%A8%A1%E5%BC%8F/" rel="alternate" type="text/html" title="promise规范" /><published>2016-06-22T00:00:00+08:00</published><updated>2016-06-22T00:00:00+08:00</updated><id>/blog/2016/06/22/promise%E6%A8%A1%E5%BC%8F</id><content type="html" xml:base="/blog/2016/06/22/promise%E6%A8%A1%E5%BC%8F/">&lt;h3 id=&quot;heading-为什么会有promise规范&quot;&gt;为什么会有promise规范&lt;/h3&gt;
+
+&lt;p&gt;js处理异步一般都是用callback，但一旦涉及串联的异步请求，就会多层callback嵌套，导致代码的可读性很差，维护起来也是非常费劲。Promise规范的提出，可以说完全改变了
+js异步编程的写法，让异步编程变得十分容易理解。&lt;/p&gt;
+
+&lt;h3 id=&quot;heading-promise规范实例&quot;&gt;promise规范实例&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var p1 = new Promise(function(resolve, reject) {
+	setTimeout(function() {
+  		resolve(&quot;Success!&quot;);
+	}, 1500);
+});
+
+p1.then(function(value) {
+  console.log(value); // Success!
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;1.5s后控制台打印Success!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;好了，我们先来认识一下 &lt;a href=&quot;http://promises-aplus.github.io/promises-spec/&quot;&gt;Promise/A+&lt;/a&gt; 规范:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;一个promise对象有三种状态：等待(pending)，已完成(fullfilled)，已拒绝(rejected)&lt;/li&gt;
+  &lt;li&gt;一个promise对象的状态只能从 pending 转到 fullfilled或者rejected，不能逆向转换，并且fullfilled和rejected之间不能相关转换&lt;/li&gt;
+  &lt;li&gt;promise必须实现then方法，并且then必须返回一个promise，同一个promise可以连续调用then方法，执行的顺序与调用的顺序一致&lt;/li&gt;
+  &lt;li&gt;then方法有两个参数，第一个参数是成功时的回调(promise的状态从pending变成fullfilled时调用)，第二个参数是失败时的回调(promise的状态从pending变成rejected时调用)。如果这两个回调返回了一个值x，如果x也是一个promise，那么x的状态将会被采用，简单点说如下：var promise2 = promise1.then(onFullfilled, onRejected);如果onFullfilled或者onRejected返回的值x也是一个promise对象，那么promise2的状态将采用x的状态，当x的状态是pending时，promise2的状态也是pending，当x的状态变成fullfilled，那么promise2的状态也变成fullfilled，同时value与x的value一致。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;heading-实例&quot;&gt;实例&lt;/h3&gt;
+
+&lt;p&gt;现在需要实现一个功能：抓取最新的一篇文章的作者的邮箱&lt;/p&gt;
+
+&lt;p&gt;流程就是：抓文章列表-&amp;gt;抓文章資訊-&amp;gt;抓作者&lt;/p&gt;
+
+&lt;p&gt;使用promise后，代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;getArticleList().then(function(articles){
+    return getArticle(articles[0].id);
+}).then(function(article){
+    return getAuthor(article.authorId);
+}).then(function(author){
+    alert(author.email);
+});
+
+function getAuthor(id){
+    return new Promise(function(resolve, reject){
+        $.ajax(&quot;http://beta.json-generator.com/api/json/get/E105pDLh&quot;,{
+            author: id
+        }).done(function(result){
+            resolve(result);
+        })
+    });
+}
+
+function getArticle(id){
+    return new Promise(function(resolve, reject){
+        $.ajax(&quot;http://beta.json-generator.com/api/json/get/EkI02vUn&quot;,{
+            id: id
+        }).done(function(result){
+            resolve(result);
+        })
+    });
+}
+
+function getArticleList(){
+    return new Promise(function(resolve, reject){
+       $.ajax(
+        &quot;http://beta.json-generator.com/api/json/get/Ey8JqwIh&quot;)
+        .done(function(result){
+            resolve(result);
+        }); 
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="promise" /><summary type="html">为什么会有promise规范</summary></entry><entry><title type="html">position sticky介绍</title><link href="/blog/2016/01/12/position-sticky/" rel="alternate" type="text/html" title="position sticky介绍" /><published>2016-01-12T00:00:00+08:00</published><updated>2016-01-12T00:00:00+08:00</updated><id>/blog/2016/01/12/position%20sticky</id><content type="html" xml:base="/blog/2016/01/12/position-sticky/">&lt;h3 id=&quot;heading-什么是positionsticky&quot;&gt;什么是position:sticky&lt;/h3&gt;
+
+&lt;p&gt;用户在浏览网页时已经习惯导航栏、菜单栏、搜索筛选栏等常用操作的工具栏始终停留在窗口的顶部。页面滚动到某处将元素固定
+在窗口某个位置的布局方式，我们称之为黏性布局。&lt;/p&gt;
+
+&lt;p&gt;在pc端，为了实现这种布局，通常的做法是监听window的scroll事件,判断页面滚动到某个元素时，把元素的position设置为
+fixed，否则，取消fixed。&lt;/p&gt;
+
+&lt;p&gt;然而在移动端浏览器，这种效果就不够平滑了，特别是在ios设备上。因为在ios设备上，当页面滚动时，会暂停所有js的执行，直到
+滚动停止才会继续执行js。因此，scroll事件在页面滚动的时候并不会被触发，而是在页面停止滚动的时候才触发。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;这样导致的一个结果是，无法通过监听scroll事件来实现黏性布局，那么监听touchmove事件可以做到吗？&lt;/p&gt;
+
+&lt;p&gt;答案是同样做不到。&lt;/p&gt;
+
+&lt;p&gt;在touchmove的过程中可以实时地执行回调，但是在手指离开屏幕，页面继续减速滚动，直到听下的这段过程，js还是无能为力。&lt;/p&gt;
+
+&lt;p&gt;position:sticky就是为了解决这个问题而引入的一个试验性属性。position:sticky表现上是position:relative和
+position:fixed的结合，怎么理解呢？设置了position:sticky的元素，表现如下：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;当页面滚动到该元素之前，元素的表现跟position:relative一样&lt;/li&gt;
+  &lt;li&gt;当页面滚动到该元素之后，元素的表现跟position:fixed一样&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;我们还是通过一个例子来看一看：(使用safari查看或者用iphone扫一扫下面的二维码)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://gw.alicdn.com/tps/TB1a6tVLpXXXXcwXVXXXXXXXXXX-220-201.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;iframe height=&quot;268&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/shelwinjue/embed/LGLgow/?height=268&amp;amp;theme-id=0&amp;amp;default-tab=result&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/shelwinjue/pen/LGLgow/&quot;&gt;LGLgow&lt;/a&gt; by shelwinjue (&lt;a href=&quot;http://codepen.io/shelwinjue&quot;&gt;@shelwinjue&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h3 id=&quot;heading-positionsticky的用法&quot;&gt;position:sticky的用法&lt;/h3&gt;
+
+&lt;p&gt;设置了position:sticky的元素要生效必须至少设置top、bottom、left、right其中的一个。top和bottom两者之间top的优先级高，
+left和right两者之间left的优先级高。&lt;/p&gt;
+
+&lt;p&gt;从上面的例子可以看出，设置了position:sticky的元素，当页面滚动其父容器的底部时，就不在固定在可见区域，而是跟随
+父容器一起滚动了.&lt;/p&gt;
+
+&lt;p&gt;最后给出关于position:sticky的polyfill，如下这些：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/filamentgroup/fixed-sticky&quot;&gt;fixed-sticky&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/wilddeer/stickyfill&quot;&gt;stickyfill&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/matthewp/position--sticky-&quot;&gt;position-sticky&lt;/a&gt;&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="css" /><summary type="html">什么是position:sticky</summary></entry><entry><title type="html">浮点数转整数</title><link href="/blog/2015/12/22/%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%B7%A7%E5%8F%98%E6%95%B4%E5%9E%8B/" rel="alternate" type="text/html" title="浮点数转整数" /><published>2015-12-22T00:00:00+08:00</published><updated>2015-12-22T00:00:00+08:00</updated><id>/blog/2015/12/22/%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%B7%A7%E5%8F%98%E6%95%B4%E5%9E%8B</id><content type="html" xml:base="/blog/2015/12/22/%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%B7%A7%E5%8F%98%E6%95%B4%E5%9E%8B/">&lt;h3 id=&quot;heading-将浮点数转换成整数的常用方法&quot;&gt;将浮点数转换成整数的常用方法&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;parseInt(1.5) // 输出 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;heading-新的方法-&quot;&gt;新的方法 ~~&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt;是按位取反，整数按位取反很好理解，如果是浮点数按位取反呢？&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~1.5 // 输出 -2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;浮点数1.5按位取反后，变成了-2，因为&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt;只对整数有用，遇到浮点数会先将其转换成整数，利用这个特性，1.5两次取反后，将得到1&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~1.5 // 输出-2
+~-2  // 输出1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最后也就实现了将浮点数转换成整数了。既然有&lt;code class=&quot;highlighter-rouge&quot;&gt;parseInt()&lt;/code&gt;，为什么推荐使用&lt;code class=&quot;highlighter-rouge&quot;&gt;~~&lt;/code&gt;呢？我们看看两种方法的性能如何&lt;/p&gt;
+
+&lt;p&gt;在chrome下，运行以下代码，测试过程如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var a = new Date()
+var b;
+for(i=0;i&amp;lt;100000;i++){
+   b = parseInt(1.5)
+}
+console.log(new Date() - a) // 输出 453
+
+var a = new Date()
+var b;
+for(i=0;i&amp;lt;100000;i++){
+   b = ~~1.5
+}
+console.log(new Date() - a) // 输出 371
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可见&lt;code class=&quot;highlighter-rouge&quot;&gt;~~&lt;/code&gt;的性能要优于&lt;code class=&quot;highlighter-rouge&quot;&gt;parseInt&lt;/code&gt;(虽然在chrome下差异不是很明显)，但&lt;code class=&quot;highlighter-rouge&quot;&gt;~~&lt;/code&gt;这种写法很便捷有木有~&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="js" /><summary type="html">将浮点数转换成整数的常用方法</summary></entry><entry><title type="html">css animation的十二个原则</title><link href="/blog/2015/04/03/css-animation%E7%9A%84%E5%8D%81%E4%BA%8C%E4%B8%AA%E5%8E%9F%E5%88%99/" rel="alternate" type="text/html" title="css animation的十二个原则" /><published>2015-04-03T00:00:00+08:00</published><updated>2015-04-03T00:00:00+08:00</updated><id>/blog/2015/04/03/css%20animation%E7%9A%84%E5%8D%81%E4%BA%8C%E4%B8%AA%E5%8E%9F%E5%88%99</id><content type="html" xml:base="/blog/2015/04/03/css-animation%E7%9A%84%E5%8D%81%E4%BA%8C%E4%B8%AA%E5%8E%9F%E5%88%99/">&lt;h3 id=&quot;heading-css-animation的十二个原则&quot;&gt;css animation的十二个原则&lt;/h3&gt;
+
+&lt;p&gt;CSS的Animation是一个很有意思的东西，也是CSS中较为复杂也难设计的一部分。熟不知在Web的动画设计中有12个关键原则。在Animation 101将这十二原则剖析出来。今天特意转载@刘英滕翻译《Animation Principles for the Web》的中文&lt;/p&gt;
+
+&lt;p&gt;作为前端的设计师和工程师，我们用 CSS 去做样式、定位并创建出好看的网站。我们经常用 CSS 去添加页面的运动过渡效果甚至动画，但我们经常做的东西不会超过这些。&lt;/p&gt;
+
+&lt;p&gt;动效是一个有助于访客和消费者理解我们设计的强有力工具。这里有些原则能最大限度地应用在我们的工作中。&lt;/p&gt;
+
+&lt;p&gt;迪士尼经过基础工作练习的长时间累积，在 1981 年出版的 The Illusion of Life: Disney Animation 一书中发表了动画的十二个原则 (12 Principles of Animation) 。这些原则描述了动画能怎样用于让观众相信自己沉浸在现实世界中。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;在本文中，我会逐个介绍这十二个原则，并讨论它们怎样运用在网页中。你能在 Codepen 找到它们全部的开源 HTML 和 CSS 代码 。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-挤压和拉伸-squash-and-stretch&quot;&gt;挤压和拉伸 (Squash and stretch)&lt;/h4&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/wBRNqX/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/wBRNqX/&quot;&gt;#1 Squash and stretch - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;p&gt;这是物体存在质量且运动时质量保持不变的概念。当一个球在弹跳时，碰击到地面会变扁，恢复的时间会越来越短。&lt;/p&gt;
+
+&lt;p&gt;创建对象的时候最有用的方法是参照实物，比如人、时钟和弹性球。&lt;/p&gt;
+
+&lt;p&gt;当它和网页元件一起工作时可能会忽略这个原则。DOM 对象不一定和实物相关，它会按需要在屏幕上缩放。例如，一个按钮会变大并变成一个信息框，或者错误信息会出现和消失。&lt;/p&gt;
+
+&lt;p&gt;尽管如此，挤压和伸缩效果可以为一个对象增加实物的感觉。甚至一些形状上的小变化就可以创造出细微但抢眼的效果。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-预备动作-anticipation&quot;&gt;预备动作 (Anticipation)&lt;/h4&gt;
+
+&lt;p&gt;运动不倾向于突然发生。在现实生活中，无论是一个球在掉到桌子前就开始滚动，或是一个人屈膝准备起跳，运动通常有着某种事先的累积。&lt;/p&gt;
+
+&lt;p&gt;我们能用它去让我们的过渡动画显得更逼真。预备动作可以是一个细微的反弹，帮人们理解什么对象将在屏幕中发生变化并留下痕迹。&lt;/p&gt;
+
+&lt;p&gt;例如，悬停在一个元件上时可以在它变大前稍微缩小，在初始列表中添加额外的条目来介绍其它条目的移除方法。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/KwbJvJ/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/KwbJvJ/&quot;&gt;#2 Anticipation - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-演出布局-staging&quot;&gt;演出布局 (Staging)&lt;/h4&gt;
+
+&lt;p&gt;演出布局是确保对象在场景中得以聚焦，让场景中的其它对象和视觉在主动画发生的地方让位。这意味着要么把主动画放到突出的位置，要么模糊其它元件来让用户专注于看他们需要看的东西。&lt;/p&gt;
+
+&lt;p&gt;在网页方面，一种方法是用 model 覆盖在某些内容上。在现有页面添加一个遮罩并把那些主要关注的内容前置展示。&lt;/p&gt;
+
+&lt;p&gt;另一种方法是用动作。当很多对象在运动，你很难知道哪些值得关注。如果其它所有的动作停止，只留一个在运动，即使动得很微弱，这都可以让对象更容易被察觉。&lt;/p&gt;
+
+&lt;p&gt;还有一种方法是做一个晃动和闪烁的按钮来简单地建议用户比如他们可能要保存文档。屏幕保持静态，所以再细微的动作也会突显出来。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/wBRNrx/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/wBRNrx/&quot;&gt;#3 Staging - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-连续运动和姿态对应-straight-ahead-action-and-pose-to-pose&quot;&gt;连续运动和姿态对应 (Straight-Ahead Action and Pose-to-Pose)&lt;/h4&gt;
+
+&lt;p&gt;连续运动是绘制动画的每一帧，姿态对应是通常由一个 assistant 在定义一系列关键帧后填充间隔。&lt;/p&gt;
+
+&lt;p&gt;大多数网页动画用的是姿态对应：关键帧之间的过渡可以通过浏览器在每个关键帧之间的插入尽可能多的帧使动画流畅。&lt;/p&gt;
+
+&lt;p&gt;有一个例外是定时功能step。通过这个功能，浏览器 &quot;steps&quot; 可以把尽可能多的无序帧串清晰。你可以用这种方式绘制一系列图片并让浏览器按顺序显示出来，这开创了一种逐帧动画的风格。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/zxyePG/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/zxyePG/&quot;&gt;#4 Straight Ahead Action and Pose to Pose - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-跟随和重叠动作-follow-through-and-overlapping-action&quot;&gt;跟随和重叠动作 (Follow Through and Overlapping Action)&lt;/h4&gt;
+
+&lt;p&gt;事情并不总在同一时间发生。当一辆车从急刹到停下，车子会向前倾、有烟从轮胎冒出来、车里的司机继续向前冲。&lt;/p&gt;
+
+&lt;p&gt;这些细节是跟随和重叠动作的例子。它们在网页中能被用作帮助强调什么东西被停止，并不会被遗忘。例如一个条目可能在滑动时稍滑微远了些，但它自己会纠正到正确位置。&lt;/p&gt;
+
+&lt;p&gt;要创造一个重叠动作的感觉，我们可以让元件以稍微不同的速度移动到每处。这是一种在 iOS 系统的视窗 (View) 过渡中被运用得很好的方法。一些按钮和元件以不同速率运动，整体效果会比全部东西以相同速率运动要更逼真，并留出时间让访客去适当理解变化。&lt;/p&gt;
+
+&lt;p&gt;在网页方面，这可能意味着让过渡或动画的效果以不同速度来运行。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/dPwaZv/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/dPwaZv/&quot;&gt;#5 Follow Through and Overlapping Action - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-缓入缓出-slow-in-and-slow-out&quot;&gt;缓入缓出 (Slow In and Slow Out)&lt;/h4&gt;
+
+&lt;p&gt;对象很少从静止状态一下子加速到最大速度，它们往往是逐步加速并在停止前变慢。没有加速和减速，动画感觉就像机器人。&lt;/p&gt;
+
+&lt;p&gt;在 CSS 方面，缓入缓出很容易被理解，在一个动画过程中计时功能是一种描述变化速率的方式。&lt;/p&gt;
+
+&lt;p&gt;使用计时功能，动画可以由慢加速 &lt;code class=&quot;highlighter-rouge&quot;&gt;(ease-in)&lt;/code&gt;、由快减速 &lt;code class=&quot;highlighter-rouge&quot;&gt;(ease-out)&lt;/code&gt;，或者用贝塞尔曲线做出更复杂的效果。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/gbZqXv/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/gbZqXv/&quot;&gt;#6 Slow in and Slow out - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-弧线运动-arc&quot;&gt;弧线运动 (Arc)&lt;/h4&gt;
+
+&lt;p&gt;虽然对象是更逼真了，当它们遵循「缓入缓出」的时候它们很少沿直线运动——它们倾向于沿弧线运动。&lt;/p&gt;
+
+&lt;p&gt;我们有几种 CSS 的方式来实现弧线运动。一种是结合多个动画，比如在弹力球动画里，可以让球上下移动的同时让它右移，这时候球的显示效果就是沿弧线运动。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/QwzYOz/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/QwzYOz/&quot;&gt;#7 Arc (example 1) - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;p&gt;另外一种是旋转元件，我们可以设置一个在对象之外的原点来作为它的旋转中心。当我们旋转这个对象，它看上去就是沿着弧线运动。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/azPXEd/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/azPXEd/&quot;&gt;#7 Arc (example 2) - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-次要动作-secondary-action&quot;&gt;次要动作 (Secondary Action)&lt;/h4&gt;
+
+&lt;p&gt;虽然主动画正在发生，次要动作可以增强它的效果。这就好比某人在走路的时候摆动手臂和倾斜脑袋，或者弹性球弹起的时候扬起一些灰尘。&lt;/p&gt;
+
+&lt;p&gt;在网页方面，当主要焦点出现的时候就可以开始执行次要动作，比如拖拽一个条目到列表中间。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/ogJmpB/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/ogJmpB/&quot;&gt;#8 Secondary Action - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-时间节奏-timing&quot;&gt;时间节奏 (Timing)&lt;/h4&gt;
+
+&lt;p&gt;动画的时间节奏是需要多久去完成，它可以被用来让看起来很重的对象做很重的动画，或者用在添加字符的动画中。&lt;/p&gt;
+
+&lt;p&gt;这在网页上可能只要简单调整 animation-duration 或 transition-duration 值。&lt;/p&gt;
+
+&lt;p&gt;这很容易让动画消耗更多时间，但调整时间节奏可以帮动画的内容和交互方式变得更出众。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/GgPzyy/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/GgPzyy/&quot;&gt;#9 Timing - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-夸张手法-exaggeration&quot;&gt;夸张手法 (Exaggeration)&lt;/h4&gt;
+
+&lt;p&gt;夸张手法在漫画中是最常用来为某些动作刻画吸引力和增加戏剧性的，比如一只狼试图把自己的喉咙张得更开地去咬东西可能会表现出更恐怖或者幽默的效果。&lt;/p&gt;
+
+&lt;p&gt;在网页中，对象可以通过上下滑动去强调和刻画吸引力，比如在填充表单的时候生动部分会比收缩和变淡的部分更突出。&lt;/p&gt;
+
+&lt;iframe height=&quot;370&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/QwzYaz/?height=370&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/QwzYaz/&quot;&gt;#10 Exaggeration - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-扎实的描绘-solid-drawing&quot;&gt;扎实的描绘 (Solid drawing)&lt;/h4&gt;
+
+&lt;p&gt;当动画对象在三维中应该加倍注意确保它们遵循透视原则。因为人们习惯了生活在三维世界里，如果对象表现得与实际不符，会让它看起来很糟糕。&lt;/p&gt;
+
+&lt;p&gt;如今浏览器对三维变换的支持已经不错，这意味着我们可以在场景里旋转和放置三维对象，浏览器能自动控制它们的转换。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/pvqGpB/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/pvqGpB/&quot;&gt;#11 Solid drawing - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;h4 id=&quot;heading-吸引力-appeal&quot;&gt;吸引力 (Appeal)&lt;/h4&gt;
+
+&lt;p&gt;吸引力是艺术作品的特质，让我们与艺术家的想法连接起来。就像一个演员身上的魅力，是注重细节和动作相结合而打造吸引性的结果。&lt;/p&gt;
+
+&lt;p&gt;精心制作网页上的动画可以打造出吸引力，例如 Stripe 这样的公司用了大量的动画去增加它们结账流程的可靠性。&lt;/p&gt;
+
+&lt;iframe height=&quot;320&quot; scrolling=&quot;no&quot; src=&quot;//codepen.io/donovanh/embed/wBRNyE/?height=320&amp;amp;theme-id=0&quot; frameborder=&quot;no&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/donovanh/pen/wBRNyE/&quot;&gt;#12 Appeal - Animation Principles for the Web&lt;/a&gt; by Donovan Hutchinson (&lt;a href=&quot;http://codepen.io/donovanh&quot;&gt;@donovanh&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="css" /><summary type="html">css animation的十二个原则</summary></entry><entry><title type="html">初识Koa(二)</title><link href="/blog/2015/04/01/%E5%88%9D%E8%AF%86Koa(%E4%BA%8C)/" rel="alternate" type="text/html" title="初识Koa(二)" /><published>2015-04-01T00:00:00+08:00</published><updated>2015-04-01T00:00:00+08:00</updated><id>/blog/2015/04/01/%E5%88%9D%E8%AF%86Koa(%E4%BA%8C)</id><content type="html" xml:base="/blog/2015/04/01/%E5%88%9D%E8%AF%86Koa(%E4%BA%8C)/">&lt;h3 id=&quot;heading-初识koa二&quot;&gt;初识Koa(二)&lt;/h3&gt;
+
+&lt;p&gt;上一节讲到了generators，可以用同步的代码编写风格来跑异步的代码了，同步代码的编写方式更容易理解(异步代码里那可恶的callback)&lt;/p&gt;
+
+&lt;p&gt;这一节，我们就来看看Koa框架会给我们的代码编写带来哪些变化。&lt;/p&gt;
+
+&lt;p&gt;首先我们介绍一下co模块，co是基于generator的流程控制模块，还记得上一节的代码吗？还是贴在下面&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// First part
+var thunkify = require('thunkify');
+var fs = require('fs');
+var read = thunkify(fs.readFile);
+
+// Second part
+function *bar () {
+  try {
+    var x = yield read('input.txt');
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(x);
+}
+
+// Third part
+var gen = bar();
+gen.next().value(function (err, data) {
+  if (err) {
+    gen.throw(err);
+  }
+  gen.next(data.toString());
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;通过co，就不用手动去执行generator方法了，唯一要做的就是将generator函数作为参数传给co，代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var co = require('co');
+var thunkify = require('thunkify');
+var fs = require('fs');
+
+var read = thunkify(fs.readFile);
+
+co(function *bar () {
+  try {
+    var x = yield read('input.txt');
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(x);
+})();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后执行co函数，一切神奇般地运行起来。这是怎么做到的呢？其实co就是帮你调用generator
+，免除你的手动工作。在co中，yield后面目前可以跟以下几种类型：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;thunks (function)&lt;/li&gt;
+  &lt;li&gt;array (将会并行执行)&lt;/li&gt;
+  &lt;li&gt;objects (将会并行执行)&lt;/li&gt;
+  &lt;li&gt;generators&lt;/li&gt;
+  &lt;li&gt;generator functions&lt;/li&gt;
+  &lt;li&gt;promises&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我们已经知道了thunks是如何工作的，现在来看看其他类型吧&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-并行执行&quot;&gt;并行执行&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var read = thunkify(fs.readFile);
+
+co(function *() {
+  // 3 concurrent reads
+  var reads = yield [read('input.txt'), read('input.txt'), read('input.txt')];
+  console.log(reads);
+
+  // 2 concurrent reads
+  reads = yield { a: read('input.txt'), b: read('input.txt') };
+  console.log(reads);
+})();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果在yield后面是array类型或者object类型，那么将会并行执行。需要注意的是数组或对象的成员必须是thunks或者generators，还可以相互嵌套。如下所示：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var read = thunkify(fs.readFile);
+
+co(function *() {
+  var a = [read('input.txt'), read('input.txt')];
+  var b = [read('input.txt'), read('input.txt')];
+
+  // 4 concurrent reads
+  var files = yield [a, b];
+
+  console.log(files);
+})();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你还可以在调用了thunk之后再来置于yield之后，如下所示：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var read = thunkify(fs.readFile);
+
+co(function *() {
+  var a = read('input.txt');
+  var b = read('input.txt');
+
+  // 2 concurrent reads
+  console.log([yield a, yield b]);
+
+  // or
+
+  // 2 concurrent reads
+  console.log(yield [a, b]);
+})();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;现在你应该掌握了generators的原理了，知道了如何使用它来完成异步流。现在我们再来了解一下Koa本身。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-koa&quot;&gt;Koa&lt;/h4&gt;
+
+&lt;p&gt;始终记住一点，每一个koa模块应该只做一件事。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-application&quot;&gt;Application&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var koa = require('koa');
+var app = koa();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;创建一个Koa app只需要调用依赖的模块koa就可以了。koa()返回的对象可以包含一组generators(或者说middlewares)。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-cascading-级联&quot;&gt;Cascading (级联)&lt;/h4&gt;
+
+&lt;p&gt;Middleware(中间件)，在Koa中的表现就是用来处理请求。所谓级联，是指由一系列的中间件构成的控制流。在web开发中，这会非常有用。Koa使用generators来实现级联，等下游的generator执行完，控制流再回到上游的generator。给use方法传递一个generator function来向控制流中添加generator。看看下面这段代码为什么依次打印A,B,C,D,E。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app.use(function *(next) {
+  console.log('A');
+  yield next;
+  console.log('E');
+});
+
+app.use(function *(next) {
+  console.log('B');
+  yield next;
+  console.log('D');
+});
+
+app.use(function *(next) {
+  console.log('C');
+});
+
+app.listen(3000);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当一个请求进来时，请求沿着中间件，一层层往下走。所以在上面的代码中，请求启动了第一个中间件，于是打印A，然后遇到了yield nex。当一个中间件遇到yield next的时候，它将会进入到下个中间件中。所以接着打印B，然后又遇到了yield next，进入下个中间件，打印C。打印完C后，发现没有多余的中间件了，于是开始往回走，回到上个中间件，就是一个出栈的操作一样。然后打印D，回到上个中间件，打印E。&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="koa" /><summary type="html">初识Koa(二)</summary></entry><entry><title type="html">初识Koa</title><link href="/blog/2015/03/28/%E5%88%9D%E8%AF%86Koa/" rel="alternate" type="text/html" title="初识Koa" /><published>2015-03-28T00:00:00+08:00</published><updated>2015-03-28T00:00:00+08:00</updated><id>/blog/2015/03/28/%E5%88%9D%E8%AF%86Koa</id><content type="html" xml:base="/blog/2015/03/28/%E5%88%9D%E8%AF%86Koa/">&lt;h3 id=&quot;heading-初识koa&quot;&gt;初识Koa&lt;/h3&gt;
+
+&lt;h4 id=&quot;heading-第一部分-generator&quot;&gt;第一部分 Generator&lt;/h4&gt;
+
+&lt;p&gt;Koa是一个小巧简单的web框架，由Express开发团队开发的新的web框架。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-为什么是koa&quot;&gt;为什么是Koa&lt;/h4&gt;
+
+&lt;p&gt;Koa的新特性让你开发web应用时变得简单而迅速。它采用了ES6的新特性generators，从而使控制流的管理变得十分简单。Koa本身非常小巧，相比一些当今流行的web框架(比如Express)，Koa采用了极致模块化的思想，每个模块做好一件事情。下面是一个使用Koa的例子：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var koa = require('koa');
+var app = koa();
+
+app.use(function *() {
+  this.body = 'Hello World';
+});
+
+app.listen(3000);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;为了能够运行上面这段代码，确保你的node版本是0.11.9及以上，运行时加上&lt;code class=&quot;highlighter-rouge&quot;&gt;--harmony&lt;/code&gt;选项。注意到上面这段代码比较特殊的就是在function旁边多了个星号&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;，这就代表该函数是一个generator函数。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-generators&quot;&gt;Generators&lt;/h4&gt;
+
+&lt;p&gt;有了generators，你就可以在你的function里面的任何地方暂停执行，然后去干点别的事情，干完后回来继续往下执行。对的，非常棒的特性。&lt;/p&gt;
+
+&lt;p&gt;下面就来定义一个generator函数，就是在函数名的左边加上一个星号&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;就可以了，像下面这样：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function *foo () { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样就定义了一个generator函数。当调用该函数时，它会返回一个iterator对象。不像普通的函数，当我们执行一个generator函数时，里面的代码并不会开始执行，我们需要手动来执行里面的代码。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function *foo (arg) { }  // generator function
+var bar = foo(123);      // iterator  object
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;执行完foo(123)之后，返回了一个generator对象&lt;code class=&quot;highlighter-rouge&quot;&gt;bar&lt;/code&gt;，我们可以手动来遍历执行generaotr里面的代码。通过调用&lt;code class=&quot;highlighter-rouge&quot;&gt;bar.next()&lt;/code&gt;方法就可以让里面的代码真正地开始执行起来，直到遇到暂停点。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bar.next()&lt;/code&gt;会返回一个对象，该对象包含了generator的状态信息，其中的&lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;属性代表的是当前迭代对象的值，也就是暂停点返回的值，另一个属性&lt;code class=&quot;highlighter-rouge&quot;&gt;done&lt;/code&gt;是一个boolean类型，表明该generator里面的代码是否已经执行完。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function *foo (arg) { return arg; }
+var bar = foo(123);
+bar.next();          // { value: 123, done: true }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在上面的例子中，foo generator函数中并没有任何暂停点，而是一条renturn语句。所以bar.next()的返回结果中&lt;code class=&quot;highlighter-rouge&quot;&gt;done&lt;/code&gt;属性的值为true，表明foo generator已经执行完毕。如果你在generator函数中return一个值，那么这个值也会赋值给最后的迭代对象，所以bar.next()返回的迭代对象的值等于123。那么如何才能在一个generator函数中暂停于某处呢，&lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt;就是为此而生。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-yield&quot;&gt;yield&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yield [[expression]];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;通过执行next()，可以让generator里面的代码开始执行，直到遇到&lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt;。然后它会返回一个包含&lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;done&lt;/code&gt;的对象，&lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;的值等于yield后面的表达式返回的值，yield后面可以是任何表达式(包括函数等等)。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function* foo () {
+  var index = 0;
+  while (index &amp;lt; 2) {
+    yield index++;
+  }
+}
+var bar =  foo();
+
+console.log(bar.next());    // { value: 0, done: false }
+console.log(bar.next());    // { value: 1, done: false }
+console.log(bar.next());    // { value: undefined, done: true }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当我们一次次执行next()的时候，跟在&lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt;后面表达式的值将会被返回。当然next()也可以接受参数，比如&lt;code class=&quot;highlighter-rouge&quot;&gt;next(val)&lt;/code&gt;，val值将会被传回，赋值给&lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt;前面的变量。例如下面这段代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function* foo () {
+  var val = yield 'A';
+  console.log(val);           // 'B'
+}
+var bar =  foo();
+
+console.log(bar.next());    // { value: 'A', done: false }
+console.log(bar.next('B')); // { value: undefined, done: true }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;heading-error-处理&quot;&gt;Error 处理&lt;/h4&gt;
+
+&lt;p&gt;如果在执行generator函数的时候遇到错误，尽管调用generator的throw方法，抛出的错误可以在generator函数中通过try catch来捕获处理。例如下面这段代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function *foo () {
+  try {
+    x = yield 'asd B';   // Error will be thrown
+  } catch (err) {
+    throw err;
+  }
+}
+
+var bar =  foo();
+if (bar.next().value == 'B') {
+  bar.throw(new Error(&quot;it's B!&quot;));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;heading-forof&quot;&gt;for…of&lt;/h4&gt;
+
+&lt;p&gt;在ES6中，我们可以使用for..of循环来迭代一个generator。迭代会一直进行，直到&lt;code class=&quot;highlighter-rouge&quot;&gt;done&lt;/code&gt;等于ture。例如下面这段代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function *foo () {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+for (v of foo()) {
+  console.log(v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上面这段代码会遍历输出1、2、3。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-yield-&quot;&gt;yield *&lt;/h4&gt;
+
+&lt;p&gt;上面说过yield后面可以是任何类型的表达式，甚至是generator。如果yield后面接的是另一个generator，那么就必须多加一个星号 yield *generator。这种方式称之为授权，在一个generator函数中将执行权利交给了另一个generator。例如下面这段代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function *bar () {
+  yield 'b';
+}
+
+function *foo () {
+  yield 'a';
+  yield *bar();
+  yield 'c';
+}
+
+for (v of foo()) {
+  console.log(v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将会先打印a，然后进入bar generator，打印b，接着又回到foo generator，打印c。&lt;/p&gt;
+
+&lt;h4 id=&quot;heading-thunks&quot;&gt;Thunks&lt;/h4&gt;
+
+&lt;p&gt;为了理解Koa，理解thunks是必不可少的一步。thunk其实就是包装了一下原函数，然后返回另一个函数。例如如下代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var read = function (file) {
+  return function (cb) {
+    require('fs').readFile(file, cb);
+  }
+}
+
+read('package.json')(function (err, str) { })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上面的read函数就是一个thunk函数。使用thunk函数的目的是为了将node的callback从函数参数列表中移出来，放在外面给传进去。例如上面的read函数，普通的node风格的函数调用如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function read(file, cb) {
+    require('fs').readFile(file, cb);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;通过thunk改造后，我们将cb从参数列表中移了出来，放在外面。thunkify可以帮助我们实现从普通函数到thunk函数的转化。首先将普通的node函数转化为thunk风格的函数，然后我们在generator函数中调用该thunk风格的函数。当我们调用next()的时候，它返回的对象的&lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;属性的值将会是一个函数，它的参数就是thunk函数所需要的callback。在这个callback中我们可以检查错误（适时抛出错误），或者继续调用next(data)。如下所示：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var thunkify = require('thunkify');
+var fs = require('fs');
+var read = thunkify(fs.readFile);
+
+function *bar () {
+  try {
+    var x = yield read('input.txt');
+  } catch (err) {
+    throw err;
+  }
+  console.log(x);
+}
+var gen = bar();
+gen.next().value(function (err, data) {
+  if (err) gen.throw(err);
+  gen.next(data.toString());
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Koa正是基于上面的原理来实现异步流程的控制。通过这种方式可以实现同步代码的书写风格，但背后是异步执行，同时保持良好的错误处理，简直太棒了！&lt;/p&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;job_title&quot;=&gt;nil, &quot;location&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;social_links&quot;=&gt;[{&quot;name&quot;=&gt;&quot;facebook&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;github&quot;, &quot;url&quot;=&gt;&quot;https://github.com/yizeng/jekyll-theme-simple-texture&quot;}, {&quot;name&quot;=&gt;&quot;instagram&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;linkedin&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;stackoverflow&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;twitter&quot;, &quot;url&quot;=&gt;nil}, {&quot;name&quot;=&gt;&quot;vk&quot;, &quot;url&quot;=&gt;nil}], &quot;twitter&quot;=&gt;nil}</name></author><category term="Koa" /><summary type="html">初识Koa</summary></entry></feed>

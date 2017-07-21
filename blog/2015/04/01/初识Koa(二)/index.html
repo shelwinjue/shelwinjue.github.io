@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>初识Koa(二)</title>
+<meta property="og:title" content="初识Koa(二)" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="初识Koa(二)" />
+<meta property="og:description" content="初识Koa(二)" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-04-01T00:00:00+08:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"初识Koa(二)","author":{"@type":"Person","name":null},"datePublished":"2015-04-01T00:00:00+08:00","dateModified":"2015-04-01T00:00:00+08:00","description":"初识Koa(二)","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2015/04/01/%E5%88%9D%E8%AF%86Koa(%E4%BA%8C)/"},"url":"/blog/2015/04/01/%E5%88%9D%E8%AF%86Koa(%E4%BA%8C)/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="koa" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">Menu</span>
+        <a class="btn-close">Close</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/categories/">Categories</a></li>
+                <li><a href="/blog/tags/">Tags</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="Search...">
+        <a class="btn-close">Close</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo nav-link">
+                        <button class="btn-menu" data-ga="Menu"></button>
+                        <a href="/blog/"></a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" data-ga="Search"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a data-ga="Categories" href="/blog/categories/">Categories</a></li>
+                    <li class="nav-link"><a data-ga="Tags" href="/blog/tags/">Tags</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">Search</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">初识Koa(二)</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            Published:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2015-04-01T00:00:00+08:00" datetime="2015-04-01T00:00:00+08:00">April 01, 2015 </time>
+                            by
+                            <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"></span></span></a>
+                            <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a> 
+                        </p>
+                        <ul class="list-category list-linear">
+                            <li class="list-head">Categories: </li>
+                             
+     
+        <li>
+            <a class="internal" data-ga="koa" href="/blog/categories/#koa" title="koa">
+            koa <span>1</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">Tags: </li>
+                             
+    
+        
+        <li>
+            <a class="internal" data-ga="koa" href="/blog/tags/#koa" title="koa">koa <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                    </div>
+                    <div itemprop="articleBody">
+                        <h3 id="heading-初识koa二">初识Koa(二)</h3>
+
+<p>上一节讲到了generators，可以用同步的代码编写风格来跑异步的代码了，同步代码的编写方式更容易理解(异步代码里那可恶的callback)</p>
+
+<p>这一节，我们就来看看Koa框架会给我们的代码编写带来哪些变化。</p>
+
+<p>首先我们介绍一下co模块，co是基于generator的流程控制模块，还记得上一节的代码吗？还是贴在下面</p>
+
+<!--more-->
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// First part
+var thunkify = require('thunkify');
+var fs = require('fs');
+var read = thunkify(fs.readFile);
+
+// Second part
+function *bar () {
+  try {
+    var x = yield read('input.txt');
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(x);
+}
+
+// Third part
+var gen = bar();
+gen.next().value(function (err, data) {
+  if (err) {
+    gen.throw(err);
+  }
+  gen.next(data.toString());
+});
+</code></pre>
+</div>
+
+<p>通过co，就不用手动去执行generator方法了，唯一要做的就是将generator函数作为参数传给co，代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var co = require('co');
+var thunkify = require('thunkify');
+var fs = require('fs');
+
+var read = thunkify(fs.readFile);
+
+co(function *bar () {
+  try {
+    var x = yield read('input.txt');
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(x);
+})();
+</code></pre>
+</div>
+
+<p>然后执行co函数，一切神奇般地运行起来。这是怎么做到的呢？其实co就是帮你调用generator
+，免除你的手动工作。在co中，yield后面目前可以跟以下几种类型：</p>
+
+<ul>
+  <li>thunks (function)</li>
+  <li>array (将会并行执行)</li>
+  <li>objects (将会并行执行)</li>
+  <li>generators</li>
+  <li>generator functions</li>
+  <li>promises</li>
+</ul>
+
+<p>我们已经知道了thunks是如何工作的，现在来看看其他类型吧</p>
+
+<h4 id="heading-并行执行">并行执行</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var read = thunkify(fs.readFile);
+
+co(function *() {
+  // 3 concurrent reads
+  var reads = yield [read('input.txt'), read('input.txt'), read('input.txt')];
+  console.log(reads);
+
+  // 2 concurrent reads
+  reads = yield { a: read('input.txt'), b: read('input.txt') };
+  console.log(reads);
+})();
+</code></pre>
+</div>
+
+<p>如果在yield后面是array类型或者object类型，那么将会并行执行。需要注意的是数组或对象的成员必须是thunks或者generators，还可以相互嵌套。如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var read = thunkify(fs.readFile);
+
+co(function *() {
+  var a = [read('input.txt'), read('input.txt')];
+  var b = [read('input.txt'), read('input.txt')];
+
+  // 4 concurrent reads
+  var files = yield [a, b];
+
+  console.log(files);
+})();
+</code></pre>
+</div>
+
+<p>你还可以在调用了thunk之后再来置于yield之后，如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var read = thunkify(fs.readFile);
+
+co(function *() {
+  var a = read('input.txt');
+  var b = read('input.txt');
+
+  // 2 concurrent reads
+  console.log([yield a, yield b]);
+
+  // or
+
+  // 2 concurrent reads
+  console.log(yield [a, b]);
+})();
+</code></pre>
+</div>
+
+<p>现在你应该掌握了generators的原理了，知道了如何使用它来完成异步流。现在我们再来了解一下Koa本身。</p>
+
+<h4 id="heading-koa">Koa</h4>
+
+<p>始终记住一点，每一个koa模块应该只做一件事。</p>
+
+<h4 id="heading-application">Application</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var koa = require('koa');
+var app = koa();
+</code></pre>
+</div>
+
+<p>创建一个Koa app只需要调用依赖的模块koa就可以了。koa()返回的对象可以包含一组generators(或者说middlewares)。</p>
+
+<h4 id="heading-cascading-级联">Cascading (级联)</h4>
+
+<p>Middleware(中间件)，在Koa中的表现就是用来处理请求。所谓级联，是指由一系列的中间件构成的控制流。在web开发中，这会非常有用。Koa使用generators来实现级联，等下游的generator执行完，控制流再回到上游的generator。给use方法传递一个generator function来向控制流中添加generator。看看下面这段代码为什么依次打印A,B,C,D,E。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>app.use(function *(next) {
+  console.log('A');
+  yield next;
+  console.log('E');
+});
+
+app.use(function *(next) {
+  console.log('B');
+  yield next;
+  console.log('D');
+});
+
+app.use(function *(next) {
+  console.log('C');
+});
+
+app.listen(3000);
+</code></pre>
+</div>
+
+<p>当一个请求进来时，请求沿着中间件，一层层往下走。所以在上面的代码中，请求启动了第一个中间件，于是打印A，然后遇到了yield nex。当一个中间件遇到yield next的时候，它将会进入到下个中间件中。所以接着打印B，然后又遇到了yield next，进入下个中间件，打印C。打印完C后，发现没有多余的中间件了，于是开始往回走，回到上个中间件，就是一个出栈的操作一样。然后打印D，回到上个中间件，打印E。</p>
+
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="gotop">
+                        <a class="internal" href="#page">Back to Top</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" data-ga="Previous Post" rel="prev" href="/blog/2015/03/28/%E5%88%9D%E8%AF%86Koa/" title="View '初识Koa'"> ← 初识Koa</a>
+                        
+                        
+                            <a class="internal" data-ga="Next Post" rel="next" href="/blog/2015/04/03/css-animation%E7%9A%84%E5%8D%81%E4%BA%8C%E4%B8%AA%E5%8E%9F%E5%88%99/" title="View 'css animation的十二个原则'">css animation的十二个原则 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+            <div class="misc-content">
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4><a href="/">About</a></h4>
+                    
+                        <p>A gem-based responsive simple texture styled Jekyll theme.</p>
+                    
+                    <p><small>Theme <a class="external" href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> developed by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a>, powered by <a class="external" href="https://jekyllrb.com/" target="_blank">Jekyll</a>.</small></p>
+                </div>
+                <div class="social-links">
+                    
+                    <a class="external ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="external ico-github" href="https://github.com/yizeng/jekyll-theme-simple-texture" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">Back to Top</a>
+</footer>
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    $(window).scroll(function () {
+        if ($(window).width() > width) {
+            if ($(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop a').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>Search results</h4>',
+      noResults: '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+    });
+</script>
+
+</body>
+
+</html>

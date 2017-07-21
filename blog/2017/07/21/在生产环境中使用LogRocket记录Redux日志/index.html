@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>在生产环境中使用LogRocket记录Redux日志</title>
+<meta property="og:title" content="在生产环境中使用LogRocket记录Redux日志" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="在生产环境中使用LogRocket记录Redux日志" />
+<meta property="og:description" content="在生产环境中使用LogRocket记录Redux日志" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-07-21T00:00:00+08:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"在生产环境中使用LogRocket记录Redux日志","author":{"@type":"Person","name":null},"datePublished":"2017-07-21T00:00:00+08:00","dateModified":"2017-07-21T00:00:00+08:00","description":"在生产环境中使用LogRocket记录Redux日志","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2017/07/21/%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BD%BF%E7%94%A8LogRocket%E8%AE%B0%E5%BD%95Redux%E6%97%A5%E5%BF%97/"},"url":"/blog/2017/07/21/%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BD%BF%E7%94%A8LogRocket%E8%AE%B0%E5%BD%95Redux%E6%97%A5%E5%BF%97/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="js,h5" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">Menu</span>
+        <a class="btn-close">Close</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/categories/">Categories</a></li>
+                <li><a href="/blog/tags/">Tags</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="Search...">
+        <a class="btn-close">Close</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo nav-link">
+                        <button class="btn-menu" data-ga="Menu"></button>
+                        <a href="/blog/"></a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" data-ga="Search"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a data-ga="Categories" href="/blog/categories/">Categories</a></li>
+                    <li class="nav-link"><a data-ga="Tags" href="/blog/tags/">Tags</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">Search</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">在生产环境中使用LogRocket记录Redux日志</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            Published:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2017-07-21T00:00:00+08:00" datetime="2017-07-21T00:00:00+08:00">July 21, 2017 </time>
+                            by
+                            <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"></span></span></a>
+                            <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a> 
+                        </p>
+                        <ul class="list-category list-linear">
+                            <li class="list-head">Categories: </li>
+                             
+     
+        <li>
+            <a class="internal" data-ga="js" href="/blog/categories/#js" title="js">
+            js <span>6</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">Tags: </li>
+                             
+    
+        
+        <li>
+            <a class="internal" data-ga="h5" href="/blog/tags/#h5" title="h5">h5 <span>4</span></a>
+        </li>
+    
+        
+        <li>
+            <a class="internal" data-ga="js" href="/blog/tags/#js" title="js">js <span>5</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                    </div>
+                    <div itemprop="articleBody">
+                        <p><a href="https://www.sitepoint.com/redux-logging-production-logrocket/">原文链接</a></p>
+
+<p>在web应用中排查问题很难。那些难解的js错误，用户上报的bug，还有QA系统里的issue，解决这些影响用户的问题是永恒不变的斗争。这些还只是那些明显的问题，事实是大部分的bug从来都没有被上报，因为当用户对应用有个不好的体验时，他们将不再使用，或者忍气吞声。
+<img src="http://p0.qhimg.com/t01961e3bfa861b5882.png" alt="Redux Logging with LogRocket" /></p>
+
+<p>为了解决这种问题，越来越多的开发者们引入前端日志工具，因为现在的状态管理库，像redux一样，留好了丰富的追踪日志接口。在生产环境，记录action和state，使得理解bug和用户上报的issues变得容易了</p>
+
+<p>在这篇文章中，我将会向你展示如何使用LogRocket来记录Redux日志。然后，我将会讨论一些使Redux应用debug变得容易的技巧。</p>
+
+<blockquote>
+  <p>这篇文章最初发表在<a href="https://blog.logrocket.com/redux-logging-in-production-3b2a4816b713">logrocket.com</a>上。经过作者的授权，转载在这里。如果你喜欢这篇文章，可以关注Ben的其他<a href="https://blog.logrocket.com/@edelstein">文章</a>。如果你想了解更多Redux方面的东西，为何不注册一个SitePoint账号，这里有我们最新的<a href="https://www.sitepoint.com/premium/courses/forms-with-react-and-redux-2935">教程</a></p>
+</blockquote>
+
+<h2 id="heading-logrocket-web应用的录像机">LogRocket: web应用的录像机</h2>
+
+<p><img src="http://p0.qhimg.com/t01c8d6f2634c66c986.png" alt="LogRocket dashboard" /></p>
+
+<p><a href="https://logrocket.com">LogRocket</a> 是一个新型的开发者工具。它就像一个web应用的录像机，可以记录下发生在你的页面上所发生的一切。它适用于任何app，不管你使用什么框架。对于React,Redux,Vue.js和Angular都有相应的插件可供使用。通过LogRocket，你可以回放bug或者用户反馈的issue时所处的会话信息，从而快速定位到问题所在。</p>
+
+<p>除了记录Redux action和state之外，LogRocket还可以记录控制台console的日志，js错误，堆栈信息，网络请求/响应(含header和responseBody)，浏览器的metadata和自定义日志。它还可以监控DOM来记录页面上的HTML和CSS，还原出像素级的视频，即使是最复杂的单页面应用。</p>
+
+<h2 id="heading-开始使用logrocket">开始使用LogRocket</h2>
+
+<p>使用LogRocket非常简单，只需要在你的应用中加几行代码就可以了：</p>
+
+<ol>
+  <li>使用<code class="highlighter-rouge">npm i --save logrocket</code>进行安装</li>
+  <li>在<a href="https://app.logrocket.com">https://app.logrocket.com</a>上创建一个免费的账号，创建你的app id</li>
+  <li>在你的应用中初始化LogRocket</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    import LogRocket from 'logrocket';
+    // Initialize LogRocket with your app ID
+    LogRocket.init(&lt;your_application_id&gt;);
+
+</code></pre>
+</div>
+
+<ol>
+  <li>增加Redux中间件</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    import { applyMiddleware, createStore } from 'redux';
+    const store = createStore(
+      reducer, // your app reducer
+      applyMiddleware(middlewares, LogRocket.reduxMiddleware()),
+    );
+
+</code></pre>
+</div>
+
+<p>这就是基本的用法</p>
+
+<p>LogRocket同时也为其他的Flux实现，比如<strong>ngrx</strong>和<strong>vuex</strong>，提供了插件，你可以从[这里]((https://docs.logrocket.com)获取更多细节</p>
+
+<p>–广告–</p>
+
+<h2 id="heading-回放用户会话">回放用户会话</h2>
+<p><img src="http://p0.qhimg.com/t01dd92be0eec10560e.png" alt="LogRocket User Session" /></p>
+
+<p>在LogRocket中回放会话，就像在你自己的浏览器中看着它一步步发生一样。你可以查看Redux actions中详细的action payload、上一个状态和下一个状态</p>
+
+<p><img src="http://p0.qhimg.com/t018a5e6a6071d098c1.png" alt="LogRocket User Session" /></p>
+
+<p>LogRocket捕获了网络请求和响应，你可以查看某次请求的headers和body的详情信息。下面的瀑布图展示了耗时，可以很容易地分辨出哪些请求很慢，或者有哪些潜在的网络竞争。</p>
+
+<p><img src="http://p0.qhimg.com/t01b889f791d250aa11.png" alt="LogRocket Timeline" /></p>
+
+<p>有时候单凭Redux的日志来排查bug是远远不够的，特别是排查用户上报的问题的时候。LogRocket的视频回放可以帮助你查看用户当时的界面</p>
+
+<p>因为视频实际上就是DOM的重建过程(并非是真实的视频)，所以你可以查看HTML和CSS来排查UI bug，或者以2倍的速度快进，来理解用户在遇到问题时在app中做了哪些操作。</p>
+
+<h2 id="heading-整合redux日志记录到你的工作流中">整合Redux日志记录到你的工作流中</h2>
+
+<p>能重放用户会话和Redux日志，无疑对整个开发过程是很有帮助的。</p>
+
+<h3 id="heading-修复bug">修复bug</h3>
+
+<p><img src="http://p0.qhimg.com/t01c5dffebb681d7d24.png" alt="LogRocket Bug" /></p>
+
+<p>LogRocket，像Sentry和Bugsnag一样，整合了错误上报工具，可以让你查看Redux日志和每个bug的视频记录。这不仅对修复bug很有帮助，还可以帮助了解错误的影响范围有多少，毕竟一些js错误完全是不影响的。通过查看视频，可以判断出，当错误发生时，它是否真的会影响用户操作，还是可以忽略不计。</p>
+
+<h3 id="heading-支持度">支持度</h3>
+
+<p>通常情况下，用户上报问题时，并不能给出足够的上下文来判断到底发生了什么。</p>
+
+<p>如果你正在使用一个像<a href="https://intercom.com">Intercom</a>的聊天工具，你可以直接将LogRocket整合进去，从而无论用户何时开始聊天，你都可以插入一条记录链接。</p>
+
+<p><img src="http://p0.qhimg.com/t014699cee3b09a1e8c.png" alt="LogRocket support" /></p>
+
+<p>如果你整合了一个更加通用的分析工具，你可以调用它的跟踪API接口来增加一条记录链接，像下面这样：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>LogRocket.getSessionURL(function (sessionURL) {
+  analytics.track('LogRocket recording', sessionURL);
+})
+
+</code></pre>
+</div>
+
+<h2 id="heading-在生产环境尽可能多地创建redux日志">在生产环境尽可能多地创建Redux日志</h2>
+
+<p>在所有的Redux应用中，生产环境日志记录是非常有用的。你可以通过良好的设计，使日志记录最有效，保证这些日志足以排查问题所在。</p>
+
+<h3 id="heading-在redux中保留尽可能地多的状态信息">在Redux中保留尽可能地多的状态信息</h3>
+
+<p>这里我不想深入讨论Rdux state。当你决定是否将一部分数据放入state中时，问问自己这些状态是否可以帮助你排查问题。如果回答是yes的话，就将它们放入state中去。当应用crash或者用户遇到问题时，它们将会被记录下来。</p>
+
+<h3 id="heading-使用事半功倍的数据请求库">使用事半功倍的数据请求库</h3>
+
+<p>像 适用GraphQL的<a href="https://github.com/apollographql/apollo-client">apollo-client</a>,使用REST的<a href="https://github.com/amplitude/redux-query">redux-query</a>这样的库，都可以帮助你用来从网络请求中抓取数据。它们使用Redux作为一个持久化层，这意味着当调试问题的时候，你可以查看你的Redux日志，从而可以查看客户端获取了哪些数据</p>
+
+<p>如果你更喜欢一种简单的方式，你可以不使用这些拉取数据的框架，只通过简单地dispatch action，当你准备发送和接收请求的时候。</p>
+
+<h3 id="heading-使用redux来处理未知的数据来源">使用Redux来处理未知的数据来源</h3>
+
+<p>当从websockets,localstorage，IndexedDB，或者<code class="highlighter-rouge">Date()</code>中访问数据时，考虑使用dispatch action，这样你可以在以后很方便的调试。例如：当监听websocket的时候，对每条信息都dispatch一条action，这样的话，你就可以在Redux日志中看到这些数据</p>
+
+<h3 id="heading-考虑其他的console-apis">考虑其他的Console APIs</h3>
+
+<p>Console方法，比如<code class="highlighter-rouge">console.time()</code>,<code class="highlighter-rouge">console.count()</code>和<code class="highlighter-rouge">console.group()</code>，可以让你添加丰富的数据到你的日志中去，比如React组件的渲染数量，动画时间和组件生命周期日志。如果你对这些感兴趣，可以查看我的<a href="https://blog.logrocket.com/leveraging-the-console-api-in-react-apps-44df6d1ebeb2">另一篇文章</a></p>
+
+<h3 id="heading-编译上传source-map到logrocket">编译上传source Map到LogRocket</h3>
+
+<p>LogRocket支持source map，你可以通过<a href="https://github.com/LogRocket/logrocket-cli">命令上传</a>。这样做，你可以在代码里看到js的错误堆栈、Redux action，console日志和网络请求</p>
+
+<h3 id="heading-结论">结论</h3>
+
+<p>React和Redux都被赞赏为可创建可维护性的应用。在生产环境记录Redux数据非常有用，因为bug和用户上报的问题，可以通过查看Redux状态、网络请求和DOM来进行调试排查。</p>
+
+<p>在Redux日志中使用LogRocket可以简化bug fix过程，你可以<a href="https://logrocket.com">开始使用LogRocket</a></p>
+
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="gotop">
+                        <a class="internal" href="#page">Back to Top</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" data-ga="Previous Post" rel="prev" href="/blog/2017/07/12/%E8%99%9A%E6%8B%9FDOM%E5%86%85%E9%83%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" title="View '虚拟DOM内部是如何工作的'"> ← 虚拟DOM内部是如何工作的</a>
+                        
+                        
+                    </nav>
+                </div>
+            </footer>
+            <div class="misc-content">
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4><a href="/">About</a></h4>
+                    
+                        <p>A gem-based responsive simple texture styled Jekyll theme.</p>
+                    
+                    <p><small>Theme <a class="external" href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> developed by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a>, powered by <a class="external" href="https://jekyllrb.com/" target="_blank">Jekyll</a>.</small></p>
+                </div>
+                <div class="social-links">
+                    
+                    <a class="external ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="external ico-github" href="https://github.com/yizeng/jekyll-theme-simple-texture" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">Back to Top</a>
+</footer>
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    $(window).scroll(function () {
+        if ($(window).width() > width) {
+            if ($(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop a').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>Search results</h4>',
+      noResults: '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+    });
+</script>
+
+</body>
+
+</html>

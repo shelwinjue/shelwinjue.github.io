@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>css animation的十二个原则</title>
+<meta property="og:title" content="css animation的十二个原则" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="css animation的十二个原则" />
+<meta property="og:description" content="css animation的十二个原则" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-04-03T00:00:00+08:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"css animation的十二个原则","author":{"@type":"Person","name":null},"datePublished":"2015-04-03T00:00:00+08:00","dateModified":"2015-04-03T00:00:00+08:00","description":"css animation的十二个原则","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2015/04/03/css-animation%E7%9A%84%E5%8D%81%E4%BA%8C%E4%B8%AA%E5%8E%9F%E5%88%99/"},"url":"/blog/2015/04/03/css-animation%E7%9A%84%E5%8D%81%E4%BA%8C%E4%B8%AA%E5%8E%9F%E5%88%99/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="css" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">Menu</span>
+        <a class="btn-close">Close</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/categories/">Categories</a></li>
+                <li><a href="/blog/tags/">Tags</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="Search...">
+        <a class="btn-close">Close</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo nav-link">
+                        <button class="btn-menu" data-ga="Menu"></button>
+                        <a href="/blog/"></a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" data-ga="Search"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a data-ga="Categories" href="/blog/categories/">Categories</a></li>
+                    <li class="nav-link"><a data-ga="Tags" href="/blog/tags/">Tags</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">Search</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">css animation的十二个原则</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            Published:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2015-04-03T00:00:00+08:00" datetime="2015-04-03T00:00:00+08:00">April 03, 2015 </time>
+                            by
+                            <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"></span></span></a>
+                            <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a> 
+                        </p>
+                        <ul class="list-category list-linear">
+                            <li class="list-head">Categories: </li>
+                             
+     
+        <li>
+            <a class="internal" data-ga="css" href="/blog/categories/#css" title="css">
+            css <span>2</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">Tags: </li>
+                             
+    
+        
+        <li>
+            <a class="internal" data-ga="css" href="/blog/tags/#css" title="css">css <span>2</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                    </div>
+                    <div itemprop="articleBody">
+                        <h3 id="heading-css-animation的十二个原则">css animation的十二个原则</h3>
+
+<p>CSS的Animation是一个很有意思的东西，也是CSS中较为复杂也难设计的一部分。熟不知在Web的动画设计中有12个关键原则。在Animation 101将这十二原则剖析出来。今天特意转载@刘英滕翻译《Animation Principles for the Web》的中文</p>
+
+<p>作为前端的设计师和工程师，我们用 CSS 去做样式、定位并创建出好看的网站。我们经常用 CSS 去添加页面的运动过渡效果甚至动画，但我们经常做的东西不会超过这些。</p>
+
+<p>动效是一个有助于访客和消费者理解我们设计的强有力工具。这里有些原则能最大限度地应用在我们的工作中。</p>
+
+<p>迪士尼经过基础工作练习的长时间累积，在 1981 年出版的 The Illusion of Life: Disney Animation 一书中发表了动画的十二个原则 (12 Principles of Animation) 。这些原则描述了动画能怎样用于让观众相信自己沉浸在现实世界中。</p>
+
+<!--more-->
+
+<p>在本文中，我会逐个介绍这十二个原则，并讨论它们怎样运用在网页中。你能在 Codepen 找到它们全部的开源 HTML 和 CSS 代码 。</p>
+
+<h4 id="heading-挤压和拉伸-squash-and-stretch">挤压和拉伸 (Squash and stretch)</h4>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/wBRNqX/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/wBRNqX/">#1 Squash and stretch - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<p>这是物体存在质量且运动时质量保持不变的概念。当一个球在弹跳时，碰击到地面会变扁，恢复的时间会越来越短。</p>
+
+<p>创建对象的时候最有用的方法是参照实物，比如人、时钟和弹性球。</p>
+
+<p>当它和网页元件一起工作时可能会忽略这个原则。DOM 对象不一定和实物相关，它会按需要在屏幕上缩放。例如，一个按钮会变大并变成一个信息框，或者错误信息会出现和消失。</p>
+
+<p>尽管如此，挤压和伸缩效果可以为一个对象增加实物的感觉。甚至一些形状上的小变化就可以创造出细微但抢眼的效果。</p>
+
+<h4 id="heading-预备动作-anticipation">预备动作 (Anticipation)</h4>
+
+<p>运动不倾向于突然发生。在现实生活中，无论是一个球在掉到桌子前就开始滚动，或是一个人屈膝准备起跳，运动通常有着某种事先的累积。</p>
+
+<p>我们能用它去让我们的过渡动画显得更逼真。预备动作可以是一个细微的反弹，帮人们理解什么对象将在屏幕中发生变化并留下痕迹。</p>
+
+<p>例如，悬停在一个元件上时可以在它变大前稍微缩小，在初始列表中添加额外的条目来介绍其它条目的移除方法。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/KwbJvJ/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/KwbJvJ/">#2 Anticipation - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-演出布局-staging">演出布局 (Staging)</h4>
+
+<p>演出布局是确保对象在场景中得以聚焦，让场景中的其它对象和视觉在主动画发生的地方让位。这意味着要么把主动画放到突出的位置，要么模糊其它元件来让用户专注于看他们需要看的东西。</p>
+
+<p>在网页方面，一种方法是用 model 覆盖在某些内容上。在现有页面添加一个遮罩并把那些主要关注的内容前置展示。</p>
+
+<p>另一种方法是用动作。当很多对象在运动，你很难知道哪些值得关注。如果其它所有的动作停止，只留一个在运动，即使动得很微弱，这都可以让对象更容易被察觉。</p>
+
+<p>还有一种方法是做一个晃动和闪烁的按钮来简单地建议用户比如他们可能要保存文档。屏幕保持静态，所以再细微的动作也会突显出来。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/wBRNrx/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/wBRNrx/">#3 Staging - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-连续运动和姿态对应-straight-ahead-action-and-pose-to-pose">连续运动和姿态对应 (Straight-Ahead Action and Pose-to-Pose)</h4>
+
+<p>连续运动是绘制动画的每一帧，姿态对应是通常由一个 assistant 在定义一系列关键帧后填充间隔。</p>
+
+<p>大多数网页动画用的是姿态对应：关键帧之间的过渡可以通过浏览器在每个关键帧之间的插入尽可能多的帧使动画流畅。</p>
+
+<p>有一个例外是定时功能step。通过这个功能，浏览器 "steps" 可以把尽可能多的无序帧串清晰。你可以用这种方式绘制一系列图片并让浏览器按顺序显示出来，这开创了一种逐帧动画的风格。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/zxyePG/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/zxyePG/">#4 Straight Ahead Action and Pose to Pose - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-跟随和重叠动作-follow-through-and-overlapping-action">跟随和重叠动作 (Follow Through and Overlapping Action)</h4>
+
+<p>事情并不总在同一时间发生。当一辆车从急刹到停下，车子会向前倾、有烟从轮胎冒出来、车里的司机继续向前冲。</p>
+
+<p>这些细节是跟随和重叠动作的例子。它们在网页中能被用作帮助强调什么东西被停止，并不会被遗忘。例如一个条目可能在滑动时稍滑微远了些，但它自己会纠正到正确位置。</p>
+
+<p>要创造一个重叠动作的感觉，我们可以让元件以稍微不同的速度移动到每处。这是一种在 iOS 系统的视窗 (View) 过渡中被运用得很好的方法。一些按钮和元件以不同速率运动，整体效果会比全部东西以相同速率运动要更逼真，并留出时间让访客去适当理解变化。</p>
+
+<p>在网页方面，这可能意味着让过渡或动画的效果以不同速度来运行。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/dPwaZv/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/dPwaZv/">#5 Follow Through and Overlapping Action - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-缓入缓出-slow-in-and-slow-out">缓入缓出 (Slow In and Slow Out)</h4>
+
+<p>对象很少从静止状态一下子加速到最大速度，它们往往是逐步加速并在停止前变慢。没有加速和减速，动画感觉就像机器人。</p>
+
+<p>在 CSS 方面，缓入缓出很容易被理解，在一个动画过程中计时功能是一种描述变化速率的方式。</p>
+
+<p>使用计时功能，动画可以由慢加速 <code class="highlighter-rouge">(ease-in)</code>、由快减速 <code class="highlighter-rouge">(ease-out)</code>，或者用贝塞尔曲线做出更复杂的效果。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/gbZqXv/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/gbZqXv/">#6 Slow in and Slow out - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-弧线运动-arc">弧线运动 (Arc)</h4>
+
+<p>虽然对象是更逼真了，当它们遵循「缓入缓出」的时候它们很少沿直线运动——它们倾向于沿弧线运动。</p>
+
+<p>我们有几种 CSS 的方式来实现弧线运动。一种是结合多个动画，比如在弹力球动画里，可以让球上下移动的同时让它右移，这时候球的显示效果就是沿弧线运动。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/QwzYOz/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/QwzYOz/">#7 Arc (example 1) - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<p>另外一种是旋转元件，我们可以设置一个在对象之外的原点来作为它的旋转中心。当我们旋转这个对象，它看上去就是沿着弧线运动。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/azPXEd/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/azPXEd/">#7 Arc (example 2) - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-次要动作-secondary-action">次要动作 (Secondary Action)</h4>
+
+<p>虽然主动画正在发生，次要动作可以增强它的效果。这就好比某人在走路的时候摆动手臂和倾斜脑袋，或者弹性球弹起的时候扬起一些灰尘。</p>
+
+<p>在网页方面，当主要焦点出现的时候就可以开始执行次要动作，比如拖拽一个条目到列表中间。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/ogJmpB/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/ogJmpB/">#8 Secondary Action - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-时间节奏-timing">时间节奏 (Timing)</h4>
+
+<p>动画的时间节奏是需要多久去完成，它可以被用来让看起来很重的对象做很重的动画，或者用在添加字符的动画中。</p>
+
+<p>这在网页上可能只要简单调整 animation-duration 或 transition-duration 值。</p>
+
+<p>这很容易让动画消耗更多时间，但调整时间节奏可以帮动画的内容和交互方式变得更出众。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/GgPzyy/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/GgPzyy/">#9 Timing - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-夸张手法-exaggeration">夸张手法 (Exaggeration)</h4>
+
+<p>夸张手法在漫画中是最常用来为某些动作刻画吸引力和增加戏剧性的，比如一只狼试图把自己的喉咙张得更开地去咬东西可能会表现出更恐怖或者幽默的效果。</p>
+
+<p>在网页中，对象可以通过上下滑动去强调和刻画吸引力，比如在填充表单的时候生动部分会比收缩和变淡的部分更突出。</p>
+
+<iframe height="370" scrolling="no" src="//codepen.io/donovanh/embed/QwzYaz/?height=370&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/QwzYaz/">#10 Exaggeration - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-扎实的描绘-solid-drawing">扎实的描绘 (Solid drawing)</h4>
+
+<p>当动画对象在三维中应该加倍注意确保它们遵循透视原则。因为人们习惯了生活在三维世界里，如果对象表现得与实际不符，会让它看起来很糟糕。</p>
+
+<p>如今浏览器对三维变换的支持已经不错，这意味着我们可以在场景里旋转和放置三维对象，浏览器能自动控制它们的转换。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/pvqGpB/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/pvqGpB/">#11 Solid drawing - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<h4 id="heading-吸引力-appeal">吸引力 (Appeal)</h4>
+
+<p>吸引力是艺术作品的特质，让我们与艺术家的想法连接起来。就像一个演员身上的魅力，是注重细节和动作相结合而打造吸引性的结果。</p>
+
+<p>精心制作网页上的动画可以打造出吸引力，例如 Stripe 这样的公司用了大量的动画去增加它们结账流程的可靠性。</p>
+
+<iframe height="320" scrolling="no" src="//codepen.io/donovanh/embed/wBRNyE/?height=320&amp;theme-id=0" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/donovanh/pen/wBRNyE/">#12 Appeal - Animation Principles for the Web</a> by Donovan Hutchinson (<a href="http://codepen.io/donovanh">@donovanh</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="gotop">
+                        <a class="internal" href="#page">Back to Top</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" data-ga="Previous Post" rel="prev" href="/blog/2015/04/01/%E5%88%9D%E8%AF%86Koa(%E4%BA%8C)/" title="View '初识Koa(二)'"> ← 初识Koa(二)</a>
+                        
+                        
+                            <a class="internal" data-ga="Next Post" rel="next" href="/blog/2015/12/22/%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%B7%A7%E5%8F%98%E6%95%B4%E5%9E%8B/" title="View '浮点数转整数'">浮点数转整数 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+            <div class="misc-content">
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4><a href="/">About</a></h4>
+                    
+                        <p>A gem-based responsive simple texture styled Jekyll theme.</p>
+                    
+                    <p><small>Theme <a class="external" href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> developed by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a>, powered by <a class="external" href="https://jekyllrb.com/" target="_blank">Jekyll</a>.</small></p>
+                </div>
+                <div class="social-links">
+                    
+                    <a class="external ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="external ico-github" href="https://github.com/yizeng/jekyll-theme-simple-texture" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">Back to Top</a>
+</footer>
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    $(window).scroll(function () {
+        if ($(window).width() > width) {
+            if ($(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop a').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>Search results</h4>',
+      noResults: '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+    });
+</script>
+
+</body>
+
+</html>

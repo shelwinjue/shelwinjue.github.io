@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>promise规范</title>
+<meta property="og:title" content="promise规范" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="promise规范" />
+<meta property="og:description" content="promise规范" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-06-22T00:00:00+08:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"promise规范","author":{"@type":"Person","name":null},"datePublished":"2016-06-22T00:00:00+08:00","dateModified":"2016-06-22T00:00:00+08:00","description":"promise规范","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2016/06/22/promise%E6%A8%A1%E5%BC%8F/"},"url":"/blog/2016/06/22/promise%E6%A8%A1%E5%BC%8F/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="promise" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">Menu</span>
+        <a class="btn-close">Close</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/categories/">Categories</a></li>
+                <li><a href="/blog/tags/">Tags</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="Search...">
+        <a class="btn-close">Close</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo nav-link">
+                        <button class="btn-menu" data-ga="Menu"></button>
+                        <a href="/blog/"></a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" data-ga="Search"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a data-ga="Categories" href="/blog/categories/">Categories</a></li>
+                    <li class="nav-link"><a data-ga="Tags" href="/blog/tags/">Tags</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">Search</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">promise规范</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            Published:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2016-06-22T00:00:00+08:00" datetime="2016-06-22T00:00:00+08:00">June 22, 2016 </time>
+                            by
+                            <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"></span></span></a>
+                            <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a> 
+                        </p>
+                        <ul class="list-category list-linear">
+                            <li class="list-head">Categories: </li>
+                             
+     
+        <li>
+            <a class="internal" data-ga="js" href="/blog/categories/#js" title="js">
+            js <span>6</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">Tags: </li>
+                             
+    
+        
+        <li>
+            <a class="internal" data-ga="promise" href="/blog/tags/#promise" title="promise">promise <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                    </div>
+                    <div itemprop="articleBody">
+                        <h3 id="heading-为什么会有promise规范">为什么会有promise规范</h3>
+
+<p>js处理异步一般都是用callback，但一旦涉及串联的异步请求，就会多层callback嵌套，导致代码的可读性很差，维护起来也是非常费劲。Promise规范的提出，可以说完全改变了
+js异步编程的写法，让异步编程变得十分容易理解。</p>
+
+<h3 id="heading-promise规范实例">promise规范实例</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var p1 = new Promise(function(resolve, reject) {
+	setTimeout(function() {
+  		resolve("Success!");
+	}, 1500);
+});
+
+p1.then(function(value) {
+  console.log(value); // Success!
+});
+</code></pre>
+</div>
+
+<p>1.5s后控制台打印Success!</p>
+
+<!--more-->
+
+<p>好了，我们先来认识一下 <a href="http://promises-aplus.github.io/promises-spec/">Promise/A+</a> 规范:</p>
+
+<ul>
+  <li>一个promise对象有三种状态：等待(pending)，已完成(fullfilled)，已拒绝(rejected)</li>
+  <li>一个promise对象的状态只能从 pending 转到 fullfilled或者rejected，不能逆向转换，并且fullfilled和rejected之间不能相关转换</li>
+  <li>promise必须实现then方法，并且then必须返回一个promise，同一个promise可以连续调用then方法，执行的顺序与调用的顺序一致</li>
+  <li>then方法有两个参数，第一个参数是成功时的回调(promise的状态从pending变成fullfilled时调用)，第二个参数是失败时的回调(promise的状态从pending变成rejected时调用)。如果这两个回调返回了一个值x，如果x也是一个promise，那么x的状态将会被采用，简单点说如下：var promise2 = promise1.then(onFullfilled, onRejected);如果onFullfilled或者onRejected返回的值x也是一个promise对象，那么promise2的状态将采用x的状态，当x的状态是pending时，promise2的状态也是pending，当x的状态变成fullfilled，那么promise2的状态也变成fullfilled，同时value与x的value一致。</li>
+</ul>
+
+<h3 id="heading-实例">实例</h3>
+
+<p>现在需要实现一个功能：抓取最新的一篇文章的作者的邮箱</p>
+
+<p>流程就是：抓文章列表-&gt;抓文章資訊-&gt;抓作者</p>
+
+<p>使用promise后，代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>getArticleList().then(function(articles){
+    return getArticle(articles[0].id);
+}).then(function(article){
+    return getAuthor(article.authorId);
+}).then(function(author){
+    alert(author.email);
+});
+
+function getAuthor(id){
+    return new Promise(function(resolve, reject){
+        $.ajax("http://beta.json-generator.com/api/json/get/E105pDLh",{
+            author: id
+        }).done(function(result){
+            resolve(result);
+        })
+    });
+}
+
+function getArticle(id){
+    return new Promise(function(resolve, reject){
+        $.ajax("http://beta.json-generator.com/api/json/get/EkI02vUn",{
+            id: id
+        }).done(function(result){
+            resolve(result);
+        })
+    });
+}
+
+function getArticleList(){
+    return new Promise(function(resolve, reject){
+       $.ajax(
+        "http://beta.json-generator.com/api/json/get/Ey8JqwIh")
+        .done(function(result){
+            resolve(result);
+        }); 
+    });
+}
+</code></pre>
+</div>
+
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="gotop">
+                        <a class="internal" href="#page">Back to Top</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" data-ga="Previous Post" rel="prev" href="/blog/2016/01/12/position-sticky/" title="View 'position sticky介绍'"> ← position sticky介绍</a>
+                        
+                        
+                            <a class="internal" data-ga="Next Post" rel="next" href="/blog/2016/08/03/%E6%89%93%E9%80%A0%E6%9C%80%E6%8E%A5%E8%BF%91native%E4%BD%93%E9%AA%8C%E7%9A%84h5%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6/" title="View 'h5日历选择组件'">h5日历选择组件 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+            <div class="misc-content">
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4><a href="/">About</a></h4>
+                    
+                        <p>A gem-based responsive simple texture styled Jekyll theme.</p>
+                    
+                    <p><small>Theme <a class="external" href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> developed by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a>, powered by <a class="external" href="https://jekyllrb.com/" target="_blank">Jekyll</a>.</small></p>
+                </div>
+                <div class="social-links">
+                    
+                    <a class="external ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="external ico-github" href="https://github.com/yizeng/jekyll-theme-simple-texture" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">Back to Top</a>
+</footer>
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    $(window).scroll(function () {
+        if ($(window).width() > width) {
+            if ($(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop a').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>Search results</h4>',
+      noResults: '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+    });
+</script>
+
+</body>
+
+</html>

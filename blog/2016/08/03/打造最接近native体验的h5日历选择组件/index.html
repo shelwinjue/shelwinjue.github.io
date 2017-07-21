@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>h5日历选择组件</title>
+<meta property="og:title" content="h5日历选择组件" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="h5日历选择组件" />
+<meta property="og:description" content="h5日历选择组件" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-08-03T00:00:00+08:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"h5日历选择组件","author":{"@type":"Person","name":null},"datePublished":"2016-08-03T00:00:00+08:00","dateModified":"2016-08-03T00:00:00+08:00","description":"h5日历选择组件","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2016/08/03/%E6%89%93%E9%80%A0%E6%9C%80%E6%8E%A5%E8%BF%91native%E4%BD%93%E9%AA%8C%E7%9A%84h5%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6/"},"url":"/blog/2016/08/03/%E6%89%93%E9%80%A0%E6%9C%80%E6%8E%A5%E8%BF%91native%E4%BD%93%E9%AA%8C%E7%9A%84h5%E6%97%A5%E5%8E%86%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="js,h5" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">Menu</span>
+        <a class="btn-close">Close</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/categories/">Categories</a></li>
+                <li><a href="/blog/tags/">Tags</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="Search...">
+        <a class="btn-close">Close</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo nav-link">
+                        <button class="btn-menu" data-ga="Menu"></button>
+                        <a href="/blog/"></a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" data-ga="Search"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a data-ga="Categories" href="/blog/categories/">Categories</a></li>
+                    <li class="nav-link"><a data-ga="Tags" href="/blog/tags/">Tags</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">Search</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">h5日历选择组件</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            Published:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2016-08-03T00:00:00+08:00" datetime="2016-08-03T00:00:00+08:00">August 03, 2016 </time>
+                            by
+                            <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"></span></span></a>
+                            <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a> 
+                        </p>
+                        <ul class="list-category list-linear">
+                            <li class="list-head">Categories: </li>
+                             
+     
+        <li>
+            <a class="internal" data-ga="js" href="/blog/categories/#js" title="js">
+            js <span>6</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">Tags: </li>
+                             
+    
+        
+        <li>
+            <a class="internal" data-ga="h5" href="/blog/tags/#h5" title="h5">h5 <span>4</span></a>
+        </li>
+    
+        
+        <li>
+            <a class="internal" data-ga="js" href="/blog/tags/#js" title="js">js <span>5</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                    </div>
+                    <div itemprop="articleBody">
+                        <h3 id="heading-ios中原生的select组件">ios中原生的select组件</h3>
+
+<p>ios中select标签在focus的时候，会唤起原生的ios选择组件，样式上是一个3d的滚筒，滚动选择时流畅、平滑，截图如下：</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB103DCLXXXXXc3XVXXXXXXXXXX-640-1136.jpg_400x400.jpg" alt="img" /></p>
+
+<p>而在android设备里，原生的select组件就没有ios设备里的漂亮和流畅了</p>
+
+<!--more-->
+
+<p><img src="https://gw.alicdn.com/tps/TB1syrwLXXXXXb0aXXXXXXXXXXX-1080-1920.png_400x400.jpg" alt="img" /></p>
+
+<h3 id="heading-统一ui">统一UI</h3>
+
+<p>原生的select组件在不同平台有不同的UI表现，事件处理也各有各的坑，统一UI才是王道。那么该如何模拟实现这种3d滚动选择组件呢?</p>
+
+<h3 id="heading-3d特效">3d特效</h3>
+
+<p><img src="https://gw.alicdn.com/tps/TB1g6P4LXXXXXacXXXXXXXXXXXX-520-368.jpg" alt="img" /></p>
+
+<p>试着想象一下，将一张长方形的纸卷曲形成圆柱体的过程，无非就是将无穷多个细小的长方形，以圆柱体的中心轴为基准，旋转一定的角度。只要角度是连续的，就可以形成曲面。
+这段话一时难以理解。我们认为每一个选择项的dom节点一开始是平面的，2d的，通过transform的rotateX(angle),rotateY(angle),rotateZ(angle)来实现3d旋转。</p>
+
+<p>先简单理解一下rotateX,rotateY,rotateZ的直观效果</p>
+
+<iframe height="265" scrolling="no" src="//codepen.io/shelwinjue/embed/RRYZkJ/?height=265&amp;theme-id=0&amp;default-tab=css,result&amp;embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/shelwinjue/pen/RRYZkJ/">RRYZkJ</a> by shelwinjue (<a href="http://codepen.io/shelwinjue">@shelwinjue</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+<p>(注意，要搭配透视perspective属性才能看到上面的效果)</p>
+
+<p>很明显我们应该使用rotateX属性来形成曲面。但是，但是，有一个属性刚刚被我们忽略了。那就是transform-origin属性，为了形成3d的曲面，除了rotate的角度，还有一个关键性
+的因为，就是transform-origin了。平时在缩放元素的时候，都会用到tansform-origin，但我们只用到了x轴和y轴，
+其实还有一个z轴。为了形成曲面，需要指定这个z轴的值。这个z轴的值应该是多少呢(一脸懵b)。</p>
+
+<p>下面来细细解释一下,transform-origin的定义如下：</p>
+
+<p><code class="highlighter-rouge">transform-origin: x-axis y-axis z-axis;</code></p>
+
+<ul>
+  <li>x-axis定义视图被置于x轴的何处</li>
+  <li>y-axis定义视图被置于y轴的何处</li>
+  <li>z-axis定义视图被置于z轴的何处</li>
+</ul>
+
+<p>到底怎么理解呢？来点实际的</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB16WDILXXXXXcfXVXXXXXXXXXX-330-227.jpg" alt="img" /></p>
+
+<p>蒙眼飞刀的transform-origin是x(center),y(center)</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB1ee2JLXXXXXbAXVXXXXXXXXXX-237-300.jpg" alt="img" /></p>
+
+<p>钢管舞的transform-origin是x(0),y(随意)</p>
+
+<p>那么圆柱体呢？其实它的transform-origin是x(center),y(center),z(圆柱体底面的圆的半径)。</p>
+
+<p>这个圆个半径如何计算呢？</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB1Az7XLXXXXXc4XXXXXXXXXXXX-374-201.png" alt="img" /></p>
+
+<p>图中可视区域的高度，其实就是圆的直径(179px)，那么半径就是89.5px。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ul class="mui-pciker-list" style="transform-origin: center center -89.5px; transform: perspective(1000px) rotateY(0deg) rotateX(60deg); transition: 100ms ease-out;"&gt;
+	&lt;li class="visible" style="transform-origin: center center -89.5px; transform: rotateX(0deg);"&gt;选项1&lt;/li&gt;
+	&lt;li class="visible" style="transform-origin: center center -89.5px; transform: rotateX(-20deg);"&gt;选项2&lt;/li&gt;
+	&lt;li class="visible" style="transform-origin: center center -89.5px; transform: rotateX(-40deg);"&gt;选项3&lt;/li&gt;
+	&lt;li class="visible highlight" style="transform-origin: center center -89.5px; transform: rotateX(-60deg);"&gt;选项4&lt;/li&gt;
+	&lt;li class="visible" style="transform-origin: center center -89.5px; transform: rotateX(-80deg);"&gt;选项5&lt;/li&gt;
+	&lt;li style="transform-origin: center center -89.5px; transform: rotateX(-100deg);" class="visible"&gt;选项6&lt;/li&gt;
+	&lt;li style="transform-origin: center center -89.5px; transform: rotateX(-120deg);" class="visible"&gt;选项7&lt;/li&gt;
+	&lt;li style="transform-origin: center center -89.5px; transform: rotateX(-140deg);" class="visible"&gt;选项8&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+</div>
+
+<p>在上面的代码中，将每个选择项的<code class="highlighter-rouge">transform-origin</code>的值设置为<code class="highlighter-rouge">center center -89.5px</code>，同时将ul的<code class="highlighter-rouge">transform-origin</code>也设置为相同的值，这样ul渲染后会有上面的3d曲面效果。接下来，就是监听touchstart,touchmove,touchend(或者mousedown,mousemove,mouseup)事件，在touchmove(或者mousemove)事件处理函数中
+对拨动的角度的计算。</p>
+
+<h3 id="heading-反余弦计算拨动角度">反余弦计算拨动角度</h3>
+
+<p>已知手势滑动的绝对值(或鼠标滑动的绝对值)，和3d曲面半径，求曲面应该转动的角度。等同于下面的三角形，已经三条边的长度，求夹角</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB1bPn.LXXXXXXWXpXXXXXXXXXX-320-226.png" alt="img" /></p>
+
+<p>余弦定理的计算公式如下：</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB1UQr0LXXXXXX9XFXXXXXXXXXX-149-45.png" alt="img" /></p>
+
+<p>求的余弦值后，通过反余弦函数求得角度，代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	/**
+	 * 弧度转换成角度
+	 * @param rad
+	 * @returns {number}
+	 */
+	function rad2deg(rad) {
+		return rad / (Math.PI / 180);
+	}
+	/**
+	 * 计算旋转角度
+	 * @param deltaPageY 手势滑动的绝对值(或者鼠标滑动的绝对值)
+	 * @returns {*}
+	 */
+	function calcAngle(deltaPageY) {
+		var self = this;
+		var a = b = parseFloat(self.r);
+		//直径的整倍数部分直接乘以 180
+		c = Math.abs(c); //只算角度不关心正否值
+		var intDeg = parseInt(c / self.d) * 180;
+		c = c % self.d;
+		//余弦
+		var cosC = (a * a + b * b - c * c) / (2 * a * b);
+		var angleC = intDeg + rad2deg(Math.acos(cosC));
+		console.log('angleC=' + angleC);
+		return angleC;
+	}
+	/**
+     * 更新ul的旋转角度
+     * @param angle
+     */
+    function setAngle(angle) {
+
+        var self = this;
+        self.list.angle = angle;
+        self.list.style.webkitTransformOrigin = 'center center -89.5px';
+        self.list.style.webkitTransform = "perspective(1000px) rotateY(0deg) rotateX(" + angle + "deg)";
+        self.calcElementItemVisibility(angle);
+
+    }
+</code></pre>
+</div>
+
+<p>调用calcAngle(deltaPageY)后，再调用setAngle()，将ul的rotateX值进行更新。</p>
+
+<h3 id="heading-touchend或者mousemove事件处理">touchend(或者mousemove)事件处理</h3>
+
+<p>在touchend(或者mousemove)事件处理函数中，需要实现减速效果。</p>
+
+<ol>
+  <li>滑动的最后300ms内，计算滑动的速度</li>
+  <li>根据滑动速度，计算速度降到0需要的时间，根据速度和时间，计算出减速运动滑动的距离</li>
+  <li>
+    <p>将滑动的距离转换成角度，然后调用缓动函数，计算每个时间点应该转动的角度，直至转动停止</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> /**
+  * 计算最终应该旋转的角度和时间
+  * @param event
+  */
+ function startInertiaScroll(event) {
+     var self = this;
+     var point = event.changedTouches ? event.changedTouches[0] : event;
+
+     var nowTime = event.timeStamp || Date.now();
+     console.log('移动距离=' + (point.pageY - self.lastMoveStart));
+     console.log('移动时间=' + (nowTime - self.lastMoveTime));
+     var v = (point.pageY - self.lastMoveStart) / (nowTime - self.lastMoveTime); //最后一段时间手指划动速度
+     var dir = v &gt; 0 ? -1 : 1; //加速度方向
+     var deceleration = dir * 0.0006 * -1;
+     console.log('速度' + v);
+     console.log('@@@@@@@' + deceleration + '@@@@@@@@@@');
+     var duration = Math.abs(v / deceleration); // 速度消减至0所需时间
+     console.log('#########'+ duration + '########');
+     var dist = v * duration / 2; //最终移动多少
+     console.log('最终dist' + dist);
+     var startAngle = self.list.angle;
+     var distAngle = self.calcAngle(dist) * dir;
+     console.log('需要转的角度' + distAngle);
+     //----
+     var srcDistAngle = distAngle;
+     if (startAngle + distAngle &lt; self.beginExceed) {
+         distAngle = self.beginExceed - startAngle;
+         duration = duration * (distAngle / srcDistAngle) * 0.6;
+     }
+     if (startAngle + distAngle &gt; self.endExceed) {
+         distAngle = self.endExceed - startAngle;
+         duration = duration * (distAngle / srcDistAngle) * 0.6;
+     }
+     //----
+     if (distAngle == 0) {
+         self.endScroll();
+         return;
+     }
+     self.scrollDistAngle(nowTime, startAngle, distAngle, duration);
+ }
+
+ /**
+  * 缓动函数
+  * @param nowTime
+  * @param startAngle
+  * @param distAngle
+  * @param duration
+  */
+ function scrollDistAngle(nowTime, startAngle, distAngle, duration) {
+     var self = this;
+     self.stopInertiaMove = false;
+     (function(nowTime, startAngle, distAngle, duration) {
+         var frameInterval = 13;
+         var stepCount = duration / frameInterval;
+         var stepIndex = 0;
+         (function inertiaMove() {
+             if (self.stopInertiaMove) return;
+             var newAngle = self.quartEaseOut(stepIndex, startAngle, distAngle, stepCount);
+             self.setAngle(newAngle);
+             stepIndex++;
+             if (stepIndex &gt; stepCount - 1 || newAngle &lt; self.beginExceed || newAngle &gt; self.endExceed) {
+                 self.endScroll();
+                 return;
+             }
+             setTimeout(inertiaMove, frameInterval);
+         })();
+     })(nowTime, startAngle, distAngle, duration);
+ }
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h3 id="heading-说好的日历选择组件呢">说好的日历选择组件呢</h3>
+
+<p>上面讲的是一般选择组件的实现，日历选择组件，只需要改一下UI，将一个曲面变成多个曲面，比例，生日的选择，需要年、月、日三个3d曲面</p>
+
+<p><img src="https://gw.alicdn.com/tps/TB1Qc2PLXXXXXczXVXXXXXXXXXX-374-228.png" alt="img" /></p>
+
+<p><a href="http://www.dcloud.io/hellomui/examples/dtpicker.html">demo展示</a>，具体的代码实现可以看<a href="https://github.com/dcloudio/mui/blob/master/examples/hello-mui/js/mui.dtpicker.js">这里</a></p>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="gotop">
+                        <a class="internal" href="#page">Back to Top</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" data-ga="Previous Post" rel="prev" href="/blog/2016/06/22/promise%E6%A8%A1%E5%BC%8F/" title="View 'promise规范'"> ← promise规范</a>
+                        
+                        
+                            <a class="internal" data-ga="Next Post" rel="next" href="/blog/2017/06/25/webpack-dev-server-2.x-%E5%AE%9E%E6%97%B6%E5%8A%A0%E8%BD%BD/" title="View 'webpack-dev-server 2.x 实时加载'">webpack-dev-server 2.x 实时加载 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+            <div class="misc-content">
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4><a href="/">About</a></h4>
+                    
+                        <p>A gem-based responsive simple texture styled Jekyll theme.</p>
+                    
+                    <p><small>Theme <a class="external" href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> developed by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a>, powered by <a class="external" href="https://jekyllrb.com/" target="_blank">Jekyll</a>.</small></p>
+                </div>
+                <div class="social-links">
+                    
+                    <a class="external ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="external ico-github" href="https://github.com/yizeng/jekyll-theme-simple-texture" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">Back to Top</a>
+</footer>
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    $(window).scroll(function () {
+        if ($(window).width() > width) {
+            if ($(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop a').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>Search results</h4>',
+      noResults: '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+    });
+</script>
+
+</body>
+
+</html>

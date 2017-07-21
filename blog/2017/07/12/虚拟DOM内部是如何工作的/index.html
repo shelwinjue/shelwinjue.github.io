@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>虚拟DOM内部是如何工作的</title>
+<meta property="og:title" content="虚拟DOM内部是如何工作的" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="虚拟DOM内部是如何工作的" />
+<meta property="og:description" content="虚拟DOM内部是如何工作的" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-07-12T00:00:00+08:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"虚拟DOM内部是如何工作的","author":{"@type":"Person","name":null},"datePublished":"2017-07-12T00:00:00+08:00","dateModified":"2017-07-12T00:00:00+08:00","description":"虚拟DOM内部是如何工作的","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2017/07/12/%E8%99%9A%E6%8B%9FDOM%E5%86%85%E9%83%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/"},"url":"/blog/2017/07/12/%E8%99%9A%E6%8B%9FDOM%E5%86%85%E9%83%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="js,h5" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">You are using an outdated browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">This site requires JavaScript. Here are the instructions <a href="http://www.enable-javascript.com/" target="_blank">how to enable JavaScript in your web browser</a>.</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">Menu</span>
+        <a class="btn-close">Close</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/categories/">Categories</a></li>
+                <li><a href="/blog/tags/">Tags</a></li>
+                <li><a href="/">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="Search...">
+        <a class="btn-close">Close</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo nav-link">
+                        <button class="btn-menu" data-ga="Menu"></button>
+                        <a href="/blog/"></a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" data-ga="Search"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a data-ga="Categories" href="/blog/categories/">Categories</a></li>
+                    <li class="nav-link"><a data-ga="Tags" href="/blog/tags/">Tags</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a data-ga="Search" class="btn-search" href="#">Search</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">虚拟DOM内部是如何工作的</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            Published:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2017-07-12T00:00:00+08:00" datetime="2017-07-12T00:00:00+08:00">July 12, 2017 </time>
+                            by
+                            <a class="author" href="/" rel="author"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"></span></span></a>
+                            <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a> 
+                        </p>
+                        <ul class="list-category list-linear">
+                            <li class="list-head">Categories: </li>
+                             
+     
+        <li>
+            <a class="internal" data-ga="js" href="/blog/categories/#js" title="js">
+            js <span>6</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">Tags: </li>
+                             
+    
+        
+        <li>
+            <a class="internal" data-ga="h5" href="/blog/tags/#h5" title="h5">h5 <span>4</span></a>
+        </li>
+    
+        
+        <li>
+            <a class="internal" data-ga="js" href="/blog/tags/#js" title="js">js <span>5</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                    </div>
+                    <div itemprop="articleBody">
+                        <p><a href="https://medium.com/@rajaraodv/the-inner-workings-of-virtual-dom-666ee7ad47cf">英文原文链接</a></p>
+
+<p>Virtual DOM很神奇，同时也比较复杂，难以理解。react,preact和相似的js库都使用了virtual dom。然而，我找不到任何好的文章或者文档，可以详细地又容易理解的方式来解释它。因此我决定自己写一篇。</p>
+
+<p>注意：文章篇幅较长，文中有大量的图片来帮助理解。文中使用的是preact的代码，因为它体积小，容易阅读。但是它与React里大部分的概率是保持一致的。希望阅读完这篇文章后，你可以更好地理解React和Preact这样的类库，甚至为它们作出贡献。</p>
+
+<p>在这篇文章中，我将列举一个简单的例子来解释以下这些是如何工作的：</p>
+
+<ol>
+  <li>Babel和JSX</li>
+  <li>创建VNode-一个简单的virtual DOM元素</li>
+  <li>处理组件和子组件</li>
+  <li>初始化渲染和创建一个DOM元素</li>
+  <li>重新渲染</li>
+  <li>移除DOM元素</li>
+  <li>替换DOM元素</li>
+</ol>
+
+<h2 id="heading-the-app">The app</h2>
+
+<p>这是一个简单地可筛选的搜索应用，它包含了两个组件<code class="highlighter-rouge">FilteredList</code>和<code class="highlighter-rouge">List</code>。<code class="highlighter-rouge">List</code>组件用来渲染一组items(默认："California"和"New York")。这个应用有一个搜索框，可以根据字母来过滤列表项。非常地直观：</p>
+
+<p><img src="https://gw.alicdn.com/tfs/TB1J.D.SXXXXXaFXVXXXXXXXXXX-1600-594.png" alt="img" /></p>
+
+<h2 id="heading-概览图">概览图</h2>
+
+<p>我们用jsx来写组件，它会被babel转换成纯js，然后Preact的<code class="highlighter-rouge">h</code>函数会将这段js转换成DOM树，最后Preact的Virtual DOM算法会将virtual DOM转换成真实的DOM树，来构建我们的应用。
+<img src="https://gw.alicdn.com/tfs/TB1s1jUSXXXXXcAaXXXXXXXXXXX-1600-496.png" alt="img" /></p>
+
+<p>在深入Virtual DOM的生命周期之前，我们先理解一下jsx，因为它为库提供了入口。</p>
+
+<h2 id="heading-babel-and-jsx">Babel And JSX</h2>
+<p>在React，Preact这样的类库中，没有HTML标签，取而代之的是，一切都是javascript。所以我们要在js中写HTML标签，但是在js中写HTML简直就是噩梦😱</p>
+
+<p>对于我们的应用来说，我们将会像下面这样来写HTML</p>
+
+<p><img src="https://gw.alicdn.com/tfs/TB1QFHFSXXXXXcxaFXXXXXXXXXX-1312-258.png" alt="img" />
+<img src="https://gw.alicdn.com/tfs/TB1de_NSXXXXXbBapXXXXXXXXXX-1300-400.png" alt="img" /></p>
+
+<p>这就是jsx的由来。jsx本质上就是允许我们在javascript中书写HTML!并且允许我们在HTML中通过使用花括号来使用js。
+jsx帮助我们像下面这样写组件
+<img src="https://gw.alicdn.com/tfs/TB1N6_7SXXXXXcgXVXXXXXXXXXX-1130-194.png" alt="img" />
+<img src="https://gw.alicdn.com/tfs/TB1kI66SXXXXXcsXVXXXXXXXXXX-1134-216.png" alt="img" /></p>
+
+<h3 id="heading-jsx转换成js">jsx转换成js</h3>
+<p>jsx很酷，但它不是合法的js，并且最终我们需要的是真实的DOM。JSX只是帮助编写一个真实DOM的替代品，除此之外，它别无用处。所以我们需要一种方法将它转换成对应的JSON对象(也就是Virtual DOM)，作为转化成真实DOM的输入。我们需要一个函数来实现这个功能。</p>
+
+<p>在Preact中<code class="highlighter-rouge">h</code>函数就是干这件事情的，等同于React中的<code class="highlighter-rouge">React.createElement</code>。</p>
+
+<p>但是如何将jsx转换成<code class="highlighter-rouge">h</code>函数的调用呢？Babel就是干这件事情的。Babel遍历每个jsx节点，并将它们转换成<code class="highlighter-rouge">h</code>函数调用。
+<img src="https://gw.alicdn.com/tfs/TB1VtfNSXXXXXb4apXXXXXXXXXX-1000-992.png" alt="img" /></p>
+
+<h3 id="heading-babel-jsxreact-vs-preact">Babel JSX(React vs Preact)</h3>
+<p>默认情况下，Babel将jsx转换成React.createElement调用
+<img src="https://gw.alicdn.com/tfs/TB1BiZnSXXXXXbkXpXXXXXXXXXX-1600-173.png" alt="img" />
+但是我们可以很容易地将函数名修改成任何名称，只需要在babelrc中配置一下即可</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Option 1:
+//.babelrc
+{   "plugins": [
+      ["transform-react-jsx", { "pragma": "h" }]
+     ]
+}
+Option 2:
+//Add the below comment as the 1st line in every JSX file
+/** @jsx h */
+</code></pre>
+</div>
+
+<p><img src="https://gw.alicdn.com/tfs/TB1RN2VSXXXXXXnapXXXXXXXXXX-1600-153.png" alt="img" /></p>
+
+<h3 id="heading-挂载到真实dom">挂载到真实DOM</h3>
+
+<p>不仅仅是render中的代码会被转换成<code class="highlighter-rouge">h</code>函数，最初的挂载也会！</p>
+
+<p>这就是代码执行开始的地方</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>//Mount to real DOM
+render(&lt;FilteredList/&gt;, document.getElementById(‘app’));
+//Converted to "h":
+render(h(FilteredList), document.getElementById(‘app’));
+</code></pre>
+</div>
+
+<h3 id="heading-h函数的输出"><code class="highlighter-rouge">h</code>函数的输出</h3>
+<p><code class="highlighter-rouge">h</code>函数将jsx转化后的内容转换成Virtual DOM节点。一个Preact的Virtual DOM节点就是一个简单的代表了单个包含属性和子节点的DOM节点的js对象，如下所示：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"nodeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+   </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+<p>比如，应用的input标签对应的Virtual DOM如下：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"nodeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"placeholder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Search"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"onChange"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>注意：<strong><code class="highlighter-rouge">h</code>函数并不是创建整棵树！</strong>它只是简单地创建某个节点的js对象。但是因为<code class="highlighter-rouge">render</code>方法。。。</p>
+
+<p>好了，让我们看看Virtual DOM是如何工作的。</p>
+
+<h2 id="heading-preact中的virtual-dom算法">Preact中的Virtual DOM算法</h2>
+<p>在下面的流程图中，展示了在Preact中，组件是如何被创建、更新和删除的过程。同时也展示了像<code class="highlighter-rouge">componentWillMount</code>这样的生命周期事件是什么时候被调用的。
+<img src="https://gw.alicdn.com/tfs/TB13tfPSXXXXXc3apXXXXXXXXXX-1000-1232.png" alt="img" /></p>
+
+<p>现在理解起来有些困难，所以我们一步一步来拆解流程图中的每种情况。</p>
+
+<h3 id="heading-情景1初始化app">情景1：初始化app</h3>
+
+<h4 id="heading-11-创建virtual-dom">1.1 创建Virtual DOM</h4>
+<p>高亮的部分展示了根据给定的组件生成的Virtual DOM树。注意一点这里并没有为子组件创建Virtual DOM
+<img src="https://gw.alicdn.com/tfs/TB1EFIESXXXXXbIXpXXXXXXXXXX-1000-1245.png" alt="img" />
+下面这幅图展示了应用首次加载时发生的情况。这个库最后为FilteredList组件创建了带有子节点和属性
+的Virtual DOM
+<img src="https://gw.alicdn.com/tfs/TB1T2.bSXXXXXXjapXXXXXXXXXX-1447-487.png" alt="img" />
+注意：在这个过程中还调用了<code class="highlighter-rouge">componentWillMount</code>和<code class="highlighter-rouge">render</code>生命周期方法(在上图中的绿色区块)</p>
+
+<p>此时，我们有了一个Virtual DOM，div元素是父亲节点，带有一个input和一个list的子节点</p>
+
+<h4 id="heading-12-如果不是一个组件则创建真实的dom">1.2 如果不是一个组件，则创建真实的DOM</h4>
+
+<p>在这一步中，它只是为父亲节点创建一个真实DOM，对于子节点，重复这个过程
+<img src="https://gw.alicdn.com/tfs/TB1.McGSXXXXXX6XpXXXXXXXXXX-1000-1245.png" alt="img" />
+此时，我们在下图中只有一个div展示出来
+<img src="https://gw.alicdn.com/tfs/TB1BL6_SXXXXXaEapXXXXXXXXXX-800-498.png" alt="img" /></p>
+<h4 id="heading-13-对于子元素重复这个过程">1.3 对于子元素重复这个过程</h4>
+
+<p>在这一步中，循环所有的子节点。在我们的应用中，将会循环input和list
+<img src="https://gw.alicdn.com/tfs/TB1KSkGSXXXXXa8XpXXXXXXXXXX-1000-1245.png" alt="img" /></p>
+<h4 id="heading-14-处理孩子节点和添加到父亲节点">1.4 处理孩子节点和添加到父亲节点</h4>
+
+<p>在这一步中，我们将会处理叶子节点，由于input有个父节点div，那么我们将会将input添加到div中作为
+子节点。然后流程转向创建<code class="highlighter-rouge">List</code>(第二个子节点是div)
+<img src="https://gw.alicdn.com/tfs/TB1W5kuSXXXXXbZXFXXXXXXXXXX-1000-1245.png" alt="img" />
+此时，我们的app长下面这样
+<img src="https://gw.alicdn.com/tfs/TB1n7EpSXXXXXXOXVXXXXXXXXXX-800-498.png" alt="img" /></p>
+
+<p>注意：在<code class="highlighter-rouge">input</code>被创建之后，由于它没有任何子节点，并不会立马就去循环和创建List组件。相反地，它会首先
+把<code class="highlighter-rouge">input</code>标签添加到父节点div中去，完事之后再返回处理List标签</p>
+
+<h4 id="heading-15-处理子节点">1.5 处理子节点</h4>
+
+<p>现在控制流回到了步骤1.1，并且开始处理<code class="highlighter-rouge">List</code>组件。但是由于<code class="highlighter-rouge">List</code>是一个组件，所以它会遍历执行自身的<strong>render</strong>方法，从而获得一组VNodes，就像下面这样：
+<img src="https://gw.alicdn.com/tfs/TB1xn.BSXXXXXcyXpXXXXXXXXXX-1000-1245.png" alt="img" />
+当<code class="highlighter-rouge">List</code>组件的循环完成时，它会返回<code class="highlighter-rouge">List</code>的VNode，就像下面这样：
+<img src="https://gw.alicdn.com/tfs/TB1GTcCSXXXXXcyXpXXXXXXXXXX-884-483.png" alt="img" /></p>
+
+<h4 id="heading-16-对于所有的子节点重复步骤11到14">1.6 对于所有的子节点，重复步骤1.1到1.4</h4>
+
+<p>对于每个节点，它将会重复以上的每一步。一旦到达叶子节点，它将会被加入到父节点中去，并且重复这个过程。
+<img src="https://gw.alicdn.com/tfs/TB1YncLSXXXXXcmXXXXXXXXXXXX-1000-1257.png" alt="img" />
+下面的图片展示了每个节点是如何添加上去的(深度优先遍历)
+<img src="https://gw.alicdn.com/tfs/TB1Pwr9SXXXXXbZapXXXXXXXXXX-2000-412.png" alt="img" /></p>
+
+<h4 id="heading-17-处理完成">1.7 处理完成</h4>
+
+<p>此时已经完成了处理过程。然后对于所有的组件，会调用<code class="highlighter-rouge">componentDidMount</code>方法(从子组件开始，直到父组件)
+<img src="https://gw.alicdn.com/tfs/TB1_sf.SXXXXXb_aXXXXXXXXXXX-1000-1245.png" alt="img" /></p>
+
+<p><strong>注意：当一切准备就绪，一个真实DOM的引用会被添加到每个组件的实例中。这个引用会在接下来的一些更新操作(创建、更新、删除)被用来比较，避免重复创建相同的DOM节点</strong></p>
+
+<h3 id="heading-情景2删除叶子节点">情景2：删除叶子节点</h3>
+<p>当输入"cal"并按回车，这将会删除第二个列表子元素，也就是一个叶子节点(New York)，同时其他父元素都会保留。
+<img src="https://gw.alicdn.com/tfs/TB1PYAdSXXXXXadapXXXXXXXXXX-800-160.png" alt="img" /></p>
+
+<p>让我们看下这种情景下，流程是怎么样的</p>
+
+<h4 id="heading-21-创建vnodes">2.1 创建VNodes</h4>
+
+<p>在初始化渲染之后，后面的每次改变都是一次"更新"。当创建VNodes时，更新周期与创建周期非常相似，并且再一次创建所有的VNodes。不过既然是更新(不是创建)组件，将会调用每个组件和子组件相应的<code class="highlighter-rouge">componentWillReceiveProps</code>,<code class="highlighter-rouge">shouldComponentUpdate</code>和<code class="highlighter-rouge">componentWillUpdate</code>方法。</p>
+
+<p>另外，更新周期并不会重新创建已经存在的DOM元素。
+<img src="https://gw.alicdn.com/tfs/TB1WB3XSXXXXXaNapXXXXXXXXXX-1000-1245.png" alt="img" /></p>
+
+<h4 id="heading-22-使用真实dom引用避免创建重复的节点">2.2 使用真实DOM引用，避免创建重复的节点</h4>
+
+<p>之前提到过，在初始化加载期间，每个组件都有一个指向真实DOM树的引用。下面的图展示了引用是如何寻找我们的应用的。</p>
+
+<p><img src="https://gw.alicdn.com/tfs/TB1YXwCSXXXXXaDXFXXXXXXXXXX-1000-666.png" alt="img" />
+当VNodes被创建后，每个VNode的属性都会与真实DOM的属性相比较。<strong>如果真实DOM存在，循环将会转移到下个节点</strong>
+<img src="https://gw.alicdn.com/tfs/TB1wT7dSXXXXXX9apXXXXXXXXXX-1000-1245.png" alt="img" /></p>
+
+<h4 id="heading-23-如果在真实dom中有其它的节点则删除">2.3 如果在真实DOM中有其它的节点，则删除</h4>
+
+<p>下面的图展示了真实DOM和VNode之间的不同</p>
+
+<p><img src="https://gw.alicdn.com/tfs/TB1FyUsSXXXXXaQXVXXXXXXXXXX-800-320.png" alt="img" />
+由于存在不同，真实DOM中的"New York"节点会被算法删除掉，正如下面图展示的那样。这个算法也称为"componentDidUpdate"生命周期。
+<img src="https://gw.alicdn.com/tfs/TB1pZgySXXXXXa_XFXXXXXXXXXX-1000-1245.png" alt="img" /></p>
+
+<h3 id="heading-情景3-卸载整个组件">情景3-卸载整个组件</h3>
+
+<p>举例：当输入<code class="highlighter-rouge">blabla</code>时，由于不匹配"California"和"New York"，我们将不会渲染子组件<code class="highlighter-rouge">List</code>。这意味着，我们需要卸载整个组件
+<img src="https://gw.alicdn.com/tfs/TB1QcQESXXXXXXiXFXXXXXXXXXX-552-160.png" alt="img" />
+<img src="https://gw.alicdn.com/tfs/TB1QFD5SXXXXXbraFXXXXXXXXXX-800-558.png" alt="img" />
+删除一个组件类似于删除一个单独的节点。除此之外，当我们删除一个包含组件引用的节点，将会调用"componentWillUnmount"，然后递归删除所有的DOM元素。在删除了所有的真实DOM元素之后，"componentDidUnmount"将会被调用。
+下面的图片展示了真实DOM元素"ul"包含了指向"List"组件的引用。
+<img src="https://gw.alicdn.com/tfs/TB1aSgmSXXXXXXFaXXXXXXXXXXX-800-470.png" alt="img" />
+下面的图片在流程图中高亮了deleting/unmounting一个组件是如何工作的
+<img src="https://gw.alicdn.com/tfs/TB1J73JSXXXXXX1XpXXXXXXXXXX-1000-1174.png" alt="img" /></p>
+
+<h2 id="heading-最后">最后</h2>
+
+<p>希望这篇文章能帮助你理解Virtual DOM是如何工作的(至少在Preact中)</p>
+
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="gotop">
+                        <a class="internal" href="#page">Back to Top</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" data-ga="Previous Post" rel="prev" href="/blog/2017/06/25/webpack-dev-server-2.x-%E5%AE%9E%E6%97%B6%E5%8A%A0%E8%BD%BD/" title="View 'webpack-dev-server 2.x 实时加载'"> ← webpack-dev-server 2.x 实时加载</a>
+                        
+                        
+                            <a class="internal" data-ga="Next Post" rel="next" href="/blog/2017/07/21/%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BD%BF%E7%94%A8LogRocket%E8%AE%B0%E5%BD%95Redux%E6%97%A5%E5%BF%97/" title="View '在生产环境中使用LogRocket记录Redux日志'">在生产环境中使用LogRocket记录Redux日志 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+            <div class="misc-content">
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4><a href="/">About</a></h4>
+                    
+                        <p>A gem-based responsive simple texture styled Jekyll theme.</p>
+                    
+                    <p><small>Theme <a class="external" href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> developed by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a>, powered by <a class="external" href="https://jekyllrb.com/" target="_blank">Jekyll</a>.</small></p>
+                </div>
+                <div class="social-links">
+                    
+                    <a class="external ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="external ico-github" href="https://github.com/yizeng/jekyll-theme-simple-texture" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">Back to Top</a>
+</footer>
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    $(window).scroll(function () {
+        if ($(window).width() > width) {
+            if ($(this).scrollTop() > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop a').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>Search results</h4>',
+      noResults: '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+    });
+</script>
+
+</body>
+
+</html>
