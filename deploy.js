@@ -53,12 +53,9 @@ execSync('git commit -m "deploy"', (err, stdout, stderr) => {
   }
 });
 
-execSync(
-  'git push -f git@github.com:shelwinjue/shelwinjue.github.io.git master',
-  (err, stdout, stderr) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
+execSync('git push -f origin master', (err, stdout, stderr) => {
+  if (err) {
+    console.log(err);
+    return;
   }
-);
+});
