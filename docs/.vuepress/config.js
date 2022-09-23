@@ -37,6 +37,7 @@ module.exports = {
           sidebarDepth: 1, //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
           children: [
             ['HelloWorld.md', 'HelloWorld'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
+            ['GridInteract.md', 'GridInteract'],
           ],
         },
       ],

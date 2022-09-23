@@ -6,15 +6,11 @@
     <HelloWorld msg="Hello Vue!" />
   </div>
 </template>
-
 <script>
 import { HelloWorld } from '@jianweife/lowcode-index';
 export default {
-  name: 'App',
   components: {
     HelloWorld,
   },
 };
 </script>
-
-<style></style>

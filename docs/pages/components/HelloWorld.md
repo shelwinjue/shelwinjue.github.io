@@ -4,7 +4,7 @@
 
 ## 代码演示
 
-<HelloWorld />
+<HelloWorldDemo />
 
 ```html
 <template>

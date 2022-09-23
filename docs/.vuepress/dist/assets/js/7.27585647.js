@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{278:function(l,n,o){"use strict";o.r(n);var e={name:"App",components:{HelloWorld:o(272).HelloWorld}},t=o(14),p=Object(t.a)(e,(function(){return(0,this._self._c)("HelloWorld")}),[],!1,null,null,null);n.default=p.exports}}]);
