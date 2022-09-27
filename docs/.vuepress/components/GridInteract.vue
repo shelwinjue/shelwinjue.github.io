@@ -3,15 +3,19 @@
     <Layout
       :style="{ height: '100%' }"
       :defaultLayout="[1, 1, 1]"
-      :defaultRowLayout="[[1, 1], [1], [1]]"
+      :defaultRowLayout="[[1, 1, 1], [2, 1], [1]]"
       @afterLayoutResize="afterLayoutResize"
     >
       <Row>
-        <Col>123</Col>
-        <Col>abc</Col>
+        <Col :style="{ backgroundColor: '#f7a3a4' }">1</Col>
+        <Col :style="{ backgroundColor: '#f7afab' }">2</Col>
+        <Col :style="{ backgroundColor: '#f6bcb5' }">3</Col>
       </Row>
-      <Row><Col>456</Col></Row>
-      <Row><Col>789</Col></Row>
+      <Row>
+        <Col :style="{ backgroundColor: '#b0cffe' }">4</Col>
+        <Col :style="{ backgroundColor: '#bedffc' }">5</Col>
+      </Row>
+      <Row><Col>6</Col></Row>
     </Layout>
   </div>
 </template>

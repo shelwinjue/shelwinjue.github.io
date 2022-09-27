@@ -18,14 +18,19 @@
     <Layout
       :style="{ height: '100%' }"
       :defaultLayout="[1, 1, 1]"
-      :defaultRowLayout="[[1, 1], [1], [1]]"
+      :defaultRowLayout="[[1, 1, 1], [2, 1], [1]]"
+      @afterLayoutResize="afterLayoutResize"
     >
       <Row>
-        <Col>123</Col>
-        <Col>abc</Col>
+        <Col :style="{ backgroundColor: '#f7a3a4' }">1</Col>
+        <Col :style="{ backgroundColor: '#f7afab' }">2</Col>
+        <Col :style="{ backgroundColor: '#f6bcb5' }">3</Col>
       </Row>
-      <Row><Col>456</Col></Row>
-      <Row><Col>789</Col></Row>
+      <Row>
+        <Col :style="{ backgroundColor: '#b0cffe' }">4</Col>
+        <Col :style="{ backgroundColor: '#bedffc' }">5</Col>
+      </Row>
+      <Row><Col>6</Col></Row>
     </Layout>
   </div>
 </template>
@@ -37,6 +42,11 @@ export default {
     Row,
     Col,
   },
+  methods: {
+    afterLayoutResize(data) {
+      console.error('+++ afterLayoutResize', data);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -45,6 +55,7 @@ export default {
   height: 500px;
 }
 </style>
+
 
 
 ```
@@ -60,6 +71,6 @@ export default {
 
 ### 事件
 
-| 事件名 | 说明 | 回调参数 |
-| :----- | :--- | :------- |
-|        |      |          |
+| 事件名            | 说明             | 回调参数                                                                             |
+| :---------------- | :--------------- | :----------------------------------------------------------------------------------- |
+| afterLayoutResize | 布局更改后的回调 | data: {layout, rowLayout}, 例如： {layout: [1, 2, 1], rowLayout: [[2, 1], [1], [1]]} |
