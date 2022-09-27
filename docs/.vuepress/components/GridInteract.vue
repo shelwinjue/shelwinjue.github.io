@@ -4,6 +4,7 @@
       :style="{ height: '100%' }"
       :defaultLayout="[1, 1, 1]"
       :defaultRowLayout="[[1, 1], [1], [1]]"
+      @afterLayoutResize="afterLayoutResize"
     >
       <Row>
         <Col>123</Col>
@@ -21,6 +22,11 @@ export default {
     Layout,
     Row,
     Col,
+  },
+  methods: {
+    afterLayoutResize(data) {
+      console.error('+++ afterLayoutResize', data);
+    },
   },
 };
 </script>
