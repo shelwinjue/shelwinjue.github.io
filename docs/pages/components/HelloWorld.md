@@ -6,6 +6,8 @@
 
 <HelloWorldDemo />
 
+相关源码如下：
+
 ```html
 <template>
   <div>
@@ -15,18 +17,14 @@
     <HelloWorld msg="Hello Vue!" />
   </div>
 </template>
-
 <script>
-  import { HelloWorld } from '@jianweife/lowcode-index';
+  import { HelloWorld } from '@jianweife/lowcode-index/dist/jianweiComponents.common.js';
   export default {
-    name: 'App',
     components: {
       HelloWorld,
     },
   };
 </script>
-
-<style></style>
 ```
 
 ## API

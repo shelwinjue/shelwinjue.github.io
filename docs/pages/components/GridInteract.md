@@ -12,26 +12,70 @@
 
 <GridInteract />
 
+相关源码如下：
+
 ```html
 <template>
-  <div class="demo">
-    <Layout
-      :style="{ height: '100%' }"
-      :defaultLayout="[1, 1, 1]"
-      :defaultRowLayout="[[1, 1, 1], [2, 1], [1]]"
-      @afterLayoutResize="afterLayoutResize"
-    >
-      <Row>
-        <Col :style="{ backgroundColor: '#f7a3a4' }">1</Col>
-        <Col :style="{ backgroundColor: '#f7afab' }">2</Col>
-        <Col :style="{ backgroundColor: '#f6bcb5' }">3</Col>
-      </Row>
-      <Row>
-        <Col :style="{ backgroundColor: '#b0cffe' }">4</Col>
-        <Col :style="{ backgroundColor: '#bedffc' }">5</Col>
-      </Row>
-      <Row><Col>6</Col></Row>
-    </Layout>
+  <div>
+    <div>示例1：包含展开和收起按钮</div>
+    <div class="demo">
+      <Layout
+        :style="{ height: '100%' }"
+        :defaultLayout="[
+          {
+            flex: 1,
+            unfold: true,
+            showUnfoldBtn: false,
+            cols: [
+              { flex: 1, unfold: true, showUnfoldBtn: true, width: 200 },
+              { flex: 1 },
+              { flex: 1 },
+            ],
+          },
+          {
+            flex: 1,
+            unfold: true,
+            showUnfoldBtn: true,
+            height: 200,
+            cols: [{ flex: 1 }],
+          },
+        ]"
+        @afterLayoutResize="afterLayoutResize"
+      >
+        <Row>
+          <Col>1</Col>
+          <Col>2</Col>
+          <Col>3</Col>
+        </Row>
+        <Row><Col>5</Col></Row>
+      </Layout>
+    </div>
+    <div>示例2：不包含展开和收起按钮</div>
+    <div class="demo">
+      <Layout
+        :style="{ height: '100%' }"
+        :defaultLayout="[
+          {
+            flex: 1,
+
+            cols: [{ flex: 1 }, { flex: 1 }, { flex: 1 }],
+          },
+          {
+            flex: 1,
+
+            cols: [{ flex: 1 }],
+          },
+        ]"
+        @afterLayoutResize="afterLayoutResize"
+      >
+        <Row>
+          <Col>1</Col>
+          <Col>2</Col>
+          <Col>3</Col>
+        </Row>
+        <Row><Col>5</Col></Row>
+      </Layout>
+    </div>
   </div>
 </template>
 <script>
@@ -58,19 +102,38 @@ export default {
 
 
 
+
 ```
 
 ## API
 
 ### props 说明
 
-| 属性             | 说明                                                                                                                                                  | 类型  | required | 默认值 |
-| :--------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :---- | :------- | :----- |
-| defaultLayout    | 容器的默认布局，控制`Row`的布局，例如：[1, 1, 1]表示 3 行(`Row`),垂直方向 1:1:1 均分                                                                  | Array | true     | 无     |
-| defaultRowLayout | Row 容器的默认布局，控制每个`Row`的`Col`布局，例如[[1, 1], [1], [1]]表示第一个 Row 有两个 Col，1:1 均分，第二个 Row 有一个 Col，第三个 Row 有一个 Col | Array | true     | 无     |
+| 属性          | 说明                                                                                                                         | 类型  | required | 默认值 |
+| :------------ | :--------------------------------------------------------------------------------------------------------------------------- | :---- | :------- | :----- |
+| defaultLayout | 容器的默认布局，控制`Row`以及`Col`的布局和配置(例如：是否有展开/收起按钮，当前是展开还是收起)，数组里的每一项参见 Row 的说明 | Array | true     | 无     |
+
+#### Row
+
+| 属性          | 说明                                                                                          | 类型    | required | 默认值 |
+| :------------ | :-------------------------------------------------------------------------------------------- | :------ | :------- | :----- |
+| flex          | 对应当前行的 css 属性 flex                                                                    | number  | true     | 无     |
+| showUnfoldBtn | 是否有展开/收起按钮                                                                           | boolean | false    | 无     |
+| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起             | boolean | false    | 无     |
+| height        | 当 showUnfoldBtn 等于 true 时，指定 height 才有意义，它表示当前行的初始高度，会忽略 flex 的值 | number  | false    | 无     |
+| cols          | 指定行中列的布局，数组里每一项参见 Col 的说明                                                 | Array   | true     | 无     |
+
+#### Col
+
+| 属性          | 说明                                                                                         | 类型    | required | 默认值 |
+| :------------ | :------------------------------------------------------------------------------------------- | :------ | :------- | :----- |
+| flex          | 对应当前列的 css 属性 flex                                                                   | number  | true     | 无     |
+| showUnfoldBtn | 是否有展开/收起按钮                                                                          | boolean | false    | 无     |
+| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起            | boolean | false    | 无     |
+| width         | 当 showUnfoldBtn 等于 true 时，指定 width 才有意义，它表示当前列的初始宽度，会忽略 flex 的值 | number  | false    | 无     |
 
 ### 事件
 
-| 事件名            | 说明             | 回调参数                                                                             |
-| :---------------- | :--------------- | :----------------------------------------------------------------------------------- |
-| afterLayoutResize | 布局更改后的回调 | data: {layout, rowLayout}, 例如： {layout: [1, 2, 1], rowLayout: [[2, 1], [1], [1]]} |
+| 事件名            | 说明             | 回调参数                           |
+| :---------------- | :--------------- | :--------------------------------- |
+| afterLayoutResize | 布局更改后的回调 | data,参考 defaultLayout 的数据结构 |

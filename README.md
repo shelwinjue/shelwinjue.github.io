@@ -5,3 +5,7 @@
 ## 文档站点部署
 
 代码改动后，直接执行`npm run deploy`
+
+## 说明
+
+项目依赖需要引入 async-validator 和 ant-design-vue，否则构建会报错
