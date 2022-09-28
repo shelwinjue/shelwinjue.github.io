@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-  import { HelloWorld } from '@jianweife/lowcode-index/dist/jianweiComponents.common.js';
+  import { HelloWorld } from '@jianweife/lowcode-index';
   export default {
     components: {
       HelloWorld,
