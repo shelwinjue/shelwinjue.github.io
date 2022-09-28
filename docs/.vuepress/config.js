@@ -38,6 +38,7 @@ module.exports = {
           children: [
             ['HelloWorld.md', 'HelloWorld'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
             ['GridInteract.md', 'GridInteract'],
+            ['DivInteractDemo.md', 'DivInteract'],
           ],
         },
       ],
