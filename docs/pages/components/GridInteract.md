@@ -109,28 +109,28 @@ export default {
 
 ### props 说明
 
-| 属性          | 说明                                                                                                                         | 类型  | required | 默认值 |
-| :------------ | :--------------------------------------------------------------------------------------------------------------------------- | :---- | :------- | :----- |
-| defaultLayout | 容器的默认布局，控制`Row`以及`Col`的布局和配置(例如：是否有展开/收起按钮，当前是展开还是收起)，数组里的每一项参见 Row 的说明 | Array | true     | 无     |
+| 属性          | 说明    | 类型    | required | 默认值 |
+| :------------ | :-------- | :------ | :------- | :----- |
+| defaultLayout | 容器的默认布局，控制`Row`以及`Col`的布局和配置(例如：是否有展开/收起按钮，当前是展开还是收起)，数组里的每一项参见 Row 的说明 | `Array` | true     | 无     |
 
 #### Row
 
-| 属性          | 说明                                                                                          | 类型    | required | 默认值 |
-| :------------ | :-------------------------------------------------------------------------------------------- | :------ | :------- | :----- |
-| flex          | 对应当前行的 css 属性 flex                                                                    | number  | true     | 无     |
-| showUnfoldBtn | 是否有展开/收起按钮                                                                           | boolean | false    | 无     |
-| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起             | boolean | false    | 无     |
-| height        | 当 showUnfoldBtn 等于 true 时，指定 height 才有意义，它表示当前行的初始高度，会忽略 flex 的值 | number  | false    | 无     |
-| cols          | 指定行中列的布局，数组里每一项参见 Col 的说明                                                 | Array   | true     | 无     |
+| 属性          | 说明    | 类型    | required | 默认值 |
+| :------------ | :-------------- | :------ | :------- | :----- |
+| flex          | 对应当前行的 css 属性 flex  | `number`  | true     | 无     |
+| showUnfoldBtn | 是否有展开/收起按钮   | `boolean` | false    | 无     |
+| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起 | `boolean` | false    | 无     |
+| height        | 当 showUnfoldBtn 等于 true 时，指定 height 才有意义，它表示当前行的初始高度，会忽略 flex 的值 | `number`  | false    | 无     |
+| cols          | 指定行中列的布局，数组里每一项参见 Col 的说明  | `Array`   | true     | 无     |
 
 #### Col
 
-| 属性          | 说明                                                                                         | 类型    | required | 默认值 |
-| :------------ | :------------------------------------------------------------------------------------------- | :------ | :------- | :----- |
-| flex          | 对应当前列的 css 属性 flex                                                                   | number  | true     | 无     |
-| showUnfoldBtn | 是否有展开/收起按钮                                                                          | boolean | false    | 无     |
-| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起            | boolean | false    | 无     |
-| width         | 当 showUnfoldBtn 等于 true 时，指定 width 才有意义，它表示当前列的初始宽度，会忽略 flex 的值 | number  | false    | 无     |
+| 属性          | 说明   | 类型    | required | 默认值 |
+| :------------ | :------------ | :------ | :------- | :----- |
+| flex          | 对应当前列的 css 属性 flex   | `number`  | true     | 无     |
+| showUnfoldBtn | 是否有展开/收起按钮   | `boolean` | false    | 无     |
+| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起| `boolean` | false    | 无     |
+| width         | 当 showUnfoldBtn 等于 true 时，指定 width 才有意义，它表示当前列的初始宽度，会忽略 flex 的值 | `number`  | false    | 无     |
 
 ### 事件
 

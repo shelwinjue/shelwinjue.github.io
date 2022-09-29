@@ -33,7 +33,7 @@
 
 | 属性 | 说明       | 类型   | required | 默认值                  |
 | :--- | :--------- | :----- | :------- | :---------------------- |
-| msg  | 展示的信息 | string | true     | 'Welcome to jianweiFE!' |
+| msg  | 展示的信息 | `string` | true     | 'Welcome to jianweiFE!' |
 
 ### 事件
 
