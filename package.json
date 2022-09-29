@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@jianweife/lowcode-index": "^0.1.13",
+    "@jianweife/lowcode-index": "^0.1.15",
     "vuepress": "^1.9.7"
   },
   "scripts": {

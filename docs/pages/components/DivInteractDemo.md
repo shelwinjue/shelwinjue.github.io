@@ -1,6 +1,6 @@
 ## 组件描述
 
-可拖拽改变位置和大小的容器组件，容器默认有如下样式：
+可拖拽改变位置和大小的容器组件，拖拽时，不会超过父容器的边界，容器组件默认有如下样式：
 
 ```css
 {
@@ -10,7 +10,7 @@
 
 ```
 
-改变大小，只允许以下方向：右，下，和右下
+可以通过传入`style`覆盖，另外，改变大小，只允许以下方向：右，下，和右下
 
 ## 代码演示
 
@@ -23,13 +23,18 @@
   <div class="container">
     <DivInteract
       :defaultRect="{
-        width: 200,
-        height: 400,
+        width: 100,
+        height: 100,
         left: 10,
         top: 10,
       }"
       @afterChange="afterChange"
-    />
+      :style="{
+        background: '#accbee',
+      }"
+    >
+      <div>拖动我试试吧</div>
+    </DivInteract>
   </div>
 </template>
 <script>
@@ -49,9 +54,10 @@
   .container {
     position: relative;
     margin: 10px;
-    background: #e6dee9;
+    background: white;
+    border: 1px dashed #2575fc;
     width: 100%;
-    height: 500px;
+    height: 350px;
   }
 </style>
 ```

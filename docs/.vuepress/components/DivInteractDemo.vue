@@ -2,13 +2,18 @@
   <div class="container">
     <DivInteract
       :defaultRect="{
-        width: 200,
-        height: 400,
+        width: 100,
+        height: 100,
         left: 10,
         top: 10,
       }"
       @afterChange="afterChange"
-    />
+      :style="{
+        background: '#accbee',
+      }"
+    >
+      <div>拖动我试试吧</div>
+    </DivInteract>
   </div>
 </template>
 <script>
@@ -28,8 +33,9 @@ export default {
 .container {
   position: relative;
   margin: 10px;
-  background: #e6dee9;
+  background: white;
+  border: 1px dashed #2575fc;
   width: 100%;
-  height: 500px;
+  height: 350px;
 }
 </style>
