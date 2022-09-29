@@ -2,7 +2,7 @@
   <div>
     <div>示例1：包含展开和收起按钮</div>
     <div class="demo">
-      <Layout
+      <Block
         :style="{ height: '100%' }"
         :defaultLayout="[
           {
@@ -31,11 +31,11 @@
           <Col>3</Col>
         </Row>
         <Row><Col>5</Col></Row>
-      </Layout>
+      </Block>
     </div>
     <div>示例2：不包含展开和收起按钮</div>
     <div class="demo">
-      <Layout
+      <Block
         :style="{ height: '100%' }"
         :defaultLayout="[
           {
@@ -57,15 +57,15 @@
           <Col>3</Col>
         </Row>
         <Row><Col>5</Col></Row>
-      </Layout>
+      </Block>
     </div>
   </div>
 </template>
 <script>
-import { Layout, Row, Col } from '@jianweife/lowcode-index';
+import { Block, Row, Col } from '@jianweife/lowcode-index';
 export default {
   components: {
-    Layout,
+    Block,
     Row,
     Col,
   },
