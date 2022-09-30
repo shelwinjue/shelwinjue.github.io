@@ -20,7 +20,7 @@
 
 ```html
 <template>
-  <div class="container">
+  <div class="containerDemo">
     <DivInteract
       :defaultRect="{
         width: 100,
@@ -38,28 +38,29 @@
   </div>
 </template>
 <script>
-  import { DivInteract } from '@jianweife/lowcode-index';
-  export default {
-    components: {
-      DivInteract,
+import { DivInteract } from '@jianweife/lowcode-index';
+export default {
+  components: {
+    DivInteract,
+  },
+  methods: {
+    afterChange(data) {
+      console.error('+++ afterChange', data);
     },
-    methods: {
-      afterChange(data) {
-        console.error('+++ afterChange', data);
-      },
-    },
-  };
+  },
+};
 </script>
 <style scoped>
-  .container {
-    position: relative;
-    margin: 10px;
-    background: white;
-    border: 1px dashed #2575fc;
-    width: 100%;
-    height: 350px;
-  }
+.containerDemo {
+  position: relative;
+  margin: 10px;
+  background: white;
+  border: 1px dashed #2575fc;
+  width: 100%;
+  height: 350px;
+}
 </style>
+
 ```
 
 ## API

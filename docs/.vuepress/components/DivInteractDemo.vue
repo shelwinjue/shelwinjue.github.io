@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containerDemo">
     <DivInteract
       :defaultRect="{
         width: 100,
@@ -30,7 +30,7 @@ export default {
 };
 </script>
 <style scoped>
-.container {
+.containerDemo {
   position: relative;
   margin: 10px;
   background: white;
