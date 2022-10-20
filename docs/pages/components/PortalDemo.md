@@ -4,6 +4,10 @@
 
 ## 代码演示
 
+### 样式引入
+
+import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+
 <PortalDemo />
 
 相关源码如下：
@@ -36,7 +40,7 @@
 
 ### props 说明
 
-| 属性              | 说明                      | 类型                  | required | 默认值 |
+| 属性 | 说明                      | 类型                  | required | 默认值 |
 | :---------------- | :------------------------ | :-------------------- | :------- | :----- |
 | containerSelector | 指定 挂载的 HTML DOM 节点 | `string` CSS Selector | true     | 无     |
 

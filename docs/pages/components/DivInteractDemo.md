@@ -18,6 +18,10 @@
 
 ## 代码演示
 
+### 样式引入
+
+import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+
 <DivInteractDemo />
 
 相关源码如下：

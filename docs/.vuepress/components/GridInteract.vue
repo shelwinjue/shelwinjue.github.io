@@ -23,7 +23,7 @@
             cols: [{ flex: 1 }],
           },
         ]"
-        @afterLayoutResize="afterLayoutResize"
+        @onLayoutChange="onLayoutChange"
       >
         <Row>
           <Col>1</Col>
@@ -49,7 +49,7 @@
             cols: [{ flex: 1 }],
           },
         ]"
-        @afterLayoutResize="afterLayoutResize"
+        @onLayoutChange="onLayoutChange"
       >
         <Row>
           <Col>1</Col>
@@ -70,8 +70,8 @@ export default {
     Col,
   },
   methods: {
-    afterLayoutResize(data) {
-      console.error('+++ afterLayoutResize', data);
+    onLayoutChange(data) {
+      console.error('+++ onLayoutChange', data);
     },
   },
 };
