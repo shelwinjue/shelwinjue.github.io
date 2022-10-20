@@ -6,7 +6,10 @@
 
 ### 样式引入
 
+```js
 import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+
+```
 
 <HelloWorldDemo />
 

@@ -12,7 +12,10 @@
 
 ### 样式引入
 
+```js
 import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+
+```
 
 
 <GridInteract />
@@ -25,6 +28,7 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
     <div>示例1：包含展开和收起按钮</div>
     <div class="demo">
       <Block
+        mode="edit"
         :style="{ height: '100%' }"
         :defaultLayout="[
           {
@@ -55,19 +59,51 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
         <Row><Col>5</Col></Row>
       </Block>
     </div>
-    <div>示例2：不包含展开和收起按钮</div>
+    <div>
+      示例2：不包含展开和收起按钮,
+      指定固定高度(指定行的高度)或者固定宽度(指定列的宽度)
+    </div>
     <div class="demo">
       <Block
+        mode="edit"
         :style="{ height: '100%' }"
         :defaultLayout="[
           {
             flex: 1,
 
-            cols: [{ flex: 1 }, { flex: 1 }, { flex: 1 }],
+            cols: [{ width: 100 }, { flex: 1 }, { width: 100 }],
+          },
+          {
+            height: 100,
+            cols: [{ flex: 1 }],
+          },
+        ]"
+        @onLayoutChange="onLayoutChange"
+      >
+        <Row>
+          <Col>1</Col>
+          <Col>2</Col>
+          <Col>3</Col>
+        </Row>
+        <Row><Col>5</Col></Row>
+      </Block>
+    </div>
+    <div>
+      示例3：不包含展开和收起按钮,
+      不指定固定高度或者固定宽度，根据flex的值进行布局
+    </div>
+    <div class="demo">
+      <Block
+        mode="edit"
+        :style="{ height: '100%' }"
+        :defaultLayout="[
+          {
+            flex: 2,
+
+            cols: [{ flex: 2 }, { flex: 2 }, { flex: 1 }],
           },
           {
             flex: 1,
-
             cols: [{ flex: 1 }],
           },
         ]"
@@ -107,6 +143,7 @@ export default {
 
 
 
+
 ```
 
 ## API
@@ -116,6 +153,7 @@ export default {
 | 属性          | 说明    | 类型    | required | 默认值 |
 | :------------ | :-------- | :------ | :------- | :----- |
 | defaultLayout | 容器的默认布局，控制`Row`以及`Col`的布局和配置(例如：是否有展开/收起按钮，当前是展开还是收起)，数组里的每一项参见 Row 的说明 | `Array` | true     | 无     |
+| mode | 当mode等于edit时，表示当前页面布局处于编辑态，编辑态会有特殊样式，比如：鼠标hover到行容器或者列容器时，会显示边框和高亮背景色等 | `String` | false     | 无     |
 
 #### Row
 
@@ -123,8 +161,8 @@ export default {
 | :------------ | :-------------- | :------ | :------- | :----- |
 | flex          | 对应当前行的 css 属性 flex  | `number`  | true     | 无     |
 | showUnfoldBtn | 是否有展开/收起按钮   | `boolean` | false    | 无     |
-| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起 | `boolean` | false    | 无     |
-| height        | 当 showUnfoldBtn 等于 true 时，指定 height 才有意义，它表示当前行的初始高度，会忽略 flex 的值 | `number`  | false    | 无     |
+| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起 | `boolean` | true    | 无     |
+| height        | 指定 height，表示当前行的初始高度，会忽略 flex 的值 | `number`  | false    | 无     |
 | cols          | 指定行中列的布局，数组里每一项参见 Col 的说明  | `Array`   | true     | 无     |
 
 #### Col
@@ -133,11 +171,11 @@ export default {
 | :------------ | :------------ | :------ | :------- | :----- |
 | flex          | 对应当前列的 css 属性 flex   | `number`  | true     | 无     |
 | showUnfoldBtn | 是否有展开/收起按钮   | `boolean` | false    | 无     |
-| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起| `boolean` | false    | 无     |
-| width         | 当 showUnfoldBtn 等于 true 时，指定 width 才有意义，它表示当前列的初始宽度，会忽略 flex 的值 | `number`  | false    | 无     |
+| unfold        | 当 showUnfoldBtn 等于 true 时，指定 unfold 才有意义，它表示当前状态是展开还是收起| `boolean` | true    | 无     |
+| width         | 指定 width，表示当前列的初始宽度，会忽略 flex 的值 | `number`  | false    | 无     |
 
 ### 事件
 
 | 事件名            | 说明             | 回调参数                           |
 | :---------------- | :--------------- | :--------------------------------- |
-| afterLayoutResize | 布局更改后的回调 | data,参考 defaultLayout 的数据结构 |
+| onLayoutChange | 布局更改后的回调 | data,参考 defaultLayout 的数据结构 |
