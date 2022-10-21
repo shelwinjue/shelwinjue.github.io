@@ -25,6 +25,8 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
 
 ```
 
+### 用法示例
+
 <DivInteractDemo />
 
 相关源码如下：

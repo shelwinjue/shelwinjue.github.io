@@ -3,7 +3,7 @@ home: true
 heroText: 组件文档
 tagline: 站点由Vuepress生成
 actionText: 起步
-actionLink: /pages/components/HelloWorld
+actionLink: /pages/components/GridInteract
 features:
   - title: 文档规范
     details: 书写规范的组件文档和代码示例，帮助开发者快速起步

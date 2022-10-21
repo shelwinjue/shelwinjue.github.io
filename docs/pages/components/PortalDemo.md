@@ -11,6 +11,17 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
 
 ```
 
+### 依赖
+
+依赖`ant-design-vue`的`Base`，确保已引入
+
+```js
+import { Base } from 'ant-design-vue';
+Vue.use(Base);
+``` 
+
+### 用法示例
+
 <PortalDemo />
 
 相关源码如下：

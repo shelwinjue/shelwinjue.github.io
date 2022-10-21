@@ -18,6 +18,12 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
 ```
 
 
+### 依赖
+
+依赖`ant-design-vue`的`Icon`组件，确保样式已引入
+
+### 用法示例
+
 <GridInteract />
 
 相关源码如下：
