@@ -6,7 +6,7 @@
 
 1. Row(行)，n 个 Row，那么从第 1 个到第 n-1 个 Row，resize 只能调整 bottom 方向，top left right 都不可调整，第 n 个 Row 四个方向均不可调整
 2. Col(列)，n 个 Col，那么从第 1 个到第 n-1 个 Col，resize 只能调整 right 方向，top left bottom 都不可调整，第 n 个 Col 四个方向均不可调整。
-3. Col，默认 flex 是 1，即均分父容器 Row 的横向空间。当 resize 其中某一个 Col 后，就会变成固定宽度，剩余的没有 resize 的 Col，flex 是 1，均分剩余空间
+3. Col，如果没有传入width,  那么默认使用样式`flex:1`，即均分父容器 Row 的横向剩余空间。
 
 ## 代码演示
 
@@ -14,7 +14,6 @@
 
 ```js
 import '@jianweife/lowcode-index/dist/jianweiComponents.css'
-
 ```
 
 
@@ -182,6 +181,6 @@ export default {
 
 ### 事件
 
-| 事件名            | 说明             | 回调参数                           |
-| :---------------- | :--------------- | :--------------------------------- |
+| 事件名            | 说明             | 回调参数    |
+| :---------------- | :--------------- | :--------- |
 | onLayoutChange | 布局更改后的回调 | data,参考 defaultLayout 的数据结构 |

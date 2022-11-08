@@ -8,7 +8,6 @@
 
 ```js
 import '@jianweife/lowcode-index/dist/jianweiComponents.css'
-
 ```
 
 ### 依赖
@@ -54,8 +53,8 @@ Vue.use(Base);
 
 ### props 说明
 
-| 属性 | 说明                      | 类型                  | required | 默认值 |
-| :---------------- | :------------------------ | :-------------------- | :------- | :----- |
+| 属性 | 说明     | 类型     | required | 默认值 |
+| :------- | :--------- | :---------- | :------- | :----- |
 | containerSelector | 指定 挂载的 HTML DOM 节点 | `string` CSS Selector | true     | 无     |
 
 ### 事件

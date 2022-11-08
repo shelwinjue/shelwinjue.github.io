@@ -8,7 +8,6 @@
 
 ```js
 import '@jianweife/lowcode-index/dist/jianweiComponents.css'
-
 ```
 
 <HelloWorldDemo />
@@ -38,8 +37,8 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
 
 ### props 说明
 
-| 属性 | 说明       | 类型   | required | 默认值                  |
-| :--- | :--------- | :----- | :------- | :---------------------- |
+| 属性 | 说明       | 类型   | required | 默认值   |
+| :--- | :--------- | :----- | :------- | :--------- |
 | msg  | 展示的信息 | `string` | true     | 'Welcome to jianweiFE!' |
 
 ### 事件
