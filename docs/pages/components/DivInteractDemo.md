@@ -21,7 +21,7 @@
 ### 样式引入
 
 ```js
-import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+import '@zjlabvis/lowcode-index/dist/jianweiComponents.css'
 ```
 
 ### 用法示例
@@ -76,7 +76,7 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
   </div>
 </template>
 <script>
-  import { DivInteract } from '@jianweife/lowcode-index';
+  import { DivInteract } from '@zjlabvis/lowcode-index';
   export default {
     components: {
       DivInteract,

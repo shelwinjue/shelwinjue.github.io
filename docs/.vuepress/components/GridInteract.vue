@@ -95,7 +95,7 @@
   </div>
 </template>
 <script>
-import { Block, Row, Col } from '@jianweife/lowcode-index';
+import { Block, Row, Col } from '@zjlabvis/lowcode-index';
 export default {
   components: {
     Block,

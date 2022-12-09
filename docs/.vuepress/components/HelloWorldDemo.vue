@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { HelloWorld } from '@jianweife/lowcode-index';
+import { HelloWorld } from '@zjlabvis/lowcode-index';
 export default {
   components: {
     HelloWorld,

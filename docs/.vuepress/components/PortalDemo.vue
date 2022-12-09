@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import { Portal } from '@jianweife/lowcode-index';
+import { Portal } from '@zjlabvis/lowcode-index';
 export default {
   components: {
     Portal,

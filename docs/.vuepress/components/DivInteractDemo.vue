@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-import { DivInteract } from '@jianweife/lowcode-index';
+import { DivInteract } from '@zjlabvis/lowcode-index';
 export default {
   components: {
     DivInteract,

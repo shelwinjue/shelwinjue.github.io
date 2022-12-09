@@ -7,7 +7,7 @@
 ### 样式引入
 
 ```js
-import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+import '@zjlabvis/lowcode-index/dist/jianweiComponents.css'
 ```
 
 <HelloWorldDemo />
@@ -24,7 +24,7 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
   </div>
 </template>
 <script>
-  import { HelloWorld } from '@jianweife/lowcode-index';
+  import { HelloWorld } from '@zjlabvis/lowcode-index';
   export default {
     components: {
       HelloWorld,

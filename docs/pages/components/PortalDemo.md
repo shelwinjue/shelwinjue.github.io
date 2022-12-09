@@ -7,7 +7,7 @@
 ### 样式引入
 
 ```js
-import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+import '@zjlabvis/lowcode-index/dist/jianweiComponents.css'
 ```
 
 ### 依赖
@@ -40,7 +40,7 @@ Vue.use(Base);
   </div>
 </template>
 <script>
-  import { Portal } from '@jianweife/lowcode-index';
+  import { Portal } from '@zjlabvis/lowcode-index';
   export default {
     components: {
       Portal,

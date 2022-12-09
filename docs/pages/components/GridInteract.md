@@ -13,7 +13,7 @@
 ### 样式引入
 
 ```js
-import '@jianweife/lowcode-index/dist/jianweiComponents.css'
+import '@zjlabvis/lowcode-index/dist/jianweiComponents.css'
 ```
 
 
@@ -125,7 +125,7 @@ import '@jianweife/lowcode-index/dist/jianweiComponents.css'
   </div>
 </template>
 <script>
-import { Block, Row, Col } from '@jianweife/lowcode-index';
+import { Block, Row, Col } from '@zjlabvis/lowcode-index';
 export default {
   components: {
     Block,
