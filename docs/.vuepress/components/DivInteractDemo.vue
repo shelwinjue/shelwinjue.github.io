@@ -44,7 +44,13 @@
 </template>
 <script>
 import { DivInteract } from '@zjlabvis/lowcode-index';
+import codeStr from './divInteractDemoCode';
 export default {
+  data: () => {
+    return {
+      codeStr,
+    };
+  },
   components: {
     DivInteract,
   },

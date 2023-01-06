@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": ["**/*.ts", "**/*.vue", "*.ts"],
+  "exclude": ["node_modules"]
+}
