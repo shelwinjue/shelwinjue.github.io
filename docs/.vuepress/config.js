@@ -40,7 +40,6 @@ module.exports = {
             ['GridInteract.md', 'GridInteract'],
             ['DivInteractDemo.md', 'DivInteract'],
             ['PortalDemo.md', 'Portal'],
-            ['TypeDemo.md', 'typescript组件demo'],
           ],
         },
       ],

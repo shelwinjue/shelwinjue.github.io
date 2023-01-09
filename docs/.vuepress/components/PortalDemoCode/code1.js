@@ -1,3 +1,4 @@
+const code = `
 <template>
   <div>
     <div
@@ -9,22 +10,16 @@
         这是一段文本
       </div>
     </Portal>
-    <CodeHelp :codeStr="code1" />
   </div>
 </template>
 <script>
 import { Portal } from '@zjlabvis/lowcode-index';
-import code1 from './PortalDemoCode/code1';
-import CodeHelp from './CodeHelp.vue';
 export default {
-  data() {
-    return {
-      code1,
-    };
-  },
   components: {
     Portal,
-    CodeHelp,
   },
 };
 </script>
+
+`;
+export default code;

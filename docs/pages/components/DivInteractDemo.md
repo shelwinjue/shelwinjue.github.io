@@ -28,7 +28,6 @@ import '@zjlabvis/lowcode-index/dist/jianweiComponents.css'
 
 <DivInteractDemo />
 
-相关源码如下：
 
 
 
