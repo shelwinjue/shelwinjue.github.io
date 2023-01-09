@@ -58,25 +58,28 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .container {
   width: 100%;
   padding: 10px 0;
-}
-
-.wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
-}
-.copyIcon {
-  cursor: pointer;
-  margin-right: 16px;
-}
-.codeIcon {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+  ::v-deep .CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+  }
+  .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .copyIcon {
+    cursor: pointer;
+    margin-right: 16px;
+  }
+  .codeIcon {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
 }
 </style>
