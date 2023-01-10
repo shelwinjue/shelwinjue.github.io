@@ -65,6 +65,7 @@ export default {
   ::v-deep .CodeMirror {
     border: 1px solid #eee;
     height: auto;
+    padding: 0 10px;
   }
   .wrap {
     display: flex;
