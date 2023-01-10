@@ -23,7 +23,7 @@ module.exports = {
 
       //格式三：跳转至外部网页，需http/https前缀
       {
-        text: 'Github',
+        text: '代码仓库',
         link: 'https://git.zjvis.org/nebula-platform/graph-application-components/tree/master/packages/lowcode-index',
       },
     ],
