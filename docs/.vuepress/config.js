@@ -40,6 +40,7 @@ module.exports = {
             ['GridInteract.md', 'GridInteract'],
             ['DivInteractDemo.md', 'DivInteract'],
             ['PortalDemo.md', 'Portal'],
+            ['CommonForm.md', '通用表单(改版中)'],
           ],
         },
       ],
