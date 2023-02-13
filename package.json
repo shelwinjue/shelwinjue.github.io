@@ -1,11 +1,12 @@
 {
   "devDependencies": {
+    "@zjlabvis/common-form": "^1.0.1",
     "@zjlabvis/lowcode-index": "^0.1.72",
+    "less-loader": "^7.3.0",
     "typescript": "~4.1.5",
     "vue-codemirror": "^4.0.6",
     "vuepress": "^1.9.7",
-    "vuepress-plugin-typescript": "^0.3.1",
-    "less-loader": "^7.3.0"
+    "vuepress-plugin-typescript": "^0.3.1"
   },
   "scripts": {
     "dev": "vuepress dev docs",

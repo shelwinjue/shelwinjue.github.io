@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import '@zjlabvis/lowcode-index/dist/jianweiComponents.css';
 import Antd from 'ant-design-vue';
+import JwFormLib from '@zjlabvis/common-form';
+import '@zjlabvis/common-form/lib/cjs/index.css';
 import 'ant-design-vue/dist/antd.css';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
@@ -11,3 +13,4 @@ if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
   Vue.use(VueCodemirror);
 }
 Vue.use(Antd);
+Vue.use(JwFormLib);
