@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="wrap">
-      <a-tooltip>
+      <a-tooltip v-if="showCopy">
         <template slot="title">
           {{ copyClicked ? '已复制' : '复制代码' }}
         </template>
@@ -33,6 +33,14 @@
 export default {
   props: {
     codeStr: String,
+    defaultCodeVisible: {
+      type: Boolean,
+      default: false,
+    },
+    showCopy: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -40,7 +48,7 @@ export default {
         '//gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg',
       hideCodeIcon:
         '//gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg',
-      codeVisible: false,
+      codeVisible: this.defaultCodeVisible,
       copyClicked: false,
     };
   },

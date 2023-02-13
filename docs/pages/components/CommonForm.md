@@ -25,9 +25,17 @@ CommonForm，是对[ant-design-vue@1.7.8](https://1x.antdv.com/docs/vue/introduc
 | formItems | 表单项配置  | `JwFormItem[]` | ✅ | [] |
 | size | 表单大小 | `large|small|default` | | `default` |
 | layout | 表单布局，当值形如`{lableCol: {}, wrapperCol: {}}`，内部会处理成`<a-form-model layout="horizontal" labelCol={layout.labelCol} wrapperCol={layout.wrapperCol} />` | `horizontal|vertical|inline|{labelCol: {span: 4, offset: 0}, wrapperCol: {span: 20, offset:0}}` | | `horizontal` | 
-| rules | 表单验证规则，同a-form-model，多层级的验证规则说明见下文 | object | | 空 |
+| rules | 表单验证规则，同 `a-form-model`，多层级的验证规则说明见下文 | object | | 空 |
 | injectComponents | 自定义表单控件的映射 | `object`| |空|
 | injectSlotSetting | 自定义表单控件的插槽描述 | `array` | | 空 |
+| watchConfig | 监听表单值变化配置，用于表单联动场景，类似于Vue组件选项配置里的watch属性，但仍有区别，详细介绍见下文 | `object` | | 空 |
+
+### watchConfig
+
+类型：`{[key: string]: Function | Object}`
+
+详细：一个对象，键是需要监听的表达式，值是对应的回调函数或者一个对象。其中键需要是合法的值路径
+
 
 ### 事件
 
@@ -38,18 +46,18 @@ CommonForm，是对[ant-design-vue@1.7.8](https://1x.antdv.com/docs/vue/introduc
 
 #### itemChange
 
-回调参数如下
+回调参数itemConfig类型如下：
 
 ```js
 itemConfig: {
   // 表单项对应的formItem对象
-  item: JwFormItem,
+  item: JwFormItem
   // 表单项最新的值
-  value: any,
+  value: any
   // 表单项变更前的值
-  oldValue: any,
+  oldValue: any
   // 对应该表单项的表单字段，formItem.key
-  name: string,
+  name: string
   // 表单项对应的值路径，值路径参照目录
   path: string
 }

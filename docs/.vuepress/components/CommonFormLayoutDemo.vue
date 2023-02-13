@@ -35,6 +35,12 @@
           </a-select-option>
         </template>
       </jw-form>
+      <div>表单的值：</div>
+      <CodeHelp
+        :defaultCodeVisible="true"
+        :showCopy="false"
+        :codeStr="JSON.stringify(this.formData, null, 2)"
+      />
     </div>
   </div>
 </template>
@@ -49,21 +55,21 @@ import {
   JwOptions,
   IKV,
 } from '@zjlabvis/common-form';
+import CodeHelp from './CodeHelp.vue';
 
-@Component({ name: 'page-demo-layout' })
+@Component({
+  name: 'page-demo-layout',
+  components: {
+    CodeHelp,
+  },
+})
 export default class PageDemoLayout extends Vue {
-  count: number = 1;
+  layoutSetting: string = 'horizontal';
 
-  testObj: any = { a: { b: [{ c: 2 }, { c: 3, d: 4 }] } };
-
-  testArr: any[] = [{ count: 1 }];
-
-  layoutSetting: string = 'inline';
-
-  layoutSettingReal: JwFormLayout = 'inline';
+  layoutSettingReal: JwFormLayout = 'horizontal';
 
   formData: IKV = {
-    name: '123',
+    name: '这是默认的名称',
   };
 
   formWatchConfig = {

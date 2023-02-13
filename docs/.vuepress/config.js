@@ -60,7 +60,7 @@ module.exports = {
             },
             {
               title: '表单布局',
-              path: 'CommonFormLayoutDemo.md',
+              path: 'common-form/LayoutDemo.md',
             },
           ],
         },
