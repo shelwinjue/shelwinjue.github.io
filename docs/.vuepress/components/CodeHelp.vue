@@ -18,7 +18,7 @@
         />
       </a-tooltip>
     </div>
-    <codemirror
+    <!-- <codemirror
       class="code-wrapper"
       v-if="codeVisible"
       :value="codeStr"
@@ -26,7 +26,8 @@
         mode: 'text/javascript',
         theme: 'material',
       }"
-    ></codemirror>
+    ></codemirror> -->
+    <pre v-if="codeVisible" class="language-javascript" v-html="codeHtml"></pre>
   </div>
 </template>
 <script>
@@ -40,6 +41,16 @@ export default {
     showCopy: {
       type: Boolean,
       default: true,
+    },
+  },
+  computed: {
+    codeHtml: function () {
+      const result = window.Prism.highlight(
+        this.codeStr,
+        window.Prism.languages.javascript,
+        'javascript'
+      );
+      return result;
     },
   },
   data() {
@@ -70,11 +81,11 @@ export default {
 .container {
   width: 100%;
   padding: 10px 0;
-  ::v-deep .CodeMirror {
-    border: 1px solid #eee;
-    height: auto;
-    padding: 0 10px;
-  }
+  // ::v-deep .CodeMirror {
+  //   border: 1px solid #eee;
+  //   height: auto;
+  //   padding: 0 10px;
+  // }
   .wrap {
     display: flex;
     align-items: center;

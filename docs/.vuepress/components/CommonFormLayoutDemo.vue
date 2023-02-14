@@ -35,7 +35,7 @@
           </a-select-option>
         </template>
       </jw-form>
-      <div>表单的值：</div>
+      <div>表单model：</div>
       <CodeHelp
         :defaultCodeVisible="true"
         :showCopy="false"
