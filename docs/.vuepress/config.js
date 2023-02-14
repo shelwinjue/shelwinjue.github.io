@@ -59,6 +59,10 @@ module.exports = {
               path: 'CommonForm.md',
             },
             {
+              title: '值路径path',
+              path: 'common-form/DataPath.md',
+            },
+            {
               title: '表单布局',
               path: 'common-form/LayoutDemo.md',
             },

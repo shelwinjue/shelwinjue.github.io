@@ -1,8 +1,10 @@
 ## 简介
 
-CommonForm，是对[ant-design-vue@1.7.8](https://1x.antdv.com/docs/vue/introduce-cn/)的基础组件进行封装的通用表单组件。目标是尽可能覆盖实际项目中的表单场景，节省书写重复的template代码，使用更方便的json配置和纯js代码，实现表单数据绑定、表单嵌套、表单联动、表单数据监听等实用功能
+`jw-form`，是对[ant-design-vue@1.7.8](https://1x.antdv.com/docs/vue/introduce-cn/)的基础组件进行封装的通用表单组件。目标是尽可能覆盖实际项目中的表单场景，节省书写重复的template代码，使用更方便的json配置和纯js代码，实现表单数据绑定、表单嵌套、表单联动、表单数据监听等实用功能
 
-## 注意
+::: warning 注意
+目前表单最多支持两级嵌套，如果希望支持3级及以上的表单嵌套场景，可以单独沟通下。目前的解法是，将3级及以上的表单部分封装成自定义组件
+:::
 
 ### antdv插槽组件说明
 
@@ -11,9 +13,7 @@ CommonForm，是对[ant-design-vue@1.7.8](https://1x.antdv.com/docs/vue/introduc
 
 该组件的默认插槽不支持
 
-## 说明
 
-开发中，使用文档，demo场景完善后再使用
 
 ##  API
 
@@ -30,11 +30,126 @@ CommonForm，是对[ant-design-vue@1.7.8](https://1x.antdv.com/docs/vue/introduc
 | injectSlotSetting | 自定义表单控件的插槽描述 | `array` | | 空 |
 | watchConfig | 监听表单值变化配置，用于表单联动场景，类似于Vue组件选项配置里的watch属性，但仍有区别，详细介绍见下文 | `object` | | 空 |
 
+### injectComponents
+
+通过该属性注入自定义表单控件
+
+示例如下：
+
+```html
+<template>
+  <jw-form :formItems="formItems" v-model="formData" :injectComponents="injectComponents" />
+</template>
+<script>
+import CustomComponent from './components/CustomComponent.vue';
+export default {
+  data() {
+    return {
+      formData: {},
+      injectComponents: {
+        'test-component': CustomComponent
+      },
+      formItems: [{
+        type: 'test-component',
+        key: 'test',
+        name: '自定义'
+      }]
+    }
+  }
+}
+</script>
+
+```
+
+### injectSlotSetting
+
+自定义表单控件的插槽说明，`jw-form`内部在实现插槽透传给自定义表单控件时，需要提前知晓控件支持哪些插槽，示例如下：
+
+假设自定义表单控件`test-component`有如下插槽：
+
+```html
+<template>
+  <div>
+    <slot name="before" />
+    <div>lalala</div>
+    <slot name="default" />
+    <slot name="after" />
+  </div>
+</template>
+
+```
+
+那么injectSlotSetting写法如下：
+
+```js
+const injectSlotSetting = [{
+  componentName: 'test-component',
+  slots: {
+    // 键是插槽名
+    before: {},
+    after: {}
+  },
+  // 如果控件支持默认插槽，那么需要指定hasDefaultSlot等于true
+  hasDefaultSlot: true
+}]
+```
+
+
+
 ### watchConfig
 
-类型：`{[key: string]: Function | Object}`
+**类型**：`{[key: string]: Function | Object}`
 
-详细：一个对象，键是需要监听的表达式，值是对应的回调函数或者一个对象。其中键需要是合法的值路径
+**详细**：一个对象，键是需要监听的表达式，值是对应的回调函数或者一个对象。其中键需要是合法的值路径
+
+**合法的值路径**: 
+- `x`
+- `x.1.y`: 表示监听x字段下数组第一项的y字段
+- `x[].y`： 表示监听x字段下所有数组项的y字段
+
+**回调函数的参数**
+
+```js
+(value: any, oldValue: any, other: {
+  // 表单控件的配置对象
+  item: JwFormItem, 
+  // 表单控件最新的值
+  value: any, 
+  // 表单控件的旧值
+  oldValue: any, 
+  // 表单控件对应的字段名
+  name: string, 
+  // 表单控件所处的值路径，例如： x.1.y
+  path: string, 
+  // 如果表单控件的父节点是jw-loop-items，那么parentValue表示表单控件所在数组项的对象，例如：x.1，否则parentValue是整个表单的值
+  parentValue: object
+  }) => {}
+```
+
+**示例**
+
+支持以下几种写法
+
+```js
+const watchConfig = {
+  
+  x: function(value, oldValue, other) {},
+  // 对象形式，handler表示回调函数，deep等于true，表示x下任何属性变更(包括数组类型的新增/删除)时都会被调用，不论嵌套多深
+  x: {
+    handler: function(value, oldValue, other) {},
+    deep: true
+  },
+  // x字段下所有数组项的y字段有变更都会被调用
+  'x[].y': function(value, oldValue, other) {},
+  // x[1]的y字段有变更时会被调用
+  'x.1.y': function(value, oldValue, other) {},
+};
+```
+
+#### 值路径
+
+[查看详细说明](/pages/components/common-form/DataPath.md)
+
 
 
 ### 事件
@@ -58,7 +173,7 @@ itemConfig: {
   oldValue: any
   // 对应该表单项的表单字段，formItem.key
   name: string
-  // 表单项对应的值路径，值路径参照目录
+  // 表单项对应的值路径，值路径说明参照目录
   path: string
 }
 ```
