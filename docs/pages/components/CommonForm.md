@@ -25,12 +25,12 @@
 | formItems | 表单项配置  | `JwFormItem[]` | ✅ | [] |
 | size | 表单大小 | `large|small|default` | | `default` |
 | layout | 表单布局，当值形如`{lableCol: {}, wrapperCol: {}}`，内部会处理成`<a-form-model layout="horizontal" labelCol={layout.labelCol} wrapperCol={layout.wrapperCol} />` | `horizontal|vertical|inline|{labelCol: {span: 4, offset: 0}, wrapperCol: {span: 20, offset:0}}` | | `horizontal` | 
-| rules | 表单验证规则，同 `a-form-model`，多层级的验证规则说明见下文 | object | | 空 |
+| rules | 表单验证规则，同 `a-form-model`的rules，多层级的验证规则参照[详细说明](/pages/components/common-form/Rules.md) | object | | 空 |
 | injectComponents | 自定义表单控件的映射 | `object`| |空|
 | injectSlotSetting | 自定义表单控件的插槽描述 | `array` | | 空 |
 | watchConfig | 监听表单值变化配置，用于表单联动场景，类似于Vue组件选项配置里的watch属性，但仍有区别，详细介绍见下文 | `object` | | 空 |
 
-### injectComponents
+#### injectComponents
 
 通过该属性注入自定义表单控件
 
@@ -61,7 +61,7 @@ export default {
 
 ```
 
-### injectSlotSetting
+#### injectSlotSetting
 
 自定义表单控件的插槽说明，`jw-form`内部在实现插槽透传给自定义表单控件时，需要提前知晓控件支持哪些插槽，示例如下：
 
@@ -96,7 +96,7 @@ const injectSlotSetting = [{
 
 
 
-### watchConfig
+#### watchConfig
 
 **类型**：`{[key: string]: Function | Object}`
 
@@ -178,6 +178,12 @@ itemConfig: {
 }
 ```
 
+### 方法
+
+#### validate
+
+对整个表单进行校验，函数执行返回一个promise，如果校验成功，将进入promise的成功回调，否则进入promise的失败回调，成功回调的参数是表单值
+
 ### JwFormItem
 
 | 属性        | 说明        | 类型     | required | 默认值   |
@@ -200,6 +206,7 @@ itemConfig: {
 | options | 可选项，适用于`a-select`和`jw-select` | `[{label: '选项标签文案', value: 1}]` | | 空 |
 | optionsFunc | 适用于`jw-select`，函数执行返回可选项, 用于动态获取可选项，示例见下文 | `function` | | 空 |
 | children | 子控件配置数组，适用于`js-loop-items`和`groupToggle` | `JwFormItem[]`| | 空 |
+| rules | 校验规则，适用于`js-loop-items`，表示子表单的校验规则 | `object` | | 空 |
 
 
 

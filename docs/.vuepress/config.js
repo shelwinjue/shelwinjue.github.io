@@ -63,8 +63,22 @@ module.exports = {
               path: 'common-form/DataPath.md',
             },
             {
-              title: '表单布局',
-              path: 'common-form/LayoutDemo.md',
+              title: '校验规则',
+              path: 'common-form/Rules.md',
+            },
+            {
+              title: '示例',
+              collapsable: false,
+              children: [
+                {
+                  title: '基本用法',
+                  path: 'common-form/LayoutDemo.md',
+                },
+                {
+                  title: '表单校验',
+                  path: 'common-form/Validate.md',
+                },
+              ],
             },
           ],
         },

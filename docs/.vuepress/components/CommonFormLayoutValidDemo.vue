@@ -1,26 +1,16 @@
 <template>
   <div class="page-demo-layout">
     <div class="setting-box">
-      <h3 class="title">布局配置</h3>
-      <div class="setting-item">
-        <a-radio-group
-          v-model="layoutSetting"
-          size="default"
-          @change="handleLayoutChange"
-        >
-          <a-radio-button value="inline">inline</a-radio-button>
-          <a-radio-button value="vertical">vertical</a-radio-button>
-          <a-radio-button value="horizontal">horizontal</a-radio-button>
-        </a-radio-group>
-      </div>
       <jw-form
         ref="formRef"
         v-model="formData"
+        :rules="rules"
         :layout="layoutSettingReal"
         :form-items="formItems"
         @change="onChange"
         @itemChange="onItemChange"
       ></jw-form>
+      <a-button @click="validate" type="primary">校验</a-button>
       <div>表单model：</div>
       <CodeHelp
         :defaultCodeVisible="true"
@@ -28,7 +18,7 @@
         :codeStr="JSON.stringify(this.formData, null, 2)"
       />
       <CodeHelp
-        codeSandboxUrl="https://codesandbox.io/s/vue-2-playground-forked-7ljh2u?file=/src/components/CommonFormLayoutDemo.vue"
+        codeSandboxUrl="https://codesandbox.io/s/vue-2-playground-forked-ok88xo?file=/src/components/CommonFormLayoutDemo.vue"
       ></CodeHelp>
     </div>
   </div>
@@ -59,6 +49,23 @@ export default class PageDemoLayout extends Vue {
 
   formData: IKV = {
     name: '这是默认的名称',
+  };
+
+  rules: JwFormRules = {
+    level: [
+      {
+        required: true,
+        message: '赛事级别是必填项',
+      },
+    ],
+    gmtStartRange: {
+      required: true,
+      message: '开始时间是必填项',
+    },
+    name: {
+      required: true,
+      message: '赛事名称是必填项',
+    },
   };
 
   formItems: JwFormItem[] = [
@@ -209,6 +216,17 @@ export default class PageDemoLayout extends Vue {
         wrapperCol: { span: 14 },
       };
     }
+  }
+
+  validate() {
+    (this.$refs.formRef as any).validate().then(
+      (data: any) => {
+        console.info('+++ valid', data);
+      },
+      (err: any) => {
+        console.info('+++ error');
+      }
+    );
   }
 
   onChange(...data: any[]) {
