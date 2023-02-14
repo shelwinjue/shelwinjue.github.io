@@ -41,6 +41,9 @@
         :showCopy="false"
         :codeStr="JSON.stringify(this.formData, null, 2)"
       />
+      <CodeHelp
+        codeSandboxUrl="https://codesandbox.io/s/vue-2-playground-forked-7ljh2u?file=/src/components/CommonFormLayoutDemo.vue"
+      ></CodeHelp>
     </div>
   </div>
 </template>
@@ -74,7 +77,7 @@ export default class PageDemoLayout extends Vue {
 
   formWatchConfig = {
     level: (...args: any[]) => {
-      console.info(...args);
+      console.info('+++ watch', ...args);
     },
   };
 
@@ -162,7 +165,7 @@ export default class PageDemoLayout extends Vue {
       },
       listener: {
         search: (keyword: string, other: any) => {
-          console.info('+++ params', keyword, other);
+          console.info('+++ keyword', keyword);
 
           other.componentRef.updateOptions([
             {
@@ -171,8 +174,8 @@ export default class PageDemoLayout extends Vue {
             },
           ]);
         },
-        change: (...args: any[]) => {
-          console.info('+++ change', ...args);
+        change: (value: any, options: any, other: any) => {
+          console.info('+++ jw-selct change', value, other.path);
         },
       },
     },
@@ -189,8 +192,8 @@ export default class PageDemoLayout extends Vue {
         },
       },
       listener: {
-        change: (...args: any[]) => {
-          console.info('+++ args', ...args);
+        change: (event: any, other: any) => {
+          console.info('+++ input change', event.target.value, other.path);
         },
       },
       // formItemProps: {
@@ -244,7 +247,6 @@ export default class PageDemoLayout extends Vue {
   }
 
   onBtnClick() {
-    console.info('+++ button clicked');
     setValueByPath(this.formData, 'level', 'A');
   }
 

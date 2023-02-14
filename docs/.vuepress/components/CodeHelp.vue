@@ -1,38 +1,35 @@
 <template>
   <div class="container">
     <div class="wrap">
-      <a-tooltip v-if="showCopy">
+      <a-tooltip v-if="codeSandboxUrl">
+        <template slot="title">打开codesanbox</template>
+        <a-icon type="code-sandbox" class="icon" @click="openCodeSandbox" />
+      </a-tooltip>
+      <a-tooltip v-if="showCopy && codeStr">
         <template slot="title">
           {{ copyClicked ? '已复制' : '复制代码' }}
         </template>
-        <a-icon type="copy" class="copyIcon" @click="onCopyIconClick" />
+        <a-icon type="copy" class="icon" @click="onCopyIconClick" />
       </a-tooltip>
-      <a-tooltip>
+      <a-tooltip v-if="codeStr">
         <template slot="title">
           {{ codeVisible ? '隐藏代码' : '显示代码' }}
         </template>
         <img
           :src="codeVisible ? hideCodeIcon : showCodeIcon"
-          class="codeIcon"
+          class="codeIcon icon"
           @click="onCodeIconClick"
         />
       </a-tooltip>
     </div>
-    <!-- <codemirror
-      class="code-wrapper"
-      v-if="codeVisible"
-      :value="codeStr"
-      :options="{
-        mode: 'text/javascript',
-        theme: 'material',
-      }"
-    ></codemirror> -->
     <pre v-if="codeVisible" class="language-javascript" v-html="codeHtml"></pre>
   </div>
 </template>
 <script>
+import Prism from 'prismjs';
 export default {
   props: {
+    codeSandboxUrl: String,
     codeStr: String,
     defaultCodeVisible: {
       type: Boolean,
@@ -45,9 +42,9 @@ export default {
   },
   computed: {
     codeHtml: function () {
-      const result = window.Prism.highlight(
+      const result = Prism.highlight(
         this.codeStr,
-        window.Prism.languages.javascript,
+        Prism.languages.javascript,
         'javascript'
       );
       return result;
@@ -64,6 +61,9 @@ export default {
     };
   },
   methods: {
+    openCodeSandbox() {
+      window.open(this.codeSandboxUrl);
+    },
     onCopyIconClick() {
       navigator.clipboard.writeText(this.codeStr);
       this.copyClicked = true;
@@ -92,14 +92,12 @@ export default {
     justify-content: center;
     margin-bottom: 8px;
   }
-  .copyIcon {
+  .icon {
     cursor: pointer;
-    margin-right: 16px;
+    padding: 0 8px;
   }
   .codeIcon {
-    width: 16px;
     height: 16px;
-    cursor: pointer;
   }
 }
 </style>
