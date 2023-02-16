@@ -67,6 +67,10 @@ module.exports = {
               path: 'common-form/Rules.md',
             },
             {
+              title: '工具函数',
+              path: 'common-form/Utils.md',
+            },
+            {
               title: '示例',
               collapsable: false,
               children: [

@@ -100,9 +100,9 @@ const injectSlotSetting = [{
 
 **类型**：`{[key: string]: Function | Object}`
 
-**详细**：一个对象，键是需要监听的表达式，值是对应的回调函数或者一个对象。其中键需要是合法的值路径
+**详细**：一个对象，键是需要监听的表达式，值是对应的回调函数或者一个对象。其中键需要是合法的路径
 
-**合法的值路径**: 
+**合法的键路径**: 
 - `x`
 - `x.1.y`: 表示监听x字段下数组第一项的y字段
 - `x[].y`： 表示监听x字段下所有数组项的y字段
@@ -119,7 +119,7 @@ const injectSlotSetting = [{
   oldValue: any, 
   // 表单控件对应的字段名
   name: string, 
-  // 表单控件所处的值路径，例如： x.1.y
+  // 表单控件所处的键路径，例如： x.1.y
   path: string, 
   // 如果表单控件的父节点是jw-loop-items，那么parentValue表示表单控件所在数组项的对象，例如：x.1，否则parentValue是整个表单的值
   parentValue: object
@@ -146,7 +146,7 @@ const watchConfig = {
 };
 ```
 
-#### 值路径
+#### 键路径
 
 [查看详细说明](/pages/components/common-form/DataPath.md)
 
@@ -173,7 +173,7 @@ itemConfig: {
   oldValue: any
   // 对应该表单项的表单字段，formItem.key
   name: string
-  // 表单项对应的值路径，值路径说明参照目录
+  // 表单项对应的键路径，键路径说明参照目录
   path: string
 }
 ```
@@ -208,5 +208,16 @@ itemConfig: {
 | children | 子控件配置数组，适用于`js-loop-items`和`groupToggle` | `JwFormItem[]`| | 空 |
 | rules | 校验规则，适用于`js-loop-items`，表示子表单的校验规则 | `object` | | 空 |
 
+
+
+### 工具函数
+
+npm包`@zjlabvis/common-form`导出了一些比较常用的工具函数
+
+- toPath：将路径格式的字符串转换成数组形式
+- setValueByPath：根据键路径修改表单属性值，内部会转换成响应式数据
+- getValueByPath：根据键路径获取表单属性值
+- getFormItemByPath： 根据键路径获取表单控件配置对象
+- setFormItemByPath：根据键路径修改表单控件配置对象
 
 
