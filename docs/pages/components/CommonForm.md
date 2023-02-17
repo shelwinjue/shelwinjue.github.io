@@ -22,9 +22,9 @@
 | 属性        | 说明        | 类型     | required | 默认值   |
 | :---------- | :---------- | :------- | :------- | :---------- |
 | v-model | 表单值双向绑定 | `object` | ✅   | 空 |
-| formItems | 表单项配置  | `JwFormItem[]` | ✅ | [] |
+| formItems | 表单项配置，表单项的具体配置参见下文`JwFormItem`的说明  | `JwFormItem[]` | ✅ | [] |
 | size | 表单大小 | `large|small|default` | | `default` |
-| layout | 表单布局，当值形如`{lableCol: {}, wrapperCol: {}}`，内部会处理成`<a-form-model layout="horizontal" labelCol={layout.labelCol} wrapperCol={layout.wrapperCol} />` | `horizontal|vertical|inline|{labelCol: {span: 4, offset: 0}, wrapperCol: {span: 20, offset:0}}` | | `horizontal` | 
+| layout | 表单布局，当值形如`{lableCol: {}, wrapperCol: {}}`，内部会处理成`<a-form-model layout="horizontal" labelCol={layout.labelCol} wrapperCol={layout.wrapperCol} />` | `horizontal|vertical|inline|{labelCol: {span: number, offset: number}, wrapperCol: {span: number, offset:number}}` | | `horizontal` | 
 | rules | 表单验证规则，同 `a-form-model`的rules，多层级的验证规则参照[详细说明](/pages/components/common-form/Rules.md) | object | | 空 |
 | injectComponents | 自定义表单控件的映射 | `object`| |空|
 | injectSlotSetting | 自定义表单控件的插槽描述 | `array` | | 空 |
@@ -188,7 +188,7 @@ itemConfig: {
 
 | 属性        | 说明        | 类型     | required | 默认值   |
 | :---------- | :---------- | :------- | :------- | :---------- |
-| type        | 表单控件名，可以是全局注入的组件(例如：antdv的组件)或者通过`injectComponents`注入的自定义表单控件名称 | `string` | ✅   | 空 |
+| type        | 表单控件名，可以是全局注入的组件(例如：antdv的组件`a-input`等输入型组件)或者通过`injectComponents`传入的自定义表单控件名称 | `string` | ✅   | 空 |
 | key   | 表单字段，命名格式要求遵守驼峰命名规则  | `string` | ✅ | 空 |
 | name  | 标签文本 | `string` |  | 空 |
 | props | 所有`props`的属性都会透传给表单控件 | `object` |  | 空 |

@@ -82,6 +82,10 @@ module.exports = {
                   title: '表单校验',
                   path: 'common-form/Validate.md',
                 },
+                {
+                  title: '自定义控件',
+                  path: 'common-form/CustomComponent.md',
+                },
               ],
             },
           ],
