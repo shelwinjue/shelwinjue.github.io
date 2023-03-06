@@ -37,7 +37,9 @@ import '@zjlabvis/lowcode-index/dist/jianweiComponents.css'
 
 | 属性        | 说明        | 类型     | required | 默认值   |
 | :---------- | :---------- | :------- | :------- | :---------- |
-| defaultRect | 初始的 Rect | `object` | false    | {top: 0,left: 0,width: 300,height: 300}，注意：值必须是 `number` 类型，不能带单位`px` |
+| defaultRect | 初始的 Rect | `object` | false    | `{top: 0,left: 0, right: 0, width: 300,height: 300}`，<br><br>注意：值必须是 `number` 类型，不能带单位`px`。<br><br>如果`placement`传入的是rightTop，那么defaultRect需要传入`{right: xxx, top: xxx, width: xxx, height: xxx}`|
+| placement | 默认的位置方向，`leftTop`表示`defaultRect`配置是相对父容器左上位置，`rightTop`表示`defaultRect`配置是相对父容器右上位置，暂时只支持这两个相对位置方向 | `string` | false | leftTop |
+| relativeConfig | 初始化时，大小/位置是否相对于父容器成比例缩放布局 | `object` | false |`{width: false, height: false, left: true, right: true, top: true}`, true表示该属性将按照比例进行初始化|
 
 ### 事件
 

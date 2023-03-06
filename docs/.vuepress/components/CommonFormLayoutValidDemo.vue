@@ -18,7 +18,7 @@
         :codeStr="JSON.stringify(this.formData, null, 2)"
       />
       <CodeHelp
-        codeSandboxUrl="https://codesandbox.io/s/vue-2-playground-forked-ok88xo?file=/src/components/CommonFormLayoutDemo.vue"
+        codeSandboxUrl="https://codesandbox.io/s/jw-formbiao-dan-xiao-yan-ok88xo"
       ></CodeHelp>
     </div>
   </div>
