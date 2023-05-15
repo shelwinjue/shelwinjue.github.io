@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@zjlabvis/common-form": "^1.0.3",
-    "@zjlabvis/lowcode-index": "^0.1.75",
+    "@zjlabvis/lowcode-index": "^0.3.0",
     "less-loader": "^7.3.0",
     "typescript": "~4.1.5",
     "vuepress": "^1.9.7",
