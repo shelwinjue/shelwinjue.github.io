@@ -15,7 +15,7 @@
       <CodeHelp
         :defaultCodeVisible="true"
         :showCopy="false"
-        :codeStr="JSON.stringify(this.formData, null, 2)"
+        :codeStr="JSON.stringify(formData, null, 2)"
       />
       <CodeHelp
         codeSandboxUrl="https://codesandbox.io/s/jw-formbiao-dan-xiao-yan-ok88xo"

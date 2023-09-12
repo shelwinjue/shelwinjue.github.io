@@ -40,7 +40,7 @@ export default class CustomUnit extends Vue {
   })
   value!: any;
 
-  onInputChange(event: any) {
+  public onInputChange(event: any) {
     this.$emit('change', {
       ...this.value,
       length: event.target.value,
